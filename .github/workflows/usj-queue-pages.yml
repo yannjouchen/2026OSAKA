@@ -82,42 +82,102 @@ jobs:
               return re.sub(r"\s+", " ", html_lib.unescape(raw)).strip()
 
           def yesterday_history(day):
-              url = f"https://queue-times.com/en-US/parks/284/calendar/{day:%Y/%m/%d}"
-              text = visible_text(request_text(url))
+              daily_url = f"https://queue-times.com/en-US/parks/284/calendar/{day:%Y/%m/%d}"
+              monthly_url = f"https://queue-times.com/en-US/parks/284/calendar/{day:%Y/%m}"
 
-              m = re.search(r"Crowd level\s+(\d{1,3})%", text, re.I)
-              crowd_percent = int(m.group(1)) if m else None
+              errors = []
+              text = ""
 
-              m = re.search(
-                  r"Crowd level\s+\d{1,3}%\s+Prediction error\s+\d{1,3}%\s+Crowd level\s+([A-Za-z]+)",
-                  text,
-                  re.I,
-              )
-              label = m.group(1) if m else None
+              # Primary: dedicated historical day page.
+              try:
+                  text = visible_text(request_text(daily_url))
+              except Exception as e:
+                  errors.append(f"daily page: {e}")
 
-              m = re.search(r"Average wait time by ride(.*?)Maximum wait time by ride", text, re.I)
-              avg_text = m.group(1) if m else ""
-
+              crowd_percent = None
+              label = None
               waits = {}
-              for name in [
-                  "Mine Cart Madness™",
-                  "Mario Kart: Koopa's Challenge™",
-                  "Yoshi's Adventure™",
-                  "Harry Potter and the Forbidden Journey™",
-                  "Despicable Me Minion Mayhem",
-                  "Hello Kitty's Ribbon Collection",
-                  "Hello Kitty's Cupcake Dream",
-              ]:
-                  mm = re.search(re.escape(name) + r"\s+(\d{1,3})(?:\s|$)", avg_text, re.I)
-                  if mm:
-                      waits[name] = int(mm.group(1))
+
+              if text:
+                  # Expected visible sequence:
+                  # Crowd level 58% Prediction error 32% Crowd level Busy
+                  m = re.search(
+                      r"\bCrowd level\s+(\d{1,3})%\s+Prediction error\s+\d{1,3}%\s+Crowd level\s+([A-Za-z]+)",
+                      text,
+                      re.I,
+                  )
+                  if m:
+                      crowd_percent = int(m.group(1))
+                      label = m.group(2)
+                  else:
+                      m = re.search(r"\bCrowd level\s+(\d{1,3})%", text, re.I)
+                      if m:
+                          crowd_percent = int(m.group(1))
+
+                  # Parse selected average wait times from the day page.
+                  m = re.search(
+                      r"Average wait time by ride(.*?)Maximum wait time by ride",
+                      text,
+                      re.I,
+                  )
+                  avg_text = m.group(1) if m else ""
+
+                  for name in [
+                      "Mine Cart Madness™",
+                      "Mario Kart: Koopa's Challenge™",
+                      "Yoshi's Adventure™",
+                      "Harry Potter and the Forbidden Journey™",
+                      "Despicable Me Minion Mayhem",
+                      "Hello Kitty's Ribbon Collection",
+                      "Hello Kitty's Cupcake Dream",
+                  ]:
+                      mm = re.search(
+                          re.escape(name) + r"\s+(?:Loading\.\.\.\s+)?(\d{1,3})(?:\s|$)",
+                          avg_text,
+                          re.I,
+                      )
+                      if mm:
+                          waits[name] = int(mm.group(1))
+
+              # Fallback: monthly crowd calendar if the dedicated day page
+              # did not expose a usable Crowd level to urllib.
+              if crowd_percent is None:
+                  try:
+                      month_text = visible_text(request_text(monthly_url))
+                      # Search a small window around the target day entry.
+                      day_num = str(day.day)
+                      candidates = [
+                          rf"\b{re.escape(day_num)}\s+[A-Za-z]{{3}}\s+{re.escape(day_num)}(?:\s+\S+)*?\s+(\d{{1,3}})%",
+                          rf"\b[A-Za-z]{{3}}\s+{re.escape(day_num)}(?:\s+\S+)*?\s+(\d{{1,3}})%",
+                      ]
+                      for pat in candidates:
+                          mm = re.search(pat, month_text, re.I)
+                          if mm:
+                              crowd_percent = int(mm.group(1))
+                              break
+                  except Exception as e:
+                      errors.append(f"monthly page: {e}")
+
+              # Derive a readable label if the percentage was found but text label was not.
+              if crowd_percent is not None and not label:
+                  if crowd_percent <= 20:
+                      label = "Empty"
+                  elif crowd_percent <= 45:
+                      label = "Quiet"
+                  elif crowd_percent <= 75:
+                      label = "Busy"
+                  else:
+                      label = "Packed"
 
               return {
                   "date": day.isoformat(),
                   "crowd_percent": crowd_percent,
                   "label": label,
                   "selected_avg_waits": waits,
-                  "source": url,
+                  "source": daily_url,
+                  "fallback_source": monthly_url,
+                  "fetch_status": "ok" if crowd_percent is not None else "unavailable",
+                  "errors": errors,
               }
 
           LIVE_WEIGHTS = {
@@ -372,6 +432,13 @@ jobs:
 
               try:
                   history = yesterday_history(yesterday)
+                  print(
+                      "Yesterday crowd:",
+                      history.get("date"),
+                      history.get("crowd_percent"),
+                      history.get("label"),
+                      history.get("fetch_status"),
+                  )
               except Exception as e:
                   print(f"Yesterday history failed: {e}")
                   history = {
