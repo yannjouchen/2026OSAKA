@@ -179,6 +179,33 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
   .queue-min{min-width:48px;font-size:14px}
 }
 
+
+/* --- Day 3 secondary kid-friendly map pins --- */
+.usj-pin.alt{
+  width:29px;height:29px;
+  background:#476276;
+  font-size:11px;
+  border-width:2px;
+}
+.badge.mapref{
+  background:#e6edf2;
+  color:#334f64;
+}
+.usj-map-legend{
+  display:flex;gap:8px;flex-wrap:wrap;
+  padding:9px 13px 0;
+  font-size:11px;color:var(--muted)
+}
+.usj-map-legend span{display:inline-flex;align-items:center;gap:5px}
+.usj-map-legend i{
+  display:inline-grid;place-items:center;
+  width:23px;height:23px;border-radius:50%;
+  color:#fff;font-style:normal;font-size:10px;font-weight:900
+}
+.usj-map-legend .main{background:var(--coral)}
+.usj-map-legend .alt{background:#476276}
+.usj-map-legend .kitty{background:#c84d7d}
+
 </style>
 </head>
 <body>
@@ -546,46 +573,88 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
           <div class="t"><div class="time">21:00</div><div><b>視體力離園 → 回心齋橋</b><div class="muted">不必硬撐閉園最後一分鐘；現場以官方 App 等待時間和孩子體力為準。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=Universal+Studios+Japan&destination=34.673856%2C135.498128&travelmode=transit" target="_blank">回飯店導航</a></div></div></div>
         </div>
 
-        <div class="d3callout"><b>國小生插入型備選：</b>WaterWorld、SING on Tour、名偵探柯南 4-D、奧利凡德魔杖店體驗、飛天史努比、史努比的王牌飛行員冒險、Snoopy Studios。這些適合依當日表演時間或排隊空檔插入，不用綁死固定分鐘。</div>
+        <div class="d3callout"><b>國小生插入型備選：</b>主線之外的項目改整理在下方 A～H 清單，並同步標在 USJ 園區圖。可依當日排隊時間、表演時段與孩子體力插入，不綁死固定分鐘。</div>
       </div>
     </section>
 
     <section class="card" style="margin-top:16px">
-      <div class="head"><h2>國小生可玩清單</h2><span class="pill">E = 可買快通</span></div>
+      <div class="head">
+        <h2>國小生可玩清單｜主線以外</h2>
+        <span class="pill">A～H = 地圖備選</span>
+      </div>
       <div class="body">
-        <div class="ridegrid">
-          <div class="ride"><b>咚奇剛的瘋狂礦車</b><div class="muted">107cm+</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>瑪利歐賽車</b><div class="muted">107cm+</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>耀西冒險</b><div class="muted">92cm+</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>哈利波特禁忌之旅</b><div class="muted">122cm+</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>鷹馬飛行</b><div class="muted">92～195cm</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>小小兵瘋狂任務</b><div class="muted">無最低身高；未滿122cm需陪同</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>小小兵瘋狂乘車遊</b><div class="muted">102cm+</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>冰凍雷射光乘車遊</b><div class="muted">92cm+</div></div>
-          <div class="ride"><b>侏羅紀公園‧乘船遊</b><div class="muted">107cm+</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>JAWS</b><div class="muted">可自己坐穩；未滿122cm需陪同</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>Hello Kitty 蝴蝶結大收藏</b><div class="muted">無身高限制</div><div class="badges"><span class="badge k">🎀 必排</span></div></div>
-          <div class="ride"><b>Hello Kitty 夢幻蛋糕杯</b><div class="muted">無最低身高；未滿122cm需陪同</div><div class="badges"><span class="badge k">🎀 必排</span></div></div>
-          <div class="ride"><b>飛天史努比</b><div class="muted">92cm+</div></div>
-          <div class="ride"><b>史努比王牌飛行員冒險</b><div class="muted">92cm+</div></div>
-          <div class="ride"><b>SING on Tour</b><div class="muted">無身高限制</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>名偵探柯南 4-D</b><div class="muted">無身高限制</div><div class="badges"><span class="badge e">E</span></div></div>
-          <div class="ride"><b>WaterWorld</b><div class="muted">無身高限制</div></div>
-          <div class="ride"><b>好萊塢美夢乘車遊</b><div class="muted">132cm+｜刺激度高</div><div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span></div></div>
-          <div class="ride"><b>飛天翼龍</b><div class="muted">132～198cm｜刺激度高</div><div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span></div></div>
+        <div class="note" style="margin-top:0">
+          <b>這裡只列「推薦遊玩主線沒有出現」的項目。</b>
+          ①～⑩ 已經排進主線的任天堂、侏羅紀、哈利波特、JAWS、小小兵、Hello Kitty 不再重複顯示。
+          A～H 可依當天排隊時間、表演時間與孩子體力插入。
         </div>
+
+        <div class="ridegrid" style="margin-top:10px">
+          <div class="ride" id="d3-k-a">
+            <b>冰凍雷射光乘車遊</b>
+            <div class="muted">92cm+｜Minion Park</div>
+            <div class="badges"><span class="badge mapref">A 地圖</span></div>
+          </div>
+
+          <div class="ride" id="d3-k-b">
+            <b>飛天史努比</b>
+            <div class="muted">92cm+｜Universal Wonderland</div>
+            <div class="badges"><span class="badge mapref">B 地圖</span></div>
+          </div>
+
+          <div class="ride" id="d3-k-c">
+            <b>史努比王牌飛行員冒險</b>
+            <div class="muted">92cm+｜Universal Wonderland</div>
+            <div class="badges"><span class="badge mapref">C 地圖</span></div>
+          </div>
+
+          <div class="ride" id="d3-k-d">
+            <b>SING on Tour</b>
+            <div class="muted">無身高限制｜Hollywood</div>
+            <div class="badges"><span class="badge e">E</span><span class="badge mapref">D 地圖</span></div>
+          </div>
+
+          <div class="ride" id="d3-k-e">
+            <b>名偵探柯南 4-D</b>
+            <div class="muted">無身高限制｜New York</div>
+            <div class="badges"><span class="badge e">E</span><span class="badge mapref">E 地圖</span></div>
+          </div>
+
+          <div class="ride" id="d3-k-f">
+            <b>WaterWorld</b>
+            <div class="muted">無身高限制｜表演型設施</div>
+            <div class="badges"><span class="badge mapref">F 地圖</span></div>
+          </div>
+
+          <div class="ride" id="d3-k-g">
+            <b>好萊塢美夢乘車遊</b>
+            <div class="muted">132cm+｜刺激度高｜Hollywood</div>
+            <div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span><span class="badge mapref">G 地圖</span></div>
+          </div>
+
+          <div class="ride" id="d3-k-h">
+            <b>飛天翼龍</b>
+            <div class="muted">132～198cm｜刺激度高｜Jurassic Park</div>
+            <div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span><span class="badge mapref">H 地圖</span></div>
+          </div>
+        </div>
+
         <div class="actions" style="margin-top:12px">
           <a class="btn mini teal" href="https://www.usj.co.jp/web/zh/tw/service-guide/safe/height-restriction" target="_blank">官方身高限制</a>
           <a class="btn mini" href="https://www.usj.co.jp/web/zh/tw/tickets/lineup/expresspass" target="_blank">官方 Express 對象</a>
           <a class="btn mini soft" href="https://www.usj.co.jp/web/zh/tw/park-guide/schedule/attraction-closure" target="_blank">10 月暫停資訊</a>
         </div>
-        <div class="note"><b>10/11 已知不排：</b>官方 2026 年 10 月暫停資訊列出芝麻街 4-D、史瑞克 4-D、太空幻想列車暫停；芝麻街 Fun World 亦已於 2026/5/10 結束營業。</div>
+
+        <div class="note">
+          <b>10/11 已知不排：</b>
+          官方 2026 年 10 月暫停資訊列出芝麻街 4-D、史瑞克 4-D、太空幻想列車暫停；芝麻街 Fun World 亦已於 2026/5/10 結束營業。
+        </div>
       </div>
     </section>
   </div>
 
   <section class="card mapcard">
-    <div class="head"><h2>Day 3｜USJ 官方園區圖＋推薦順序</h2><span class="pill">①～⑩</span></div>
+    <div class="head"><h2>Day 3｜USJ 官方園區圖＋推薦順序</h2><span class="pill">①～⑩ 主線・A～H 備選</span></div>
     <div id="usjMapWrap">
       <img src="https://www.usj.co.jp/contentdata/usj/ja/jp/files/images/gds-images/usj-gds-blog-park-mapn-go-around-sp.jpg" alt="Universal Studios Japan 官方園區圖">
       <!-- 推薦主線；標記位置為依官方底圖的區域位置疊加 -->
@@ -599,8 +668,24 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <a class="usj-pin" href="#d3-8" title="⑧ 小小兵" style="left:49%;top:11%">8</a>
       <a class="usj-pin kitty" href="#d3-9" title="⑨ Hello Kitty 蝴蝶結大收藏" style="left:47%;top:69%">9</a>
       <a class="usj-pin kitty" href="#d3-10" title="⑩ Hello Kitty 夢幻蛋糕杯" style="left:50%;top:73%">10</a>
+
+      <!-- A～H：主線以外的國小生可玩／選配項目；位置標示所在園區的大致位置 -->
+      <a class="usj-pin alt" href="#d3-k-a" title="A 冰凍雷射光乘車遊｜Minion Park" style="left:55%;top:15%">A</a>
+      <a class="usj-pin alt" href="#d3-k-b" title="B 飛天史努比｜Universal Wonderland" style="left:47%;top:61%">B</a>
+      <a class="usj-pin alt" href="#d3-k-c" title="C 史努比王牌飛行員冒險｜Universal Wonderland" style="left:43%;top:66%">C</a>
+      <a class="usj-pin alt" href="#d3-k-d" title="D SING on Tour｜Hollywood" style="left:30%;top:57%">D</a>
+      <a class="usj-pin alt" href="#d3-k-e" title="E 名偵探柯南 4-D｜New York" style="left:25%;top:47%">E</a>
+      <a class="usj-pin alt" href="#d3-k-f" title="F WaterWorld" style="left:18%;top:30%">F</a>
+      <a class="usj-pin alt" href="#d3-k-g" title="G 好萊塢美夢乘車遊｜Hollywood" style="left:38%;top:61%">G</a>
+      <a class="usj-pin alt" href="#d3-k-h" title="H 飛天翼龍｜Jurassic Park" style="left:73%;top:26%">H</a>
+
       <span class="usj-pin food" title="奇諾比奧咖啡店" style="left:84%;top:76%">🍴</span>
       <span class="usj-pin food" title="園內晚餐／Park Side Grille 候選" style="left:34%;top:51%">🍽</span>
+    </div>
+    <div class="usj-map-legend">
+      <span><i class="main">1</i>①～⑩ 推薦主線</span>
+      <span><i class="alt">A</i>A～H 主線以外備選</span>
+      <span><i class="kitty">9</i>Hello Kitty 必排</span>
     </div>
     <div class="tools">
       <a class="btn teal" href="https://www.usj.co.jp/web/zh/tw/service-guide/parkmap" target="_blank">開啟 USJ 官方互動園區圖</a>
@@ -608,14 +693,14 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <a class="btn soft" href="https://www.usj.co.jp/web/zh/tw/park-guide/schedule/park-hour" target="_blank">10/11 前再查營業時間</a>
     </div>
     <div class="usj-map-note">
-      <b>地圖說明：</b>底圖使用 USJ 官方網站園區圖素材；①～⑩ 是本行程自行疊加的推薦順序標記，方便快速看動線。遊樂設施入口、施工／活動區域與當日營運可能調整，現場請以官方互動園區圖與 App 為準。<br>
+      <b>地圖說明：</b>底圖使用 USJ 官方網站園區圖素材；①～⑩ 是推薦遊玩主線，A～H 是主線以外的國小生可玩／選配項目。A～H 以「所在園區的大致位置」標示，不代表設施入口的精確座標；現場請以官方互動園區圖與 App 為準。<br>
       <b>路線概念：</b>任天堂世界 → 侏羅紀 → 哈利波特 → JAWS → 小小兵 → Hello Kitty → Hollywood／晚餐 → 18:00 後夜間活動。
     </div>
   </section>
 </main>
 </div>
 
-<div class="foot">Prototype v13｜USJ 排隊資料改由 GitHub Actions 伺服器端抓取並部署 usj-queue.json，移除瀏覽器 CORS／AllOrigins 依賴。</div>
+<div class="foot">Prototype v14｜Day 3 國小生清單去除主線重複項目；A～H 備選同步標示在 USJ 官方園區圖，①～⑩ 保留推薦主線。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
