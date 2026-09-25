@@ -206,6 +206,93 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 .usj-map-legend .alt{background:#476276}
 .usj-map-legend .kitty{background:#c84d7d}
 
+
+/* --- Crowd summary v16 --- */
+.crowd-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.crowd-box{border:1px solid var(--line);border-radius:16px;background:#fff;padding:13px;min-width:0}
+.crowd-label{font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.03em}
+.crowd-big{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin-top:5px}
+.crowd-big strong{font-size:28px;line-height:1;color:var(--ink)}
+.crowd-big span{font-size:12px;font-weight:900}
+.crowd-meter{height:8px;border-radius:999px;background:#ece9e2;overflow:hidden;margin:10px 0 8px}
+.crowd-meter i{display:block;height:100%;width:0;background:var(--teal);border-radius:inherit}
+.crowd-meta{font-size:11px;line-height:1.55;color:var(--muted)}
+.crowd-kpis{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.crowd-kpi{border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;background:#faf9f6}
+.crowd-note{margin:0 0 12px;padding:9px 11px;border-radius:12px;background:#f6f3ec;font-size:11px;color:var(--muted);line-height:1.55}
+@media(max-width:620px){.crowd-summary{grid-template-columns:1fr}}
+
+
+/* --- Trip weather v18 --- */
+.trip-weather{
+  margin:12px 0 16px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:18px;
+  overflow:hidden;
+}
+.trip-weather-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;flex-wrap:wrap;
+  padding:11px 13px;
+  border-bottom:1px solid var(--line);
+}
+.trip-weather-head b{font-size:14px}
+.trip-weather-head span{font-size:11px;color:var(--muted);font-weight:800}
+.trip-weather-grid{
+  display:grid;
+  grid-template-columns:repeat(var(--weather-cols,1),minmax(0,1fr));
+}
+.weather-place{
+  padding:12px 13px;
+  min-width:0;
+}
+.weather-place + .weather-place{border-left:1px solid var(--line)}
+.weather-top{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:8px;
+}
+.weather-place-name{font-size:13px;font-weight:950}
+.weather-state{
+  padding:4px 7px;border-radius:999px;
+  background:#eee9df;color:#625c53;
+  font-size:10px;font-weight:900;white-space:nowrap
+}
+.weather-state.forecast{background:#e2f0ef;color:#226563}
+.weather-state.history{background:#e9edf2;color:#4c5d6b}
+.weather-state.waiting{background:#fff0d9;color:#8a5b13}
+.weather-main{
+  display:flex;align-items:center;gap:10px;
+  margin:9px 0 7px;
+}
+.weather-icon{font-size:30px;line-height:1}
+.weather-condition{font-size:15px;font-weight:950}
+.weather-temp{font-size:12px;color:var(--muted);margin-top:2px}
+.weather-metrics{
+  display:flex;gap:6px;flex-wrap:wrap;
+}
+.weather-metric{
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:5px 8px;
+  font-size:10px;font-weight:900;
+  background:#faf9f6;
+}
+.weather-updated{
+  margin-top:8px;
+  font-size:10px;color:var(--muted);line-height:1.45
+}
+.weather-source{
+  padding:8px 13px;
+  border-top:1px dashed var(--line);
+  font-size:10px;color:var(--muted)
+}
+.weather-source a{font-weight:900;color:var(--teal)}
+@media(max-width:620px){
+  .trip-weather-grid{grid-template-columns:1fr!important}
+  .weather-place + .weather-place{border-left:0;border-top:1px solid var(--line)}
+}
+
 </style>
 </head>
 <body>
@@ -230,6 +317,16 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <a href="https://www.google.com/maps/dir/?api=1&origin=Kansai%20International%20Airport%20Terminal%201&destination=34.673856%2C135.498128&travelmode=transit" target="_blank">🗺️ KIX → 飯店<span>Google Maps</span></a>
     </div>
   </section>
+<section class="trip-weather" id="weather-day1">
+  <div class="trip-weather-head"><b>🌤️ 10/9 大阪天氣</b><span>預報 → 日期過後自動切換歷史天氣</span></div>
+  <div class="trip-weather-grid" style="--weather-cols:1"><div class="weather-place" data-weather="osaka_day1">
+  <div class="weather-top"><div class="weather-place-name">大阪・心齋橋</div><span class="weather-state waiting">讀取中</span></div>
+  <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
+  <div class="weather-metrics"><span class="weather-metric">🌧️ 降雨量 —</span></div>
+  <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
+</div></div>
+  <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
+</section>
 
   <main class="grid">
     <div>
@@ -427,6 +524,21 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     <a href="https://www.google.com/maps/reserve/v/dine/c/53sk8jwCI5w?source=pa&opi=89978449&hl=zh-TW" target="_blank">📅 晚餐訂位<span>19:30｜需事先訂位</span></a>
   </div>
 </section>
+<section class="trip-weather" id="weather-day2">
+  <div class="trip-weather-head"><b>🌤️ 10/10 京都・奈良天氣</b><span>預報 → 日期過後自動切換歷史天氣</span></div>
+  <div class="trip-weather-grid" style="--weather-cols:2"><div class="weather-place" data-weather="kyoto_day2">
+  <div class="weather-top"><div class="weather-place-name">京都・清水寺</div><span class="weather-state waiting">讀取中</span></div>
+  <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
+  <div class="weather-metrics"><span class="weather-metric">🌧️ 降雨量 —</span></div>
+  <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
+</div><div class="weather-place" data-weather="nara_day2">
+  <div class="weather-top"><div class="weather-place-name">奈良公園</div><span class="weather-state waiting">讀取中</span></div>
+  <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
+  <div class="weather-metrics"><span class="weather-metric">🌧️ 降雨量 —</span></div>
+  <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
+</div></div>
+  <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
+</section>
 <main class="grid">
   <div>
     <section class="card">
@@ -482,6 +594,16 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     <a href="https://bobbytravel.tw/usj/" target="_blank">📖 USJ 攻略<span>Bobby 參考文章</span></a>
   </div>
 </section>
+<section class="trip-weather" id="weather-day3">
+  <div class="trip-weather-head"><b>🌤️ 10/11 USJ 天氣</b><span>預報 → 日期過後自動切換歷史天氣</span></div>
+  <div class="trip-weather-grid" style="--weather-cols:1"><div class="weather-place" data-weather="usj_day3">
+  <div class="weather-top"><div class="weather-place-name">Universal Studios Japan</div><span class="weather-state waiting">讀取中</span></div>
+  <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
+  <div class="weather-metrics"><span class="weather-metric">🌧️ 降雨量 —</span></div>
+  <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
+</div></div>
+  <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
+</section>
 
 
 <section class="card queue-card" id="liveQueueCard">
@@ -490,6 +612,23 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     <span class="pill">約每 5 分鐘更新</span>
   </div>
   <div class="body">
+    <div class="crowd-summary">
+      <div class="crowd-box">
+        <div class="crowd-label">昨日 Queue‑Times 人潮</div>
+        <div class="crowd-big"><strong id="yesterdayCrowd">—</strong><span id="yesterdayCrowdLabel">等待資料</span></div>
+        <div class="crowd-meter"><i id="yesterdayCrowdBar"></i></div>
+        <div class="crowd-meta" id="yesterdayCrowdMeta">等待 GitHub Actions 歷史資料…</div>
+        <div class="crowd-kpis" id="yesterdayRideAverages"></div>
+      </div>
+      <div class="crowd-box">
+        <div class="crowd-label">今日即時壅擠指數</div>
+        <div class="crowd-big"><strong id="todayCrowd">—</strong><span id="todayCrowdLabel">等待資料</span></div>
+        <div class="crowd-meter"><i id="todayCrowdBar"></i></div>
+        <div class="crowd-meta" id="todayCrowdMeta">依主要設施即時等待時間計算。</div>
+        <div class="crowd-kpis" id="todayCrowdCounts"></div>
+      </div>
+    </div>
+    <div class="crowd-note"><b>注意：</b>昨日顯示的是 Queue‑Times 歷史 Crowd level；今日則是本 Dashboard 依主要設施等待時間計算的自訂 0–100 壅擠指數。兩者都不是 USJ 官方入園人數，也不能直接換算成實際入園人數。</div>
     <div class="queue-top">
       <div class="queue-status" aria-live="polite">
         <span id="queueDot" class="queue-dot"></span>
@@ -700,7 +839,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 </main>
 </div>
 
-<div class="foot">Prototype v14｜Day 3 國小生清單去除主線重複項目；A～H 備選同步標示在 USJ 官方園區圖，①～⑩ 保留推薦主線。</div>
+<div class="foot">Prototype v18｜新增 10/9 大阪、10/10 京都＋奈良、10/11 USJ 天氣與每日降雨量；未來顯示預報，日期過後自動切換歷史天氣。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -897,6 +1036,139 @@ function normalizeQueue(data){
     return {...r, meta};
   });
 }
+
+function crowdText(v){
+  const n=Number(v);
+  if(!Number.isFinite(n)) return '等待資料';
+  if(n<=25) return '很空';
+  if(n<=45) return '舒適';
+  if(n<=65) return '普通';
+  if(n<=80) return '擁擠';
+  return '非常擁擠';
+}
+
+function weatherCodeInfo(code){
+  const c=Number(code);
+  if(c===0) return ['☀️','晴朗'];
+  if(c===1) return ['🌤️','大致晴朗'];
+  if(c===2) return ['⛅','局部多雲'];
+  if(c===3) return ['☁️','陰天'];
+  if(c===45||c===48) return ['🌫️','有霧'];
+  if(c>=51&&c<=57) return ['🌦️','毛毛雨'];
+  if(c>=61&&c<=67) return ['🌧️','下雨'];
+  if(c>=71&&c<=77) return ['🌨️','降雪'];
+  if(c>=80&&c<=82) return ['🌦️','陣雨'];
+  if(c>=85&&c<=86) return ['🌨️','陣雪'];
+  if(c>=95) return ['⛈️','雷雨'];
+  return ['🌥️','天氣資料'];
+}
+function fmtWeatherNum(v,d=1){
+  const n=Number(v);
+  return Number.isFinite(n) ? n.toFixed(d).replace(/\.0$/,'') : '—';
+}
+function renderTripWeather(data){
+  const weather=data?._weather?.places||{};
+  document.querySelectorAll('[data-weather]').forEach(card=>{
+    const w=weather[card.dataset.weather];
+    const state=card.querySelector('.weather-state');
+    const icon=card.querySelector('.weather-icon');
+    const cond=card.querySelector('.weather-condition');
+    const temp=card.querySelector('.weather-temp');
+    const metrics=card.querySelector('.weather-metrics');
+    const updated=card.querySelector('.weather-updated');
+
+    if(!w || w.status==='not_available_yet'){
+      state.className='weather-state waiting';
+      state.textContent='尚未進入預報範圍';
+      icon.textContent='🗓️';
+      cond.textContent='等待預報';
+      temp.textContent=w?.date ? w.date : '—';
+      metrics.innerHTML='<span class="weather-metric">🌧️ 降雨量 —</span>';
+      updated.textContent='Open‑Meteo 最長約 16 天預報；進入範圍後 GitHub Actions 會自動更新。';
+      return;
+    }
+    if(w.status!=='ok'){
+      state.className='weather-state waiting';
+      state.textContent='暫無資料';
+      icon.textContent='⚠️';
+      cond.textContent='天氣資料暫時無法取得';
+      temp.textContent=w?.date||'—';
+      metrics.innerHTML='<span class="weather-metric">🌧️ 降雨量 —</span>';
+      updated.textContent='下一次 GitHub Actions 會再次嘗試。';
+      return;
+    }
+
+    const [ico,label]=weatherCodeInfo(w.weather_code);
+    const historical=w.mode==='historical'||w.mode==='historical_forecast';
+    state.className='weather-state '+(historical?'history':'forecast');
+    state.textContent=historical ? (w.mode==='historical'?'歷史天氣':'歷史回溯') : (w.is_today?'今日':'預報');
+    icon.textContent=ico;
+    cond.textContent=label;
+    temp.textContent=`${fmtWeatherNum(w.temperature_min)}–${fmtWeatherNum(w.temperature_max)}°C`;
+
+    let chips=[
+      `<span class="weather-metric">🌧️ 降雨量 ${fmtWeatherNum(w.rain_sum ?? w.precipitation_sum)} mm</span>`,
+      `<span class="weather-metric">💧 總降水 ${fmtWeatherNum(w.precipitation_sum)} mm</span>`
+    ];
+    if(!historical && Number.isFinite(Number(w.precipitation_probability_max))){
+      chips.push(`<span class="weather-metric">☔ 降雨機率 ${Math.round(Number(w.precipitation_probability_max))}%</span>`);
+    }
+    metrics.innerHTML=chips.join('');
+    const kind=historical?'過去資料':'未來預報';
+    updated.textContent=`${w.date} · ${kind}${w.source_label?' · '+w.source_label:''}`;
+  });
+}
+
+function renderCrowdSummary(data){
+  const c=data?._crowd||{}, y=c.yesterday||{}, t=c.today_live||{};
+  const yp=Number(y.crowd_percent);
+  const yv=document.getElementById('yesterdayCrowd');
+  const yl=document.getElementById('yesterdayCrowdLabel');
+  const yb=document.getElementById('yesterdayCrowdBar');
+  const ym=document.getElementById('yesterdayCrowdMeta');
+  const ya=document.getElementById('yesterdayRideAverages');
+  if(Number.isFinite(yp)){
+    yv.textContent=Math.round(yp)+'%';
+    yl.textContent=y.label||'歷史人潮';
+    yb.style.width=Math.max(0,Math.min(100,yp))+'%';
+    ym.textContent=(y.date||'昨日')+' · Queue‑Times 歷史 Crowd level';
+  }else{
+    yv.textContent='—'; yl.textContent='暫無歷史資料'; yb.style.width='0%';
+    ym.textContent=(y.date||'昨日')+' 尚未取得完整 Crowd level';
+  }
+  if(ya){
+    const a=y.selected_avg_waits||{}, picks=[
+      ["Mine Cart Madness™","咚奇剛"],
+      ["Mario Kart: Koopa's Challenge™","瑪利歐"],
+      ["Yoshi's Adventure™","耀西"]
+    ];
+    ya.innerHTML=picks.filter(([k])=>Number.isFinite(Number(a[k])))
+      .map(([k,n])=>`<span class="crowd-kpi">${n} 平均 ${Math.round(Number(a[k]))} 分</span>`).join('');
+  }
+
+  const ti=Number(t.index);
+  const tv=document.getElementById('todayCrowd');
+  const tl=document.getElementById('todayCrowdLabel');
+  const tb=document.getElementById('todayCrowdBar');
+  const tm=document.getElementById('todayCrowdMeta');
+  const tc=document.getElementById('todayCrowdCounts');
+  if(Number.isFinite(ti)){
+    tv.textContent=Math.round(ti)+'/100';
+    tl.textContent=t.label||crowdText(ti);
+    tb.style.width=Math.max(0,Math.min(100,ti))+'%';
+    tm.textContent=`追蹤 ${Number(t.tracked_open_rides||0)} 個主要開放設施${t.calculated_at?' · '+qJapanTime(t.calculated_at)+' JST':''}`;
+  }else{
+    tv.textContent='—'; tl.textContent='等待即時資料'; tb.style.width='0%';
+    tm.textContent='尚未計算今日即時壅擠指數';
+  }
+  if(tc){
+    const x=t.counts||{};
+    const parts=[['≤30分',x.green],['31–60分',x.yellow],['61–100分',x.orange],['>100分',x.red]];
+    tc.innerHTML=parts.filter(([,v])=>Number.isFinite(Number(v)))
+      .map(([k,v])=>`<span class="crowd-kpi">${k} ${v}</span>`).join('');
+  }
+}
+
 function renderQueue(){
   const grid = document.getElementById('queueGrid');
   if(!grid) return;
@@ -966,6 +1238,8 @@ async function refreshUSJQueue(){
 
     queueMeta = data?._meta || {};
     usjQueueRows = normalizeQueue(data);
+    renderTripWeather(data);
+    renderCrowdSummary(data);
     renderQueue();
 
     const fetchedAt = qJapanTime(queueMeta.fetched_at);
