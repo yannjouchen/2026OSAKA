@@ -904,7 +904,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 </main>
 </div>
 
-<div class="foot">Prototype v20｜天氣卡新增預報可信度：0–2 天高、3–5 天中高、6–9 天中、10–16 天低；日期過後自動顯示歷史資料。</div>
+<div class="foot">Prototype v21｜修正「昨日人潮缺值被顯示為 0%」；Queue‑Times 歷史人潮改為日頁＋月曆頁雙重抓取。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1221,20 +1221,22 @@ function renderTripWeather(data){
 
 function renderCrowdSummary(data){
   const c=data?._crowd||{}, y=c.yesterday||{}, t=c.today_live||{};
-  const yp=Number(y.crowd_percent);
+  const rawY=y.crowd_percent;
+  const hasYesterdayCrowd = rawY !== null && rawY !== undefined && rawY !== '' && Number.isFinite(Number(rawY));
+  const yp=hasYesterdayCrowd ? Number(rawY) : NaN;
   const yv=document.getElementById('yesterdayCrowd');
   const yl=document.getElementById('yesterdayCrowdLabel');
   const yb=document.getElementById('yesterdayCrowdBar');
   const ym=document.getElementById('yesterdayCrowdMeta');
   const ya=document.getElementById('yesterdayRideAverages');
-  if(Number.isFinite(yp)){
+  if(hasYesterdayCrowd){
     yv.textContent=Math.round(yp)+'%';
     yl.textContent=y.label||'歷史人潮';
     yb.style.width=Math.max(0,Math.min(100,yp))+'%';
     ym.textContent=(y.date||'昨日')+' · Queue‑Times 歷史 Crowd level';
   }else{
     yv.textContent='—'; yl.textContent='暫無歷史資料'; yb.style.width='0%';
-    ym.textContent=(y.date||'昨日')+' 尚未取得完整 Crowd level';
+    ym.textContent=(y.date||'昨日')+' 歷史 Crowd level 尚未取得；不會再把缺值顯示成 0%';
   }
   if(ya){
     const a=y.selected_avg_waits||{}, picks=[
