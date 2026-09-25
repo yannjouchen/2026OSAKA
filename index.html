@@ -328,6 +328,28 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
   font-weight:800;
 }
 
+
+/* --- Weather forecast confidence v20 --- */
+.weather-confidence{
+  margin-top:7px;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:10px;
+  font-weight:900;
+  border:1px solid var(--line);
+  background:#f7f5ef;
+  color:#5d666c;
+}
+.weather-confidence.high{background:#e3f2e8;color:#286442}
+.weather-confidence.midhigh{background:#edf3df;color:#546824}
+.weather-confidence.medium{background:#fff2cd;color:#7a5a00}
+.weather-confidence.low{background:#ffe5d2;color:#934a1b}
+.weather-confidence.verylow{background:#f7dddd;color:#8b3030}
+.weather-confidence.history{background:#e7edf2;color:#4d5f6c}
+
 </style>
 </head>
 <body>
@@ -358,6 +380,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
   <div class="weather-top"><div class="weather-place-name">大阪・心齋橋</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
   <div class="weather-metrics"><span class="weather-metric">🌧️ 降雨量 —</span></div>
+  <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
   <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
@@ -569,11 +592,13 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
   <div class="weather-top"><div class="weather-place-name">京都・清水寺</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
   <div class="weather-metrics"><span class="weather-metric">🌧️ 降雨量 —</span></div>
+  <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div><div class="weather-place" data-weather="nara_day2">
   <div class="weather-top"><div class="weather-place-name">奈良公園</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
   <div class="weather-metrics"><span class="weather-metric">🌧️ 降雨量 —</span></div>
+  <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
   <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
@@ -639,6 +664,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
   <div class="weather-top"><div class="weather-place-name">Universal Studios Japan</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
   <div class="weather-metrics"><span class="weather-metric">🌧️ 降雨量 —</span></div>
+  <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
   <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
@@ -878,7 +904,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 </main>
 </div>
 
-<div class="foot">Prototype v19｜Day 1 百貨／商場卡片新增「精選店家」：PARCO、大丸心齋橋、大阪高島屋、難波 PARKS，並附官方店家目錄。</div>
+<div class="foot">Prototype v20｜天氣卡新增預報可信度：0–2 天高、3–5 天中高、6–9 天中、10–16 天低；日期過後自動顯示歷史資料。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1105,6 +1131,31 @@ function fmtWeatherNum(v,d=1){
   const n=Number(v);
   return Number.isFinite(n) ? n.toFixed(d).replace(/\.0$/,'') : '—';
 }
+
+function japanTodayUTC(){
+  const parts=new Intl.DateTimeFormat('en-US',{
+    timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'
+  }).formatToParts(new Date());
+  const get=t=>Number(parts.find(p=>p.type===t)?.value);
+  return Date.UTC(get('year'),get('month')-1,get('day'));
+}
+function weatherConfidence(dateStr,mode){
+  if(mode==='historical'||mode==='historical_forecast'){
+    return {label:'歷史資料',cls:'history',detail:'日期已過，顯示過去天氣'};
+  }
+  const m=String(dateStr||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m) return {label:'—',cls:'',detail:''};
+  const target=Date.UTC(Number(m[1]),Number(m[2])-1,Number(m[3]));
+  const diff=Math.round((target-japanTodayUTC())/86400000);
+
+  if(diff<0) return {label:'歷史資料',cls:'history',detail:'日期已過'};
+  if(diff<=2) return {label:'高',cls:'high',detail:'0–2 天內'};
+  if(diff<=5) return {label:'中高',cls:'midhigh',detail:'3–5 天內'};
+  if(diff<=9) return {label:'中',cls:'medium',detail:'6–9 天內'};
+  if(diff<=16) return {label:'低',cls:'low',detail:'10–16 天內，主要看趨勢'};
+  return {label:'很低',cls:'verylow',detail:'超過 16 天，僅看趨勢'};
+}
+
 function renderTripWeather(data){
   const weather=data?._weather?.places||{};
   document.querySelectorAll('[data-weather]').forEach(card=>{
@@ -1114,6 +1165,7 @@ function renderTripWeather(data){
     const cond=card.querySelector('.weather-condition');
     const temp=card.querySelector('.weather-temp');
     const metrics=card.querySelector('.weather-metrics');
+    const confidence=card.querySelector('.weather-confidence');
     const updated=card.querySelector('.weather-updated');
 
     if(!w || w.status==='not_available_yet'){
@@ -1123,6 +1175,9 @@ function renderTripWeather(data){
       cond.textContent='等待預報';
       temp.textContent=w?.date ? w.date : '—';
       metrics.innerHTML='<span class="weather-metric">🌧️ 降雨量 —</span>';
+      const cf=weatherConfidence(w?.date,w?.mode);
+      confidence.className='weather-confidence '+cf.cls;
+      confidence.textContent=`預報可信度：${cf.label}${cf.detail?' · '+cf.detail:''}`;
       updated.textContent='Open‑Meteo 最長約 16 天預報；進入範圍後 GitHub Actions 會自動更新。';
       return;
     }
@@ -1133,6 +1188,9 @@ function renderTripWeather(data){
       cond.textContent='天氣資料暫時無法取得';
       temp.textContent=w?.date||'—';
       metrics.innerHTML='<span class="weather-metric">🌧️ 降雨量 —</span>';
+      const cf=weatherConfidence(w?.date,w?.mode);
+      confidence.className='weather-confidence '+cf.cls;
+      confidence.textContent=`預報可信度：${cf.label}${cf.detail?' · '+cf.detail:''}`;
       updated.textContent='下一次 GitHub Actions 會再次嘗試。';
       return;
     }
@@ -1153,6 +1211,9 @@ function renderTripWeather(data){
       chips.push(`<span class="weather-metric">☔ 降雨機率 ${Math.round(Number(w.precipitation_probability_max))}%</span>`);
     }
     metrics.innerHTML=chips.join('');
+    const cf=weatherConfidence(w.date,w.mode);
+    confidence.className='weather-confidence '+cf.cls;
+    confidence.textContent=`${historical?'資料狀態':'預報可信度'}：${cf.label}${cf.detail?' · '+cf.detail:''}`;
     const kind=historical?'過去資料':'未來預報';
     updated.textContent=`${w.date} · ${kind}${w.source_label?' · '+w.source_label:''}`;
   });
