@@ -46,7 +46,7 @@ jobs:
         shell: python
         env:
           QUEUE_URL: https://queue-times.com/parks/284/queue_times.json
-          PREVIOUS_URL: https://yannjouchen.github.io/usj-queue.json
+          PREVIOUS_URL: https://yannjouchen.github.io/2026OSAKA/usj-queue.json
         run: |
           import json
           import os
