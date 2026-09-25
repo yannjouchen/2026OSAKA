@@ -3,12 +3,10 @@ name: USJ Queue → Deploy Pages
 on:
   workflow_dispatch:
 
-  # Japan time: every 5 minutes from 06:02 through 22:57 on October 11.
-  # The 2-minute offset avoids the top-of-hour congestion window.
-  # Note: cron has no year field, so this also matches October 11 in future years.
-  # Disable this workflow after the 2026 trip if you no longer need it.
+  # TEST MODE: run every 5 minutes, all day.
+  # After testing succeeds, switch back to the Oct 11 trip-only schedule.
   schedule:
-    - cron: "2-57/5 6-22 11 10 *"
+    - cron: "2-59/5 * * * *"
       timezone: "Asia/Tokyo"
 
   push:
@@ -42,40 +40,353 @@ jobs:
             --exclude='_site' \
             ./ _site/
 
-      - name: Fetch USJ queue times
+      - name: Fetch USJ queue, crowd summary and trip weather
         shell: python
         env:
           QUEUE_URL: https://queue-times.com/parks/284/queue_times.json
           PREVIOUS_URL: https://yannjouchen.github.io/2026OSAKA/usj-queue.json
         run: |
+          import html as html_lib
           import json
           import os
           import pathlib
+          import re
           import urllib.request
-          from datetime import datetime, timezone
+          import urllib.parse
+          from datetime import datetime, timezone, timedelta
+          from zoneinfo import ZoneInfo
 
           out = pathlib.Path("_site/usj-queue.json")
           queue_url = os.environ["QUEUE_URL"]
           previous_url = os.environ["PREVIOUS_URL"]
+          JST = ZoneInfo("Asia/Tokyo")
 
-          def get_json(url, timeout=20):
+          def request_text(url, timeout=20):
               req = urllib.request.Request(
                   url,
                   headers={
                       "User-Agent": "Osaka-Trip-Dashboard/1.0 (+GitHub Actions)",
-                      "Accept": "application/json",
+                      "Accept": "text/html,application/json;q=0.9,*/*;q=0.8",
                   },
               )
               with urllib.request.urlopen(req, timeout=timeout) as res:
-                  return json.load(res)
+                  return res.read().decode("utf-8", errors="replace")
 
-          fetched_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+          def request_json(url, timeout=20):
+              return json.loads(request_text(url, timeout))
+
+          def visible_text(raw):
+              raw = re.sub(r"<script\b[^>]*>.*?</script>", " ", raw, flags=re.I|re.S)
+              raw = re.sub(r"<style\b[^>]*>.*?</style>", " ", raw, flags=re.I|re.S)
+              raw = re.sub(r"<[^>]+>", " ", raw)
+              return re.sub(r"\s+", " ", html_lib.unescape(raw)).strip()
+
+          def yesterday_history(day):
+              url = f"https://queue-times.com/en-US/parks/284/calendar/{day:%Y/%m/%d}"
+              text = visible_text(request_text(url))
+
+              m = re.search(r"Crowd level\s+(\d{1,3})%", text, re.I)
+              crowd_percent = int(m.group(1)) if m else None
+
+              m = re.search(
+                  r"Crowd level\s+\d{1,3}%\s+Prediction error\s+\d{1,3}%\s+Crowd level\s+([A-Za-z]+)",
+                  text,
+                  re.I,
+              )
+              label = m.group(1) if m else None
+
+              m = re.search(r"Average wait time by ride(.*?)Maximum wait time by ride", text, re.I)
+              avg_text = m.group(1) if m else ""
+
+              waits = {}
+              for name in [
+                  "Mine Cart Madness™",
+                  "Mario Kart: Koopa's Challenge™",
+                  "Yoshi's Adventure™",
+                  "Harry Potter and the Forbidden Journey™",
+                  "Despicable Me Minion Mayhem",
+                  "Hello Kitty's Ribbon Collection",
+                  "Hello Kitty's Cupcake Dream",
+              ]:
+                  mm = re.search(re.escape(name) + r"\s+(\d{1,3})(?:\s|$)", avg_text, re.I)
+                  if mm:
+                      waits[name] = int(mm.group(1))
+
+              return {
+                  "date": day.isoformat(),
+                  "crowd_percent": crowd_percent,
+                  "label": label,
+                  "selected_avg_waits": waits,
+                  "source": url,
+              }
+
+          LIVE_WEIGHTS = {
+              14402: 1.5,  # Mine Cart Madness
+              12061: 1.5, # Mario Kart
+              12071: 1.2, # Yoshi
+              12065: 1.2, # Harry Potter
+              12066: 1.0, # Minion Mayhem
+              12068: 0.8, # JAWS
+              7063: 0.7,  # Hello Kitty Ribbon
+              7065: 0.6,  # Hello Kitty Cupcake
+              7092: 1.0,  # Flying Dinosaur
+              7077: 1.0,  # Hollywood Dream
+          }
+
+          def live_index(rides, calculated_at):
+              weighted = 0.0
+              total_weight = 0.0
+              tracked = 0
+              counts = {"green":0, "yellow":0, "orange":0, "red":0}
+
+              for ride in rides:
+                  if not ride.get("is_open"):
+                      continue
+
+                  wait = max(0, int(ride.get("wait_time") or 0))
+                  if wait <= 30:
+                      counts["green"] += 1
+                  elif wait <= 60:
+                      counts["yellow"] += 1
+                  elif wait <= 100:
+                      counts["orange"] += 1
+                  else:
+                      counts["red"] += 1
+
+                  ride_id = int(ride.get("id") or 0)
+                  weight = LIVE_WEIGHTS.get(ride_id)
+                  if weight:
+                      # 120 minutes or more = 100 points for that ride.
+                      score = min(wait / 120.0, 1.0) * 100.0
+                      weighted += score * weight
+                      total_weight += weight
+                      tracked += 1
+
+              index = round(weighted / total_weight) if total_weight else None
+              if index is None:
+                  label = None
+              elif index <= 25:
+                  label = "很空"
+              elif index <= 45:
+                  label = "舒適"
+              elif index <= 65:
+                  label = "普通"
+              elif index <= 80:
+                  label = "擁擠"
+              else:
+                  label = "非常擁擠"
+
+              return {
+                  "index": index,
+                  "label": label,
+                  "tracked_open_rides": tracked,
+                  "counts": counts,
+                  "calculated_at": calculated_at,
+                  "method": "custom weighted wait-time index; selected rides capped at 120 min = 100",
+              }
+
+
+          WEATHER_TARGETS = {
+              "osaka_day1": {
+                  "date": "2026-10-09",
+                  "label": "大阪・心齋橋",
+                  "latitude": 34.673856,
+                  "longitude": 135.498128,
+              },
+              "kyoto_day2": {
+                  "date": "2026-10-10",
+                  "label": "京都・清水寺",
+                  "latitude": 34.9954951,
+                  "longitude": 135.7763166,
+              },
+              "nara_day2": {
+                  "date": "2026-10-10",
+                  "label": "奈良公園",
+                  "latitude": 34.685047,
+                  "longitude": 135.843012,
+              },
+              "usj_day3": {
+                  "date": "2026-10-11",
+                  "label": "Universal Studios Japan",
+                  "latitude": 34.6654,
+                  "longitude": 135.4323,
+              },
+          }
+
+          WEATHER_DAILY_FORECAST = (
+              "weather_code,temperature_2m_max,temperature_2m_min,"
+              "precipitation_sum,rain_sum,precipitation_probability_max"
+          )
+          WEATHER_DAILY_HISTORY = (
+              "weather_code,temperature_2m_max,temperature_2m_min,"
+              "precipitation_sum,rain_sum,precipitation_hours"
+          )
+
+          def api_json(base, params, timeout=20):
+              url = base + "?" + urllib.parse.urlencode(params)
+              return request_json(url, timeout)
+
+          def first_daily(data, key):
+              daily = data.get("daily") or {}
+              values = daily.get(key)
+              if isinstance(values, list) and values:
+                  return values[0]
+              return None
+
+          def weather_record(target, today):
+              from datetime import date as date_cls
+
+              target_date = date_cls.fromisoformat(target["date"])
+              common = {
+                  "latitude": target["latitude"],
+                  "longitude": target["longitude"],
+                  "timezone": "Asia/Tokyo",
+                  "start_date": target["date"],
+                  "end_date": target["date"],
+              }
+
+              def pack(data, mode, source_label):
+                  daily = data.get("daily") or {}
+                  times = daily.get("time") or []
+                  if not times:
+                      raise ValueError("No daily weather row returned")
+                  return {
+                      "status": "ok",
+                      "date": target["date"],
+                      "label": target["label"],
+                      "mode": mode,
+                      "is_today": target_date == today,
+                      "weather_code": first_daily(data, "weather_code"),
+                      "temperature_max": first_daily(data, "temperature_2m_max"),
+                      "temperature_min": first_daily(data, "temperature_2m_min"),
+                      "precipitation_sum": first_daily(data, "precipitation_sum"),
+                      "rain_sum": first_daily(data, "rain_sum"),
+                      "precipitation_probability_max": first_daily(data, "precipitation_probability_max"),
+                      "precipitation_hours": first_daily(data, "precipitation_hours"),
+                      "source_label": source_label,
+                  }
+
+              if target_date >= today:
+                  params = {
+                      **common,
+                      "daily": WEATHER_DAILY_FORECAST,
+                  }
+                  try:
+                      data = api_json("https://api.open-meteo.com/v1/forecast", params)
+                      return pack(data, "forecast", "Open‑Meteo Forecast")
+                  except Exception as e:
+                      # Most commonly means the date has not entered the forecast horizon yet.
+                      return {
+                          "status": "not_available_yet",
+                          "date": target["date"],
+                          "label": target["label"],
+                          "mode": "forecast",
+                          "error": str(e)[:250],
+                      }
+
+              archive_params = {
+                  **common,
+                  "daily": WEATHER_DAILY_HISTORY,
+              }
+              try:
+                  data = api_json("https://archive-api.open-meteo.com/v1/archive", archive_params)
+                  return pack(data, "historical", "Open‑Meteo Historical Weather")
+              except Exception as archive_error:
+                  # Recent past may not yet be fully available in the long-term archive.
+                  hist_params = {
+                      **common,
+                      "daily": WEATHER_DAILY_FORECAST,
+                  }
+                  try:
+                      data = api_json(
+                          "https://historical-forecast-api.open-meteo.com/v1/forecast",
+                          hist_params,
+                      )
+                      rec = pack(data, "historical_forecast", "Open‑Meteo Historical Forecast")
+                      rec["archive_error"] = str(archive_error)[:200]
+                      return rec
+                  except Exception as hist_error:
+                      return {
+                          "status": "unavailable",
+                          "date": target["date"],
+                          "label": target["label"],
+                          "mode": "historical",
+                          "error": str(hist_error)[:250],
+                      }
+
+          def weather_bundle(now_utc, now_jst, previous_live=None):
+              # Weather changes much more slowly than queue times.
+              # Reuse the previously published weather bundle for up to 30 minutes.
+              old = (previous_live or {}).get("_weather") or {}
+              old_fetched = old.get("fetched_at")
+              if old_fetched and old.get("places"):
+                  try:
+                      old_dt = datetime.fromisoformat(old_fetched.replace("Z", "+00:00"))
+                      if (now_utc - old_dt).total_seconds() < 1800:
+                          return old
+                  except Exception:
+                      pass
+
+              places = {}
+              for key, target in WEATHER_TARGETS.items():
+                  try:
+                      places[key] = weather_record(target, now_jst.date())
+                  except Exception as e:
+                      places[key] = {
+                          "status": "unavailable",
+                          "date": target["date"],
+                          "label": target["label"],
+                          "error": str(e)[:250],
+                      }
+
+              return {
+                  "fetched_at": now_utc.isoformat().replace("+00:00", "Z"),
+                  "places": places,
+                  "source": "Open‑Meteo",
+              }
+
+
+          now_utc = datetime.now(timezone.utc)
+          now_jst = now_utc.astimezone(JST)
+          fetched_at = now_utc.isoformat().replace("+00:00", "Z")
+          yesterday = now_jst.date() - timedelta(days=1)
+
+          # Read the currently deployed JSON once so weather can be cached for 30 minutes.
+          previous_live = None
+          try:
+              previous_live = request_json(previous_url + "?_=" + str(int(now_utc.timestamp())))
+          except Exception as e:
+              print(f"Previous live JSON unavailable for weather cache: {e}")
 
           try:
-              data = get_json(queue_url)
+              data = request_json(queue_url)
               if not isinstance(data, dict):
                   raise ValueError("Queue-Times response is not a JSON object")
 
+              rides = []
+              if isinstance(data.get("rides"), list):
+                  rides.extend(data["rides"])
+              for land in data.get("lands") or []:
+                  if isinstance(land, dict) and isinstance(land.get("rides"), list):
+                      rides.extend(land["rides"])
+
+              try:
+                  history = yesterday_history(yesterday)
+              except Exception as e:
+                  print(f"Yesterday history failed: {e}")
+                  history = {
+                      "date": yesterday.isoformat(),
+                      "crowd_percent": None,
+                      "label": None,
+                      "selected_avg_waits": {},
+                      "error": str(e)[:300],
+                  }
+
+              data["_crowd"] = {
+                  "yesterday": history,
+                  "today_live": live_index(rides, fetched_at),
+              }
+              data["_weather"] = weather_bundle(now_utc, now_jst, previous_live)
               data["_meta"] = {
                   "status": "ok",
                   "fetched_at": fetched_at,
@@ -86,14 +397,13 @@ jobs:
                   json.dumps(data, ensure_ascii=False, separators=(",", ":")),
                   encoding="utf-8",
               )
-              print("Fresh Queue-Times data written.")
+              print("Fresh queue + crowd summary written.")
 
           except Exception as fresh_error:
               print(f"Fresh fetch failed: {fresh_error}")
 
-              # Keep the live site usable if Queue-Times temporarily fails.
               try:
-                  previous = get_json(previous_url)
+                  previous = request_json(previous_url)
                   previous["_meta"] = {
                       **(previous.get("_meta") or {}),
                       "status": "stale_fallback",
@@ -107,7 +417,7 @@ jobs:
                   print("Previous live JSON used as fallback.")
 
               except Exception as previous_error:
-                  print(f"Previous JSON fallback also failed: {previous_error}")
+                  print(f"Previous fallback also failed: {previous_error}")
                   fallback = {
                       "_meta": {
                           "status": "unavailable",
@@ -115,6 +425,22 @@ jobs:
                           "source": queue_url,
                           "error": str(fresh_error)[:300],
                       },
+                      "_crowd": {
+                          "yesterday": {
+                              "date": yesterday.isoformat(),
+                              "crowd_percent": None,
+                              "label": None,
+                              "selected_avg_waits": {},
+                          },
+                          "today_live": {
+                              "index": None,
+                              "label": None,
+                              "tracked_open_rides": 0,
+                              "counts": {},
+                              "calculated_at": fetched_at,
+                          },
+                      },
+                      "_weather": weather_bundle(now_utc, now_jst, previous_live),
                       "lands": [],
                       "rides": [],
                   }
