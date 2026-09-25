@@ -350,6 +350,47 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 .weather-confidence.verylow{background:#f7dddd;color:#8b3030}
 .weather-confidence.history{background:#e7edf2;color:#4d5f6c}
 
+
+/* --- USJ official hours / shows v22 --- */
+.usj-official-card{margin:16px 0}
+.usj-hours-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px
+}
+.usj-hours-box{
+  border:1px solid var(--line);border-radius:15px;background:#fff;padding:12px
+}
+.usj-hours-label{font-size:11px;color:var(--muted);font-weight:900}
+.usj-hours-value{font-size:20px;font-weight:950;margin-top:4px}
+.usj-hours-sub{font-size:11px;color:var(--muted);line-height:1.5;margin-top:4px}
+.show-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.show-item{
+  border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;
+  min-width:0
+}
+.show-item b{display:block;font-size:13px;margin-bottom:5px}
+.show-times{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.show-time{
+  border-radius:999px;padding:4px 7px;background:#e8f1f0;color:#245f5c;
+  font-size:10px;font-weight:900
+}
+.show-kind{
+  display:inline-flex;border-radius:999px;padding:3px 7px;
+  background:#eee9df;color:#655e54;font-size:9px;font-weight:900;margin-bottom:5px
+}
+.show-item.special{border-width:2px}
+.close-advice{
+  display:inline-flex;align-items:center;
+  margin-top:6px;border-radius:999px;padding:4px 7px;
+  font-size:10px;font-weight:900
+}
+.close-advice.good{background:#e1f2e8;color:#23633f}
+.close-advice.warn{background:#fff3cd;color:#7b5a00}
+.close-advice.bad{background:#f8d7da;color:#8b2630}
+.close-advice.info{background:#e7edf2;color:#4d5f6c}
+@media(max-width:620px){
+  .usj-hours-row,.show-grid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -671,6 +712,56 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 </section>
 
 
+
+<section class="card usj-official-card" id="usjOfficialSchedule">
+  <div class="head">
+    <h2>USJ 官方營業時間・表演時刻</h2>
+    <span class="pill">10/11 自動更新</span>
+  </div>
+  <div class="body">
+    <div class="usj-hours-row">
+      <div class="usj-hours-box">
+        <div class="usj-hours-label">10/11 官方開園／閉園</div>
+        <div class="usj-hours-value" id="usjParkHours">尚未公布</div>
+        <div class="usj-hours-sub" id="usjParkHoursMeta">GitHub Actions 會持續檢查 USJ 官方營業時間頁。</div>
+      </div>
+      <div class="usj-hours-box">
+        <div class="usj-hours-label">當天閉園補玩判斷</div>
+        <div class="usj-hours-value" id="usjCloseCountdown">等待官方閉園時間</div>
+        <div class="usj-hours-sub">10/11 當天會把「剩餘時間 vs. 排隊分鐘」加到每張設施卡；這只是輔助估算，實際停止入列仍以 USJ 現場為準。</div>
+      </div>
+    </div>
+
+    <div class="section">特殊體驗／已公告活動</div>
+    <div class="show-grid" id="usjSpecialGrid">
+      <div class="show-item special">
+        <span class="show-kind">電子號碼券</span>
+        <b>葬送的芙莉蓮 故事徒步 ～追憶之旅～</b>
+        <div class="muted">10:00～園區關閉｜官方 App 電子號碼券；人少時可能免號碼券。</div>
+      </div>
+      <div class="show-item special">
+        <span class="show-kind">遊行</span>
+        <b>NO LIMIT! 遊行～Discover U!!! 版～</b>
+        <div class="show-times"><span class="show-time">13:00</span><span class="show-time">約 40 分</span></div>
+      </div>
+    </div>
+
+    <div class="section">10/11 官方每日表演時刻表</div>
+    <div class="show-grid" id="usjShowSchedule">
+      <div class="show-item">
+        <b>尚未公布完整場次</b>
+        <div class="muted">USJ 通常在來園日前約 7～10 天公布每日 Show Schedule。公布後會自動列出 WaterWorld、水世界、舞台秀、街頭表演、角色活動等所有可解析場次。</div>
+      </div>
+    </div>
+
+    <div class="actions" style="margin-top:11px">
+      <a class="btn mini teal" href="https://www.usj.co.jp/web/en/us/park-guide/schedule/park-hour2" target="_blank">官方營業時間</a>
+      <a class="btn mini" href="https://www.usj.co.jp/web/en/us/attractions/show-and-attraction-schedule?date=10%2F11%2F2026" target="_blank">官方 10/11 Show Schedule</a>
+      <a class="btn mini soft" href="https://www.usj.co.jp/web/zh/tw/events/universal-cool-japan-2026/frieren" target="_blank">芙莉蓮官方頁</a>
+    </div>
+  </div>
+</section>
+
 <section class="card queue-card" id="liveQueueCard">
   <div class="head">
     <h2>USJ 即時排隊看板 <span class="pill">BETA</span></h2>
@@ -904,7 +995,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 </main>
 </div>
 
-<div class="foot">Prototype v21｜修正「昨日人潮缺值被顯示為 0%」；Queue‑Times 歷史人潮改為日頁＋月曆頁雙重抓取。</div>
+<div class="foot">Prototype v22｜Day 3 新增 USJ 官方 10/11 開閉園時間、每日表演時刻表、芙莉蓮電子號碼券提醒；閉園當天依剩餘時間＋排隊時間提供補玩估算。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1219,6 +1310,101 @@ function renderTripWeather(data){
   });
 }
 
+
+let usjOfficialSchedule = {};
+
+function normalizeOfficialTimeLabel(v){
+  return String(v||'').trim();
+}
+function minutesFromHHMM(v){
+  const m=String(v||'').match(/^(\d{1,2}):(\d{2})$/);
+  if(!m) return null;
+  return Number(m[1])*60+Number(m[2]);
+}
+function japanNowParts(){
+  const parts=new Intl.DateTimeFormat('en-CA',{
+    timeZone:'Asia/Tokyo',
+    year:'numeric',month:'2-digit',day:'2-digit',
+    hour:'2-digit',minute:'2-digit',hour12:false
+  }).formatToParts(new Date());
+  const o={};
+  parts.forEach(p=>{if(p.type!=='literal')o[p.type]=p.value});
+  return o;
+}
+function renderUSJOfficialSchedule(data){
+  usjOfficialSchedule=data?._usj_schedule||{};
+  const hours=usjOfficialSchedule.park_hours||{};
+  const hoursEl=document.getElementById('usjParkHours');
+  const metaEl=document.getElementById('usjParkHoursMeta');
+  const countEl=document.getElementById('usjCloseCountdown');
+
+  if(hours.status==='ok' && hours.open && hours.close){
+    hoursEl.textContent=`${hours.open} ～ ${hours.close}`;
+    metaEl.textContent=`USJ 官方營業時間 · ${hours.date}${hours.fetched_at?' · 更新 '+qJapanTime(hours.fetched_at)+' JST':''}`;
+  }else{
+    hoursEl.textContent='尚未公布';
+    metaEl.textContent='目前 USJ 官方營業時間頁尚未列出 2026/10/11；GitHub Actions 會持續檢查。';
+  }
+
+  const now=japanNowParts();
+  const today=`${now.year}-${now.month}-${now.day}`;
+  if(today==='2026-10-11' && hours.status==='ok'){
+    const closeMin=minutesFromHHMM(hours.close);
+    const nowMin=Number(now.hour)*60+Number(now.minute);
+    if(closeMin!==null){
+      const remain=closeMin-nowMin;
+      if(remain>0){
+        countEl.textContent=`距閉園約 ${Math.floor(remain/60)} 小時 ${remain%60} 分`;
+      }else{
+        countEl.textContent='已到官方閉園時間';
+      }
+    }
+  }else if(hours.status==='ok'){
+    countEl.textContent=`10/11 閉園 ${hours.close}`;
+  }else{
+    countEl.textContent='等待官方閉園時間';
+  }
+
+  const showBox=document.getElementById('usjShowSchedule');
+  const shows=Array.isArray(usjOfficialSchedule.shows)?usjOfficialSchedule.shows:[];
+  if(shows.length){
+    showBox.innerHTML=shows.map(show=>{
+      const times=(show.times||[]).map(t=>`<span class="show-time">${escapeQueueText(t)}</span>`).join('');
+      return `<div class="show-item">
+        <span class="show-kind">官方時刻表</span>
+        <b>${escapeQueueText(show.name_zh||show.name)}</b>
+        ${show.name_zh&&show.name_zh!==show.name?`<div class="queue-sub">${escapeQueueText(show.name)}</div>`:''}
+        <div class="show-times">${times}</div>
+      </div>`;
+    }).join('');
+  }else{
+    const st=usjOfficialSchedule.show_schedule_status;
+    showBox.innerHTML=`<div class="show-item">
+      <b>${st==='not_published_yet'?'10/11 完整時刻表尚未公布':'暫時沒有可解析的官方場次'}</b>
+      <div class="muted">WaterWorld、舞台秀、街頭表演、角色活動等不是 Queue‑Times 的 wait_time 資料；官方 Show Schedule 發布後會在這裡自動出現。</div>
+    </div>`;
+  }
+}
+function closeAdviceHtml(row){
+  const h=usjOfficialSchedule?.park_hours||{};
+  if(h.status!=='ok'||!h.close||!row?.is_open) return '';
+  const now=japanNowParts();
+  const today=`${now.year}-${now.month}-${now.day}`;
+  if(today!=='2026-10-11') return '';
+
+  const closeMin=minutesFromHHMM(h.close);
+  const nowMin=Number(now.hour)*60+Number(now.minute);
+  if(closeMin===null) return '';
+  const remain=closeMin-nowMin;
+  if(remain<=0) return '<span class="close-advice bad">🔴 已到閉園時間</span>';
+
+  const wait=Math.max(0,Number(row.wait_time)||0);
+  if(wait+30<=remain) return `<span class="close-advice good">✅ 補玩估算：尚有餘裕</span>`;
+  if(wait+10<=remain) return `<span class="close-advice warn">⚠️ 補玩估算：建議儘快入列</span>`;
+  return `<span class="close-advice bad">🔴 補玩估算：可能接近停止入列</span>`;
+}
+
+
 function renderCrowdSummary(data){
   const c=data?._crowd||{}, y=c.yesterday||{}, t=c.today_live||{};
   const rawY=y.crowd_percent;
@@ -1313,6 +1499,7 @@ function renderQueue(){
       </div>
       ${original}
       <div class="queue-sub">${r.is_open ? '目前開放' : '目前休止／未開放'}${updated ? ` · 設施資料 ${updated} JST` : ''}</div>
+      ${closeAdviceHtml(r)}
     </article>`;
   }).join('');
 }
@@ -1341,6 +1528,7 @@ async function refreshUSJQueue(){
     queueMeta = data?._meta || {};
     usjQueueRows = normalizeQueue(data);
     renderTripWeather(data);
+    renderUSJOfficialSchedule(data);
     renderCrowdSummary(data);
     renderQueue();
 
