@@ -305,5 +305,59 @@ const d2coords=[];
 day2points.forEach(p=>{d2coords.push([p.lat,p.lng]);const icon=L.divIcon({className:'',html:'<div class="marker">'+p.n+'</div>',iconSize:[30,30],iconAnchor:[15,15]});L.marker([p.lat,p.lng],{icon}).addTo(map2).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.time+' · '+p.tag);});
 const bounds2=L.latLngBounds(d2coords);map2.fitBounds(bounds2,{padding:[30,30]});document.getElementById('fit2').onclick=()=>map2.fitBounds(bounds2,{padding:[30,30]});
 
+
+function setupDayTabs(){
+  const tabs = Array.from(document.querySelectorAll('#dayTabs [data-day]'));
+  const d1Hero = document.getElementById('day1');
+  const d2Hero = document.getElementById('day2');
+  const d1Main = d1Hero ? d1Hero.nextElementSibling : null;
+  const d2Main = d2Hero ? d2Hero.nextElementSibling : null;
+
+  const panels = {
+    day1: [d1Hero, d1Main],
+    day2: [d2Hero, d2Main]
+  };
+
+  function showDay(day, shouldScroll=true){
+    Object.entries(panels).forEach(([key, els]) => {
+      els.forEach(el => {
+        if (!el) return;
+        el.classList.toggle('day-panel-hidden', key !== day);
+      });
+    });
+
+    tabs.forEach(tab => {
+      const active = tab.dataset.day === day;
+      tab.classList.toggle('active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    // Leaflet maps need a resize refresh after being unhidden.
+    setTimeout(() => {
+      if (day === 'day1' && typeof map !== 'undefined') map.invalidateSize();
+      if (day === 'day2' && typeof map2 !== 'undefined') map2.invalidateSize();
+    }, 80);
+
+    if (shouldScroll) {
+      document.getElementById('dayTabs').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    history.replaceState(null, '', '#' + day);
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', e => {
+      e.preventDefault();
+      showDay(tab.dataset.day, true);
+    });
+  });
+
+  // Open the requested tab from the URL hash; otherwise Day 1.
+  const initial = location.hash === '#day2' ? 'day2' : 'day1';
+  showDay(initial, false);
+}
+
+window.addEventListener('DOMContentLoaded', setupDayTabs);
+
 </script>
 </body></html>
