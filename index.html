@@ -31,11 +31,50 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 .daytabs{display:flex;gap:10px;position:sticky;top:0;z-index:1200;background:rgba(246,242,234,.94);backdrop-filter:blur(12px);padding:10px 0 12px;margin-bottom:4px}.daytabs a{padding:10px 14px;border:1px solid var(--line);background:white;border-radius:999px;font-size:13px;font-weight:900;box-shadow:0 5px 14px #0000000d}.daytabs a.day2{background:var(--teal);color:white;border-color:var(--teal)}.foot{padding:22px 0 50px;font-size:12px;color:var(--muted)}
 @media(max-width:980px){.grid{grid-template-columns:1fr}.mapcard{position:static}.quick{grid-template-columns:1fr 1fr}#map,#map2{height:54vh;min-height:420px}}
 @media(max-width:620px){.wrap{padding:12px}.quick{grid-template-columns:1fr 1fr}.t{grid-template-columns:58px 1fr}}
+
+/* --- True tab system (fixed) --- */
+.daytabs{
+  display:flex;
+  gap:10px;
+  position:sticky;
+  top:0;
+  z-index:1500;
+  background:rgba(246,242,234,.96);
+  backdrop-filter:blur(14px);
+  padding:10px 0 12px;
+  margin-bottom:4px;
+}
+.daytabs .daytab{
+  appearance:none;
+  -webkit-appearance:none;
+  padding:10px 14px;
+  border:1px solid var(--line);
+  background:white !important;
+  color:var(--ink) !important;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:900;
+  box-shadow:0 5px 14px #0000000d;
+  transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease;
+  white-space:nowrap;
+}
+.daytabs .daytab.active{
+  background:var(--teal) !important;
+  color:white !important;
+  border-color:var(--teal) !important;
+  box-shadow:0 7px 18px rgba(36,125,123,.24);
+}
+.day-panel{display:none;}
+.day-panel.active{display:block;}
+
 </style>
 </head>
 <body>
-<div class="wrap"><div class="daytabs"><a href="#day1">Day 1｜10/9 大阪</a><a class="day2" href="#day2">Day 2｜10/10 京都・奈良</a></div>
-  <section class="hero" id="day1">
+<div class="wrap"><div class="daytabs" id="dayTabs" role="tablist" aria-label="行程日期">
+  <a href="#day1" class="daytab active" data-day="day1" role="tab" aria-selected="true">Day 1｜10/9 大阪</a>
+  <a href="#day2" class="daytab" data-day="day2" role="tab" aria-selected="false">Day 2｜10/10 京都・奈良</a>
+</div>
+  <div class="day-panel active" id="panel-day1" data-panel="day1"><section class="hero" id="day1">
     <div class="kicker">DAY 1 · 2026/10/09 FRI</div>
     <h1>高雄 → 關西 → 心齋橋 → 難波</h1>
     <div class="muted">Wanderlog 式雙欄＋TripIt 式時間卡片｜手機直接點導航、票券、停車與報到。</div>
@@ -222,10 +261,10 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       </div>
       <div class="legend"><b>地圖說明：</b>青綠色為飯店，橘紅色為 ①～⑭ 逛街順序。地圖只顯示地點標記，不以虛線連接；需要導航時請點各店的 Google Maps 按鈕。</div>
     </section>
-  </main>
+  </main></div>
 
   
-<section class="hero" id="day2" style="padding-top:38px">
+<div class="day-panel" id="panel-day2" data-panel="day2"><section class="hero" id="day2" style="padding-top:38px">
   <div class="kicker">DAY 2 · 2026/10/10 SAT</div>
   <h1>京都清水寺 → 奈良公園 → 大阪</h1>
   <div class="muted">最新版：刪除產寧坂、二年坂、八坂塔與祇園；午餐改為京都勝牛，下午直接前往奈良。</div>
@@ -269,7 +308,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     <div class="tools"><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.9954951%2C135.7763166&destination=34.9954951%2C135.7763166&travelmode=walking&waypoints=34.9948561%2C135.7850463%7C34.9956%2C135.7822%7C34.9946%2C135.7775" target="_blank">京都步行路線</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.9954951%2C135.7763166&destination=34.685047%2C135.843012&travelmode=transit" target="_blank">京都 → 奈良</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.685047%2C135.843012&destination=34.6746794%2C135.4963046&travelmode=transit" target="_blank">奈良 → FUJIMOTO</a><button class="btn soft" id="fit2" type="button">顯示全部</button></div>
     <div class="legend"><b>順路判斷：</b>京都段集中在清水寺／五條坂一帶，午餐後回 MOCOMOCO 還衣，再直接前往奈良；地圖不畫虛線。</div>
   </section>
-</main>
+</main></div>
 
 <div class="foot">Prototype v6｜已加入 Day 2 京都・奈良；Day 1 / Day 2 地圖皆不使用虛線。營業時間與實際班次建議出發前再次確認。</div>
 </div>
@@ -306,58 +345,63 @@ day2points.forEach(p=>{d2coords.push([p.lat,p.lng]);const icon=L.divIcon({classN
 const bounds2=L.latLngBounds(d2coords);map2.fitBounds(bounds2,{padding:[30,30]});document.getElementById('fit2').onclick=()=>map2.fitBounds(bounds2,{padding:[30,30]});
 
 
-function setupDayTabs(){
-  const tabs = Array.from(document.querySelectorAll('#dayTabs [data-day]'));
-  const d1Hero = document.getElementById('day1');
-  const d2Hero = document.getElementById('day2');
-  const d1Main = d1Hero ? d1Hero.nextElementSibling : null;
-  const d2Main = d2Hero ? d2Hero.nextElementSibling : null;
 
-  const panels = {
-    day1: [d1Hero, d1Main],
-    day2: [d2Hero, d2Main]
-  };
+function initTrueDayTabs(){
+  const tabs = Array.from(document.querySelectorAll('#dayTabs .daytab'));
+  const panels = Array.from(document.querySelectorAll('.day-panel'));
 
-  function showDay(day, shouldScroll=true){
-    Object.entries(panels).forEach(([key, els]) => {
-      els.forEach(el => {
-        if (!el) return;
-        el.classList.toggle('day-panel-hidden', key !== day);
-      });
-    });
-
+  function activateDay(day, updateHash = true){
     tabs.forEach(tab => {
-      const active = tab.dataset.day === day;
-      tab.classList.toggle('active', active);
-      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      const isActive = tab.dataset.day === day;
+      tab.classList.toggle('active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
 
-    // Leaflet maps need a resize refresh after being unhidden.
-    setTimeout(() => {
-      if (day === 'day1' && typeof map !== 'undefined') map.invalidateSize();
-      if (day === 'day2' && typeof map2 !== 'undefined') map2.invalidateSize();
-    }, 80);
+    panels.forEach(panel => {
+      panel.classList.toggle('active', panel.dataset.panel === day);
+    });
 
-    if (shouldScroll) {
-      document.getElementById('dayTabs').scrollIntoView({behavior:'smooth', block:'start'});
+    // Leaflet must be resized after its hidden panel becomes visible.
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        if (day === 'day1' && typeof map !== 'undefined') {
+          map.invalidateSize(true);
+          if (typeof bounds !== 'undefined') map.fitBounds(bounds,{padding:[30,30]});
+        }
+        if (day === 'day2' && typeof map2 !== 'undefined') {
+          map2.invalidateSize(true);
+          if (typeof bounds2 !== 'undefined') map2.fitBounds(bounds2,{padding:[30,30]});
+        }
+      }, 120);
+    });
+
+    if (updateHash) {
+      history.replaceState(null, '', '#' + day);
+      window.scrollTo({top:0, behavior:'smooth'});
     }
-
-    history.replaceState(null, '', '#' + day);
   }
 
   tabs.forEach(tab => {
-    tab.addEventListener('click', e => {
+    tab.addEventListener('click', function(e){
       e.preventDefault();
-      showDay(tab.dataset.day, true);
+      activateDay(this.dataset.day, true);
     });
   });
 
-  // Open the requested tab from the URL hash; otherwise Day 1.
-  const initial = location.hash === '#day2' ? 'day2' : 'day1';
-  showDay(initial, false);
+  const initialDay = location.hash === '#day2' ? 'day2' : 'day1';
+  activateDay(initialDay, false);
+
+  // Back/forward or manually changing the hash also switches the tab.
+  window.addEventListener('hashchange', () => {
+    activateDay(location.hash === '#day2' ? 'day2' : 'day1', false);
+  });
 }
 
-window.addEventListener('DOMContentLoaded', setupDayTabs);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTrueDayTabs);
+} else {
+  initTrueDayTabs();
+}
 
 </script>
 </body></html>
