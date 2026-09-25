@@ -1,0 +1,144 @@
+name: USJ Queue → Deploy Pages
+
+on:
+  workflow_dispatch:
+
+  # 2026/10/11 Japan time roughly 06:00–23:00.
+  # GitHub cron is UTC:
+  #   2026/10/10 21:00–23:55 UTC = 10/11 06:00–08:55 JST
+  #   2026/10/11 00:00–13:55 UTC = 10/11 09:00–22:55 JST
+  schedule:
+    - cron: "*/5 21-23 10 10 *"
+    - cron: "*/5 0-13 11 10 *"
+
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Prepare site
+        shell: bash
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='_site' \
+            ./ _site/
+
+      - name: Fetch USJ queue times
+        shell: python
+        env:
+          QUEUE_URL: https://queue-times.com/parks/284/queue_times.json
+          PREVIOUS_URL: https://yannjouchen.github.io/usj-queue.json
+        run: |
+          import json
+          import os
+          import pathlib
+          import urllib.request
+          from datetime import datetime, timezone
+
+          out = pathlib.Path("_site/usj-queue.json")
+          queue_url = os.environ["QUEUE_URL"]
+          previous_url = os.environ["PREVIOUS_URL"]
+
+          def get_json(url, timeout=20):
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "User-Agent": "Osaka-Trip-Dashboard/1.0 (+GitHub Actions)",
+                      "Accept": "application/json",
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=timeout) as res:
+                  return json.load(res)
+
+          fetched_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+          try:
+              data = get_json(queue_url)
+              if not isinstance(data, dict):
+                  raise ValueError("Queue-Times response is not a JSON object")
+
+              data["_meta"] = {
+                  "status": "ok",
+                  "fetched_at": fetched_at,
+                  "source": queue_url,
+              }
+
+              out.write_text(
+                  json.dumps(data, ensure_ascii=False, separators=(",", ":")),
+                  encoding="utf-8",
+              )
+              print("Fresh Queue-Times data written.")
+
+          except Exception as fresh_error:
+              print(f"Fresh fetch failed: {fresh_error}")
+
+              # Keep the live site usable if Queue-Times temporarily fails.
+              try:
+                  previous = get_json(previous_url)
+                  previous["_meta"] = {
+                      **(previous.get("_meta") or {}),
+                      "status": "stale_fallback",
+                      "attempted_at": fetched_at,
+                      "error": str(fresh_error)[:300],
+                  }
+                  out.write_text(
+                      json.dumps(previous, ensure_ascii=False, separators=(",", ":")),
+                      encoding="utf-8",
+                  )
+                  print("Previous live JSON used as fallback.")
+
+              except Exception as previous_error:
+                  print(f"Previous JSON fallback also failed: {previous_error}")
+                  fallback = {
+                      "_meta": {
+                          "status": "unavailable",
+                          "attempted_at": fetched_at,
+                          "source": queue_url,
+                          "error": str(fresh_error)[:300],
+                      },
+                      "lands": [],
+                      "rides": [],
+                  }
+                  out.write_text(
+                      json.dumps(fallback, ensure_ascii=False, separators=(",", ":")),
+                      encoding="utf-8",
+                  )
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
