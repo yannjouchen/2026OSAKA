@@ -40,7 +40,7 @@ jobs:
             --exclude='_site' \
             ./ _site/
 
-      - name: Fetch USJ queue, crowd summary and trip weather
+      - name: Fetch USJ queue, crowd, weather and official schedule
         shell: python
         env:
           QUEUE_URL: https://queue-times.com/parks/284/queue_times.json
@@ -243,6 +243,165 @@ jobs:
                   "counts": counts,
                   "calculated_at": calculated_at,
                   "method": "custom weighted wait-time index; selected rides capped at 120 min = 100",
+              }
+
+
+
+          USJ_TRIP_DATE = "2026-10-11"
+          USJ_HOURS_URL = "https://www.usj.co.jp/web/en/us/park-guide/schedule/park-hour2"
+          USJ_SHOW_URL = "https://www.usj.co.jp/web/en/us/attractions/show-and-attraction-schedule?date=10%2F11%2F2026"
+
+          SHOW_ZH = {
+              "WaterWorld": "水世界",
+              "NO LIMIT! Parade: Discover U!!! Version": "NO LIMIT! 遊行～Discover U!!! 版～",
+              "Wicked: The Witches of Oz": "Wicked：奧茲女巫",
+              "The Power of Rock: U Rock!": "The Power of Rock：U Rock!",
+              "Kuromi Live: Discover Me, Discover U!!!": "酷洛米 Live：Discover Me, Discover U!!!",
+              "The Ultimate Blues Bash": "The Ultimate Blues Bash",
+              "Universal Wonderland: Let's Smile Together!": "環球奇境～Let's Smile Together!～",
+              "Meet the Hogsmeade Magical Creatures": "霍格莫德魔法生物見面活動",
+              "Hippogriff Magical Lesson": "鷹馬魔法課程",
+              "Discover U!!! Time": "Discover U!!! Time",
+              "ONE PIECE PREMIER SHOW 2026": "ONE PIECE PREMIER SHOW 2026",
+              "Jurassic Park Dinosaur Meet & Greet": "侏羅紀公園恐龍見面活動",
+          }
+
+          def ampm_to_24h(value):
+              m = re.match(r"^\s*(\d{1,2}):(\d{2})\s*([AP]M)\s*$", value, re.I)
+              if not m:
+                  return None
+              hour = int(m.group(1))
+              minute = int(m.group(2))
+              ap = m.group(3).upper()
+              if ap == "AM" and hour == 12:
+                  hour = 0
+              elif ap == "PM" and hour != 12:
+                  hour += 12
+              return f"{hour:02d}:{minute:02d}"
+
+          def parse_park_hours():
+              fetched = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+              try:
+                  raw = request_text(USJ_HOURS_URL)
+                  text = visible_text(raw)
+                  patterns = [
+                      r"\(Sun\)\s*Oct\.?\s*11,\s*2026\s+(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)",
+                      r"Oct\.?\s*11,\s*2026\s+(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)",
+                  ]
+                  for pat in patterns:
+                      m = re.search(pat, text, re.I)
+                      if m:
+                          op = ampm_to_24h(m.group(1))
+                          cl = ampm_to_24h(m.group(2))
+                          if op and cl:
+                              return {
+                                  "status": "ok",
+                                  "date": USJ_TRIP_DATE,
+                                  "open": op,
+                                  "close": cl,
+                                  "source": USJ_HOURS_URL,
+                                  "fetched_at": fetched,
+                              }
+
+                  return {
+                      "status": "not_published_yet",
+                      "date": USJ_TRIP_DATE,
+                      "open": None,
+                      "close": None,
+                      "source": USJ_HOURS_URL,
+                      "fetched_at": fetched,
+                  }
+              except Exception as e:
+                  return {
+                      "status": "unavailable",
+                      "date": USJ_TRIP_DATE,
+                      "open": None,
+                      "close": None,
+                      "source": USJ_HOURS_URL,
+                      "error": str(e)[:250],
+                      "fetched_at": fetched,
+                  }
+
+          def parse_show_schedule():
+              try:
+                  raw = request_text(USJ_SHOW_URL)
+                  text = visible_text(raw)
+
+                  # USJ redirects/unavailable dates back to another day's schedule.
+                  if not re.search(r"\bOct\.?\s*11,\s*2026\b", text, re.I):
+                      return "not_published_yet", []
+
+                  heads = list(re.finditer(r"<h3\b[^>]*>(.*?)</h3>", raw, re.I|re.S))
+                  shows = []
+                  for i, h in enumerate(heads):
+                      name = visible_text(h.group(1))
+                      end = heads[i+1].start() if i+1 < len(heads) else min(len(raw), h.end()+5000)
+                      body = visible_text(raw[h.end():end])
+                      times = re.findall(r"\b(?:1[0-2]|[1-9]):[0-5]\d\s*(?:AM|PM)\b", body, re.I)
+                      # Deduplicate while preserving order.
+                      seen = set()
+                      ordered = []
+                      for t in times:
+                          t = re.sub(r"\s+", "", t.upper())
+                          if t not in seen:
+                              seen.add(t)
+                              ordered.append(t)
+
+                      if ordered and name not in {"To everyone who visits today", "Time Table"}:
+                          shows.append({
+                              "name": name,
+                              "name_zh": SHOW_ZH.get(name, name),
+                              "times": ordered,
+                          })
+
+                  # Deduplicate show names.
+                  unique = []
+                  seen_names = set()
+                  for show in shows:
+                      if show["name"] not in seen_names:
+                          seen_names.add(show["name"])
+                          unique.append(show)
+
+                  return ("ok" if unique else "published_but_empty"), unique
+
+              except Exception as e:
+                  print(f"USJ show schedule parse failed: {e}")
+                  return "unavailable", []
+
+          def usj_official_schedule_bundle(now_utc, previous_live=None):
+              old = (previous_live or {}).get("_usj_schedule") or {}
+              old_fetched = old.get("fetched_at")
+              if old_fetched:
+                  try:
+                      old_dt = datetime.fromisoformat(old_fetched.replace("Z", "+00:00"))
+                      if (now_utc - old_dt).total_seconds() < 1800:
+                          return old
+                  except Exception:
+                      pass
+
+              park_hours = parse_park_hours()
+              show_status, shows = parse_show_schedule()
+              return {
+                  "fetched_at": now_utc.isoformat().replace("+00:00", "Z"),
+                  "park_hours": park_hours,
+                  "show_schedule_status": show_status,
+                  "shows": shows,
+                  "specials": [
+                      {
+                          "name": "Frieren: Beyond Journey's End Story Walk -- Echoes of Adventure",
+                          "name_zh": "葬送的芙莉蓮 故事徒步 ～追憶之旅～",
+                          "type": "timed_entry",
+                          "hours": "10:00～Park close",
+                          "requires_official_app_eticket": True,
+                      },
+                      {
+                          "name": "NO LIMIT! Parade: Discover U!!! Version",
+                          "name_zh": "NO LIMIT! 遊行～Discover U!!! 版～",
+                          "type": "parade",
+                          "times": ["1:00PM"],
+                          "duration_minutes": 40,
+                      },
+                  ],
               }
 
 
@@ -454,6 +613,7 @@ jobs:
                   "today_live": live_index(rides, fetched_at),
               }
               data["_weather"] = weather_bundle(now_utc, now_jst, previous_live)
+              data["_usj_schedule"] = usj_official_schedule_bundle(now_utc, previous_live)
               data["_meta"] = {
                   "status": "ok",
                   "fetched_at": fetched_at,
@@ -508,6 +668,7 @@ jobs:
                           },
                       },
                       "_weather": weather_bundle(now_utc, now_jst, previous_live),
+                      "_usj_schedule": usj_official_schedule_bundle(now_utc, previous_live),
                       "lands": [],
                       "rides": [],
                   }
