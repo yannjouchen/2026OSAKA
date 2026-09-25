@@ -485,7 +485,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     </div>
 
     <div id="queueGrid" class="queue-grid">
-      <div class="queue-item"><div class="queue-title">正在連線 Queue-Times…</div><div class="queue-sub">如果直接連線被瀏覽器阻擋，會自動嘗試公開 CORS 代理。</div></div>
+      <div class="queue-item"><div class="queue-title">正在連線 Queue-Times…</div><div class="queue-sub">資料由 GitHub Actions 伺服器端更新，所以手機 Safari 不需要跨網域連 Queue-Times。</div></div>
     </div>
 
     <div id="queueError" class="queue-error"></div>
@@ -499,9 +499,8 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     </div>
 
     <div class="queue-attrib">
-      第三方即時資料，非 USJ 官方。任天堂世界區域入場券、臨時停駛與現場最終等待時間請以 USJ 官方 App 為準。
+      第三方即時資料，非 USJ 官方。GitHub Actions 會在指定時段約每 5 分鐘重新部署資料；排程可能延遲。任天堂世界區域入場券、臨時停駛與現場最終等待時間請以 USJ 官方 App 為準。
       <br><a href="https://queue-times.com/" target="_blank" rel="noopener">Powered by Queue-Times.com</a>
-      ｜若瀏覽器阻擋直接 API，測試版會改走 <a href="https://allorigins.win/" target="_blank" rel="noopener">AllOrigins</a> 公開代理。
     </div>
   </div>
 </section>
@@ -616,7 +615,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 </main>
 </div>
 
-<div class="foot">Prototype v12｜修正 Day 3 園區圖錨點：點 ①～⑩ 會留在 Day 3 並跳到對應設施，不再誤切回 Day 1。</div>
+<div class="foot">Prototype v13｜USJ 排隊資料改由 GitHub Actions 伺服器端抓取並部署 usj-queue.json，移除瀏覽器 CORS／AllOrigins 依賴。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -740,8 +739,8 @@ if (document.readyState === 'loading') {
 }
 
 
-/* --- USJ live queue board (Queue-Times + CORS fallback) --- */
-const USJ_QUEUE_API = 'https://queue-times.com/parks/284/queue_times.json';
+/* --- USJ live queue board (GitHub Actions same-origin JSON) --- */
+const USJ_QUEUE_JSON = './usj-queue.json';
 
 const USJ_RIDE_META = {
   "Mine Cart Madness™": {zh:"咚奇剛的瘋狂礦車", route:1, kids:true},
@@ -766,16 +765,13 @@ const USJ_RIDE_META = {
   "Playing with Curious George™": {zh:"好奇猴喬治", kids:true},
   "The Flying Dinosaur": {zh:"飛天翼龍", kids:false},
   "Hollywood Dream - The Ride": {zh:"好萊塢美夢乘車遊", kids:false},
-  "Hollywood Dream -The Ride - Backdrop-": {zh:"好萊塢美夢～逆轉世界～", kids:false},
-  "貞子の呪い ～ダーク・ホラー・ライド～": {zh:"貞子的詛咒～黑暗恐怖乘車遊～", kids:false},
-  "Sesame Street 4-D Movie Magic™": {zh:"芝麻街 4-D", kids:true},
-  "Shrek’s 4-D Adventure™": {zh:"史瑞克 4-D", kids:true},
-  "Space Fantasy – The Ride": {zh:"太空幻想列車", kids:false}
+  "Hollywood Dream -The Ride - Backdrop-": {zh:"好萊塢美夢～逆轉世界～", kids:false}
 };
 
 let usjQueueRows = [];
 let queueTimer = null;
 let queueFetching = false;
+let queueMeta = {};
 
 function qClass(row){
   if(!row.is_open) return 'q-closed';
@@ -842,7 +838,7 @@ function renderQueue(){
   });
 
   if(!rows.length){
-    grid.innerHTML = '<div class="queue-item"><div class="queue-title">目前沒有符合篩選條件的設施資料。</div></div>';
+    grid.innerHTML = '<div class="queue-item"><div class="queue-title">目前 JSON 內沒有符合篩選條件的設施資料。</div></div>';
     return;
   }
 
@@ -857,26 +853,15 @@ function renderQueue(){
         <div class="queue-min ${qClass(r)}">${qLabel(r)}</div>
       </div>
       ${original}
-      <div class="queue-sub">${r.is_open ? '目前開放' : '目前休止／未開放'}${updated ? ` · 更新 ${updated} JST` : ''}</div>
+      <div class="queue-sub">${r.is_open ? '目前開放' : '目前休止／未開放'}${updated ? ` · 設施資料 ${updated} JST` : ''}</div>
     </article>`;
   }).join('');
-}
-
-async function fetchJsonWithTimeout(url, ms=10000){
-  const ctrl = new AbortController();
-  const timer = setTimeout(()=>ctrl.abort(), ms);
-  try{
-    const res = await fetch(url,{cache:'no-store',signal:ctrl.signal});
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  }finally{
-    clearTimeout(timer);
-  }
 }
 
 async function refreshUSJQueue(){
   if(queueFetching) return;
   queueFetching = true;
+
   const btn = document.getElementById('queueRefresh');
   const dot = document.getElementById('queueDot');
   const status = document.getElementById('queueStatusText');
@@ -885,45 +870,49 @@ async function refreshUSJQueue(){
 
   if(btn){ btn.disabled = true; btn.textContent = '讀取中…'; }
   if(dot) dot.className = 'queue-dot loading';
-  if(status) status.textContent = '正在抓取 USJ 排隊時間…';
+  if(status) status.textContent = '正在讀取 GitHub Pages 排隊資料…';
   if(updated) updated.textContent = '';
   if(err){ err.style.display='none'; err.textContent=''; }
 
-  let data = null;
-  let via = 'direct';
   try{
-    data = await fetchJsonWithTimeout(USJ_QUEUE_API + '?_=' + Date.now(), 8000);
-  }catch(directError){
-    via = 'proxy';
-    try{
-      const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(USJ_QUEUE_API + '?_=' + Date.now());
-      data = await fetchJsonWithTimeout(proxy, 12000);
-    }catch(proxyError){
-      if(dot) dot.className = 'queue-dot error';
-      if(status) status.textContent = '即時排隊資料目前無法讀取';
-      if(err){
-        err.style.display='block';
-        err.innerHTML = '直接連 Queue-Times 與公開 CORS 代理都失敗。這通常是網路、代理服務或瀏覽器安全限制，不代表 USJ 沒有排隊資料。可先開啟 <a href="https://queue-times.com/parks/284/queue_times" target="_blank">Queue-Times USJ</a> 或 USJ 官方 App 查看。';
-      }
-      queueFetching = false;
-      if(btn){ btn.disabled=false; btn.textContent='↻ 再試一次'; }
-      return;
+    const res = await fetch(USJ_QUEUE_JSON + '?_=' + Date.now(), {cache:'no-store'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+
+    queueMeta = data?._meta || {};
+    usjQueueRows = normalizeQueue(data);
+    renderQueue();
+
+    const fetchedAt = qJapanTime(queueMeta.fetched_at);
+    const latestRide = usjQueueRows
+      .map(r => new Date(r.last_updated || 0))
+      .filter(d => !Number.isNaN(d.getTime()))
+      .sort((a,b)=>b-a)[0];
+
+    if(dot) dot.className = usjQueueRows.length ? 'queue-dot ok' : 'queue-dot error';
+    if(status) status.textContent = usjQueueRows.length ? 'GitHub Actions 排隊資料已讀取' : 'JSON 已讀取，但暫無設施資料';
+    if(updated){
+      const latestRideText = latestRide ? qJapanTime(latestRide.toISOString()) : '';
+      updated.textContent = fetchedAt
+        ? `Actions 抓取 ${fetchedAt} JST${latestRideText ? ` · 設施 ${latestRideText} JST` : ''}`
+        : (latestRideText ? `設施資料 ${latestRideText} JST` : '');
     }
+
+    if(queueMeta.status && queueMeta.status !== 'ok' && err){
+      err.style.display='block';
+      err.textContent = '這次 GitHub Actions 沒有取得新資料，目前可能是備援或空白資料。請同時查看 USJ 官方 App。';
+    }
+  }catch(e){
+    if(dot) dot.className = 'queue-dot error';
+    if(status) status.textContent = '找不到 usj-queue.json';
+    if(err){
+      err.style.display='block';
+      err.innerHTML = '請先到 GitHub → Actions 手動執行 <b>USJ Queue → Deploy Pages</b>。第一次成功部署後，這裡就會開始顯示等待時間。';
+    }
+  }finally{
+    queueFetching = false;
+    if(btn){ btn.disabled=false; btn.textContent='↻ 重新整理'; }
   }
-
-  usjQueueRows = normalizeQueue(data);
-  renderQueue();
-
-  const latest = usjQueueRows
-    .map(r => new Date(r.last_updated || 0))
-    .filter(d => !Number.isNaN(d.getTime()))
-    .sort((a,b)=>b-a)[0];
-
-  if(dot) dot.className = 'queue-dot ok';
-  if(status) status.textContent = via === 'direct' ? '排隊資料已更新' : '排隊資料已更新（代理模式）';
-  if(updated && latest) updated.textContent = `資料時間 ${qJapanTime(latest.toISOString())} JST`;
-  if(btn){ btn.disabled=false; btn.textContent='↻ 重新整理'; }
-  queueFetching = false;
 }
 
 function initUSJQueueBoard(){
@@ -931,6 +920,7 @@ function initUSJQueueBoard(){
   const filter = document.getElementById('queueFilter');
   const sort = document.getElementById('queueSort');
   if(!btn || btn.dataset.bound === '1') return;
+
   btn.dataset.bound = '1';
   btn.addEventListener('click', refreshUSJQueue);
   filter?.addEventListener('change', renderQueue);
@@ -940,6 +930,7 @@ function initUSJQueueBoard(){
   if(queueTimer) clearInterval(queueTimer);
   queueTimer = setInterval(refreshUSJQueue, 300000);
 }
+
 if(document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', initUSJQueueBoard);
 }else{

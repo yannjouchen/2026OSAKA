@@ -1,0 +1,9 @@
+{
+  "_meta": {
+    "status": "waiting_for_first_github_action",
+    "fetched_at": null,
+    "source": "https://queue-times.com/parks/284/queue_times.json"
+  },
+  "lands": [],
+  "rides": []
+}
