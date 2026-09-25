@@ -616,7 +616,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 </main>
 </div>
 
-<div class="foot">Prototype v11｜Day 3 新增 USJ 即時排隊看板 Beta：Queue-Times 即時 API＋CORS 代理備援、5 分鐘更新；USJ 官方 App 仍為現場最終依據。</div>
+<div class="foot">Prototype v12｜修正 Day 3 園區圖錨點：點 ①～⑩ 會留在 Day 3 並跳到對應設施，不再誤切回 Day 1。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -694,14 +694,42 @@ function initTrueDayTabs(){
     });
   });
 
-  const requestedDay = location.hash.replace('#','');
-  const initialDay = ['day1','day2','day3'].includes(requestedDay) ? requestedDay : 'day1';
+  function resolveDayFromHash(hash){
+    const h = (hash || '').replace('#','');
+    if (['day1','day2','day3'].includes(h)) return h;
+    if (h.startsWith('d3-')) return 'day3';
+    if (h.startsWith('d2-')) return 'day2';
+    if (h.startsWith('d1-')) return 'day1';
+    return 'day1';
+  }
+
+  const initialDay = resolveDayFromHash(location.hash);
   activateDay(initialDay, false);
 
   // Back/forward or manually changing the hash also switches the tab.
   window.addEventListener('hashchange', () => {
-    const d = location.hash.replace('#','');
-    activateDay(['day1','day2','day3'].includes(d) ? d : 'day1', false);
+    const h = location.hash.replace('#','');
+
+    // Only switch day panels for known day hashes / anchors.
+    // Crucially, #d3-1 ... #d3-10 must stay on Day 3 instead of falling back to Day 1.
+    if (['day1','day2','day3'].includes(h)) {
+      activateDay(h, false);
+      return;
+    }
+    if (h.startsWith('d3-')) {
+      activateDay('day3', false);
+      return;
+    }
+    if (h.startsWith('d2-')) {
+      activateDay('day2', false);
+      return;
+    }
+    if (h.startsWith('d1-')) {
+      activateDay('day1', false);
+      return;
+    }
+
+    // Ignore unrelated anchors instead of forcing Day 1.
   });
 }
 
