@@ -391,6 +391,41 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
   .usj-hours-row,.show-grid{grid-template-columns:1fr}
 }
 
+
+/* --- Chinese names + inline official show times v23 --- */
+.inline-show-block{
+  margin-top:7px;
+  padding-top:7px;
+  border-top:1px dashed var(--line);
+}
+.inline-show-label{
+  font-size:10px;
+  font-weight:900;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+.inline-show-times{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+.inline-show-time{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:25px;
+  padding:4px 8px;
+  border-radius:7px;
+  background:#e7f0ef;
+  color:#245f5c;
+  font-size:11px;
+  font-weight:950;
+}
+.inline-show-waiting{
+  font-size:10px;
+  color:var(--muted);
+}
+
 </style>
 </head>
 <body>
@@ -904,20 +939,32 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
           </div>
 
           <div class="ride" id="d3-k-d">
-            <b>SING on Tour</b>
+            <b>SING 歡樂好聲音巡迴演唱會</b>
             <div class="muted">無身高限制｜Hollywood</div>
+            <div class="inline-show-block" data-inline-show="SING ON TOUR">
+              <div class="inline-show-label">官方表演時間</div>
+              <div class="inline-show-times"><span class="inline-show-waiting">10/11 場次尚未公布</span></div>
+            </div>
             <div class="badges"><span class="badge e">E</span><span class="badge mapref">D 地圖</span></div>
           </div>
 
           <div class="ride" id="d3-k-e">
             <b>名偵探柯南 4-D</b>
             <div class="muted">無身高限制｜New York</div>
+            <div class="inline-show-block" data-inline-show="Detective Conan">
+              <div class="inline-show-label">官方表演時間</div>
+              <div class="inline-show-times"><span class="inline-show-waiting">若官方列出場次，會自動顯示</span></div>
+            </div>
             <div class="badges"><span class="badge e">E</span><span class="badge mapref">E 地圖</span></div>
           </div>
 
           <div class="ride" id="d3-k-f">
-            <b>WaterWorld</b>
+            <b>水世界</b>
             <div class="muted">無身高限制｜表演型設施</div>
+            <div class="inline-show-block" data-inline-show="WaterWorld">
+              <div class="inline-show-label">官方表演時間</div>
+              <div class="inline-show-times"><span class="inline-show-waiting">10/11 場次尚未公布</span></div>
+            </div>
             <div class="badges"><span class="badge mapref">F 地圖</span></div>
           </div>
 
@@ -968,9 +1015,9 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <a class="usj-pin alt" href="#d3-k-a" title="A 冰凍雷射光乘車遊｜Minion Park" style="left:55%;top:15%">A</a>
       <a class="usj-pin alt" href="#d3-k-b" title="B 飛天史努比｜Universal Wonderland" style="left:47%;top:61%">B</a>
       <a class="usj-pin alt" href="#d3-k-c" title="C 史努比王牌飛行員冒險｜Universal Wonderland" style="left:43%;top:66%">C</a>
-      <a class="usj-pin alt" href="#d3-k-d" title="D SING on Tour｜Hollywood" style="left:30%;top:57%">D</a>
+      <a class="usj-pin alt" href="#d3-k-d" title="D SING 歡樂好聲音巡迴演唱會｜Hollywood" style="left:30%;top:57%">D</a>
       <a class="usj-pin alt" href="#d3-k-e" title="E 名偵探柯南 4-D｜New York" style="left:25%;top:47%">E</a>
-      <a class="usj-pin alt" href="#d3-k-f" title="F WaterWorld" style="left:18%;top:30%">F</a>
+      <a class="usj-pin alt" href="#d3-k-f" title="F 水世界｜官方位置校正" style="left:85.8%;top:57.6%">F</a>
       <a class="usj-pin alt" href="#d3-k-g" title="G 好萊塢美夢乘車遊｜Hollywood" style="left:38%;top:61%">G</a>
       <a class="usj-pin alt" href="#d3-k-h" title="H 飛天翼龍｜Jurassic Park" style="left:73%;top:26%">H</a>
 
@@ -988,14 +1035,14 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <a class="btn soft" href="https://www.usj.co.jp/web/zh/tw/park-guide/schedule/park-hour" target="_blank">10/11 前再查營業時間</a>
     </div>
     <div class="usj-map-note">
-      <b>地圖說明：</b>底圖使用 USJ 官方網站園區圖素材；①～⑩ 是推薦遊玩主線，A～H 是主線以外的國小生可玩／選配項目。A～H 以「所在園區的大致位置」標示，不代表設施入口的精確座標；現場請以官方互動園區圖與 App 為準。<br>
+      <b>地圖說明：</b>底圖使用 USJ 官方網站園區圖素材；①～⑩ 是推薦遊玩主線，A～H 是主線以外的國小生可玩／選配項目。<b>F 水世界已依 USJ 官方 WaterWorld 區域位置圖校正到右側圓形水上劇場。</b>其餘 A～H 仍以所在園區的大致位置標示；現場入口與動線請以官方互動園區圖與 App 為準。<br>
       <b>路線概念：</b>任天堂世界 → 侏羅紀 → 哈利波特 → JAWS → 小小兵 → Hello Kitty → Hollywood／晚餐 → 18:00 後夜間活動。
     </div>
   </section>
 </main>
 </div>
 
-<div class="foot">Prototype v22｜Day 3 新增 USJ 官方 10/11 開閉園時間、每日表演時刻表、芙莉蓮電子號碼券提醒；閉園當天依剩餘時間＋排隊時間提供補玩估算。</div>
+<div class="foot">Prototype v24｜校正 USJ 水世界地圖位置：F 標記移至官方底圖右側圓形 WaterWorld 劇場位置。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1331,6 +1378,43 @@ function japanNowParts(){
   parts.forEach(p=>{if(p.type!=='literal')o[p.type]=p.value});
   return o;
 }
+
+const SHOW_DISPLAY_ZH = {
+  "WaterWorld":"水世界",
+  "SING ON TOUR":"SING 歡樂好聲音巡迴演唱會",
+  "NO LIMIT! Parade: Discover U!!! Version":"NO LIMIT! 遊行～Discover U!!! 版～",
+  "Wicked: The Witches of Oz":"Wicked：奧茲女巫",
+  "The Power of Rock: U Rock!":"The Power of Rock：U Rock!",
+  "Kuromi Live: Discover Me, Discover U!!!":"酷洛米 Live：Discover Me, Discover U!!!",
+  "Universal Wonderland: Let's Smile Together!":"環球奇境～Let's Smile Together!～",
+  "Meet the Hogsmeade Magical Creatures":"霍格莫德魔法生物見面活動",
+  "Hippogriff Magical Lesson":"鷹馬魔法課程",
+  "Jurassic Park Dinosaur Meet & Greet":"侏羅紀公園恐龍見面活動"
+};
+function showDisplayName(show){
+  return show?.name_zh || SHOW_DISPLAY_ZH[show?.name] || show?.name || '表演';
+}
+function renderInlineShowTimes(shows,status){
+  document.querySelectorAll('[data-inline-show]').forEach(box=>{
+    const key=(box.dataset.inlineShow||'').toLowerCase();
+    const target=(shows||[]).find(show=>{
+      const names=[show.name,show.name_zh,SHOW_DISPLAY_ZH[show.name]].filter(Boolean).map(x=>String(x).toLowerCase());
+      return names.some(n=>n.includes(key) || key.includes(n));
+    });
+    const timesEl=box.querySelector('.inline-show-times');
+    if(!timesEl) return;
+
+    if(target && Array.isArray(target.times) && target.times.length){
+      timesEl.innerHTML=target.times.map(t=>`<span class="inline-show-time">${escapeQueueText(t)}</span>`).join('');
+    }else{
+      const msg=status==='not_published_yet'
+        ? '10/11 場次尚未公布'
+        : '目前官方時刻表未列出場次';
+      timesEl.innerHTML=`<span class="inline-show-waiting">${msg}</span>`;
+    }
+  });
+}
+
 function renderUSJOfficialSchedule(data){
   usjOfficialSchedule=data?._usj_schedule||{};
   const hours=usjOfficialSchedule.park_hours||{};
@@ -1372,8 +1456,7 @@ function renderUSJOfficialSchedule(data){
       const times=(show.times||[]).map(t=>`<span class="show-time">${escapeQueueText(t)}</span>`).join('');
       return `<div class="show-item">
         <span class="show-kind">官方時刻表</span>
-        <b>${escapeQueueText(show.name_zh||show.name)}</b>
-        ${show.name_zh&&show.name_zh!==show.name?`<div class="queue-sub">${escapeQueueText(show.name)}</div>`:''}
+        <b>${escapeQueueText(showDisplayName(show))}</b>
         <div class="show-times">${times}</div>
       </div>`;
     }).join('');
@@ -1381,9 +1464,12 @@ function renderUSJOfficialSchedule(data){
     const st=usjOfficialSchedule.show_schedule_status;
     showBox.innerHTML=`<div class="show-item">
       <b>${st==='not_published_yet'?'10/11 完整時刻表尚未公布':'暫時沒有可解析的官方場次'}</b>
-      <div class="muted">WaterWorld、舞台秀、街頭表演、角色活動等不是 Queue‑Times 的 wait_time 資料；官方 Show Schedule 發布後會在這裡自動出現。</div>
+      <div class="muted">水世界、舞台秀、街頭表演、角色活動等不是 Queue‑Times 的 wait_time 資料；官方 Show Schedule 發布後會在這裡自動出現。</div>
     </div>`;
   }
+
+  // Also put official show times directly under matching cards in the kids/backup list.
+  renderInlineShowTimes(shows, usjOfficialSchedule.show_schedule_status);
 }
 function closeAdviceHtml(row){
   const h=usjOfficialSchedule?.park_hours||{};
