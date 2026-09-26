@@ -122,6 +122,8 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 }
 .d3-video-strip{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;margin-top:9px;max-width:560px}
 .d3-video-strip.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px}
+.ride .d3-video-strip{max-width:none}
+.ride .d3-video-card{grid-template-columns:96px minmax(0,1fr)}
 .d3-video-card{
   appearance:none;width:100%;display:grid;grid-template-columns:112px minmax(0,1fr);gap:9px;
   align-items:center;text-align:left;border:1px solid var(--line);border-radius:12px;background:#fbfaf7;
@@ -1144,24 +1146,25 @@ body.d3-video-open{overflow:hidden}
           A～H 可依當天排隊時間、表演時間與孩子體力插入。
         </div>
 
+        <div class="d3-video-note">🎬 A～H 也附影片：官方公開片優先；沒有合適官方一般影片時，改用非 Shorts 的設施實拍／POV。點縮圖可在本頁播放。</div>
         <div class="ridegrid" style="margin-top:10px">
           <div class="ride" id="d3-k-a">
             <b>冰凍雷射光乘車遊</b>
             <div class="muted">92cm+｜Minion Park</div>
             <div class="badges"><span class="badge mapref">A 地圖</span></div>
-          </div>
+          <div class="d3-video-strip"><button class="d3-video-card" type="button" data-youtube-id="VxwN1dpvMxs" data-video-title="冰凍雷射光乘車遊｜實拍 Ride Experience" data-video-source="YouTube 實拍 · 2025" aria-label="播放：冰凍雷射光乘車遊｜實拍 Ride Experience"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/VxwN1dpvMxs/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>冰凍雷射光乘車遊｜實拍 Ride Experience</b><small>YouTube 實拍 · 2025</small></span></button></div></div>
 
           <div class="ride" id="d3-k-b">
             <b>飛天史努比</b>
             <div class="muted">92cm+｜Universal Wonderland</div>
             <div class="badges"><span class="badge mapref">B 地圖</span></div>
-          </div>
+          <div class="d3-video-strip"><button class="d3-video-card" type="button" data-youtube-id="w3mpJjn0eCs" data-video-title="飛天史努比｜設施實拍" data-video-source="A Traveller&#x27;s Journey · 2024" aria-label="播放：飛天史努比｜設施實拍"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/w3mpJjn0eCs/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>飛天史努比｜設施實拍</b><small>A Traveller&#x27;s Journey · 2024</small></span></button></div></div>
 
           <div class="ride" id="d3-k-c">
             <b>史努比王牌飛行員冒險</b>
             <div class="muted">92cm+｜Universal Wonderland</div>
             <div class="badges"><span class="badge mapref">C 地圖</span></div>
-          </div>
+          <div class="d3-video-strip"><button class="d3-video-card" type="button" data-youtube-id="xfWGlR_-w7Y" data-video-title="史努比王牌飛行員冒險｜Front Seat POV" data-video-source="Theme Park POV · 2026" aria-label="播放：史努比王牌飛行員冒險｜Front Seat POV"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/xfWGlR_-w7Y/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">POV</span></span><span class="d3-video-copy"><b>史努比王牌飛行員冒險｜Front Seat POV</b><small>Theme Park POV · 2026</small></span></button></div></div>
 
           <div class="ride" id="d3-k-d">
             <b>SING 歡樂好聲音巡迴演唱會</b>
@@ -1171,7 +1174,7 @@ body.d3-video-open{overflow:hidden}
               <div class="inline-show-times"><span class="inline-show-waiting">10/11 場次尚未公布</span></div>
             </div>
             <div class="badges"><span class="badge e">E</span><span class="badge mapref">D 地圖</span></div>
-          </div>
+          <div class="d3-video-strip"><button class="d3-video-card" type="button" data-youtube-id="CeBmGbnIQDw" data-video-title="SING on Tour｜完整 4K 表演實拍" data-video-source="Dean on Vacation · 2025" aria-label="播放：SING on Tour｜完整 4K 表演實拍"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/CeBmGbnIQDw/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">完整 4K</span></span><span class="d3-video-copy"><b>SING on Tour｜完整 4K 表演實拍</b><small>Dean on Vacation · 2025</small></span></button></div></div>
 
           <div class="ride" id="d3-k-e">
             <b>名偵探柯南 4-D</b>
@@ -1181,7 +1184,7 @@ body.d3-video-open{overflow:hidden}
               <div class="inline-show-times"><span class="inline-show-waiting">若官方列出場次，會自動顯示</span></div>
             </div>
             <div class="badges"><span class="badge e">E</span><span class="badge mapref">E 地圖</span></div>
-          </div>
+          <div class="d3-video-strip"><button class="d3-video-card" type="button" data-youtube-id="j5a5GI5L6Zg" data-video-title="名偵探柯南 4-D｜USJ 官方" data-video-source="Universal Studios Japan Official" aria-label="播放：名偵探柯南 4-D｜USJ 官方"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/j5a5GI5L6Zg/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>名偵探柯南 4-D｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div>
 
           <div class="ride" id="d3-k-f">
             <b>水世界</b>
@@ -1191,19 +1194,19 @@ body.d3-video-open{overflow:hidden}
               <div class="inline-show-times"><span class="inline-show-waiting">10/11 場次尚未公布</span></div>
             </div>
             <div class="badges"><span class="badge mapref">F 地圖</span></div>
-          </div>
+          <div class="d3-video-strip"><button class="d3-video-card" type="button" data-youtube-id="ekwrWtViHo4" data-video-title="水世界 WATERWORLD｜USJ 官方" data-video-source="Universal Studios Japan Official" aria-label="播放：水世界 WATERWORLD｜USJ 官方"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/ekwrWtViHo4/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>水世界 WATERWORLD｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div>
 
           <div class="ride" id="d3-k-g">
             <b>好萊塢美夢乘車遊</b>
             <div class="muted">132cm+｜刺激度高｜Hollywood</div>
             <div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span><span class="badge mapref">G 地圖</span></div>
-          </div>
+          <div class="d3-video-strip"><button class="d3-video-card" type="button" data-youtube-id="zHmg4dHJUJo" data-video-title="好萊塢美夢乘車遊｜USJ 官方" data-video-source="Universal Studios Japan Official" aria-label="播放：好萊塢美夢乘車遊｜USJ 官方"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/zHmg4dHJUJo/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>好萊塢美夢乘車遊｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div>
 
           <div class="ride" id="d3-k-h">
             <b>飛天翼龍</b>
             <div class="muted">132～198cm｜刺激度高｜Jurassic Park</div>
             <div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span><span class="badge mapref">H 地圖</span></div>
-          </div>
+          <div class="d3-video-strip"><button class="d3-video-card" type="button" data-youtube-id="h1NPf2FQGPc" data-video-title="飛天翼龍｜USJ 官方" data-video-source="Universal Studios Japan Official" aria-label="播放：飛天翼龍｜USJ 官方"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/h1NPf2FQGPc/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>飛天翼龍｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div>
         </div>
 
         <div class="actions" style="margin-top:12px">
