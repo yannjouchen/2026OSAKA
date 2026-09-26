@@ -507,15 +507,78 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 .coffee-popup b{font-size:13px}.coffee-popup a{color:var(--teal);font-weight:900}
 @media(max-width:620px){#map3coffee{height:300px;min-height:270px;margin:0 10px}}
 
+/* --- v31 compact five-day tabs --- */
+.daytabs{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:0;
+  position:sticky;
+  top:0;
+  z-index:1500;
+  margin:0 0 8px;
+  padding:0;
+  overflow:visible;
+  background:rgba(246,242,234,.96);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.daytabs .daytab{
+  position:relative;
+  display:flex;
+  min-width:0;
+  min-height:58px;
+  padding:7px 2px 9px;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1px;
+  border:0;
+  border-radius:0;
+  background:transparent !important;
+  box-shadow:none;
+  color:#8a9296 !important;
+  text-align:center;
+  white-space:normal;
+  transition:color .16s ease,background .16s ease;
+}
+.daytabs .daytab::after{
+  content:"";
+  position:absolute;
+  left:17%;
+  right:17%;
+  bottom:-1px;
+  height:3px;
+  border-radius:3px 3px 0 0;
+  background:transparent;
+}
+.daytabs .daytab.active{
+  background:transparent !important;
+  color:var(--teal) !important;
+  border-color:transparent !important;
+  box-shadow:none;
+}
+.daytabs .daytab.active::after{background:var(--teal)}
+.daytabs .tab-day{font-size:14px;font-weight:950;line-height:1.1;letter-spacing:.01em}
+.daytabs .tab-date{font-size:11px;font-weight:800;line-height:1.15;color:inherit}
+.daytabs .daytab:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+@media(max-width:620px){
+  .wrap{padding-top:8px}
+  .daytabs{margin-left:-12px;margin-right:-12px}
+  .daytabs .daytab{min-height:56px;padding:7px 1px 8px}
+  .daytabs .tab-day{font-size:13px}
+  .daytabs .tab-date{font-size:10.5px}
+}
+
 </style>
 </head>
 <body>
 <div class="wrap"><div class="daytabs" id="dayTabs" role="tablist" aria-label="行程日期">
-  <a href="#day1" class="daytab active" data-day="day1" role="tab" aria-selected="true">Day 1｜10/9 大阪</a>
-  <a href="#day2" class="daytab" data-day="day2" role="tab" aria-selected="false">Day 2｜10/10 京都・奈良</a>
-  <a href="#day3" class="daytab" data-day="day3" role="tab" aria-selected="false">Day 3｜10/11 USJ</a>
-  <a href="#day4" class="daytab" data-day="day4" role="tab" aria-selected="false">Day 4｜10/12 池田・梅田</a>
-  <a href="#day5" class="daytab" data-day="day5" role="tab" aria-selected="false">Day 5｜10/13 阿倍野・臨空・KIX</a>
+  <a href="#day1" class="daytab active" data-day="day1" role="tab" aria-selected="true"><span class="tab-day">D1</span><span class="tab-date">10/9</span></a>
+  <a href="#day2" class="daytab" data-day="day2" role="tab" aria-selected="false"><span class="tab-day">D2</span><span class="tab-date">10/10</span></a>
+  <a href="#day3" class="daytab" data-day="day3" role="tab" aria-selected="false"><span class="tab-day">D3</span><span class="tab-date">10/11</span></a>
+  <a href="#day4" class="daytab" data-day="day4" role="tab" aria-selected="false"><span class="tab-day">D4</span><span class="tab-date">10/12</span></a>
+  <a href="#day5" class="daytab" data-day="day5" role="tab" aria-selected="false"><span class="tab-day">D5</span><span class="tab-date">10/13</span></a>
 </div>
   <div class="day-panel active" id="panel-day1" data-panel="day1"><section class="hero" id="day1">
     <div class="kicker">DAY 1 · 2026/10/09 FRI</div>
