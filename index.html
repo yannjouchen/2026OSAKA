@@ -481,6 +481,32 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 .trip-alert{background:#fff7db;border:1px solid #ecd791;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.55;margin-top:9px}
 @media(max-width:620px){.option-grid{grid-template-columns:1fr}}
 
+/* --- Coffee markers v27 --- */
+.coffee-marker{
+  width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  color:#fff;border:3px solid #fff;font-size:12px;font-weight:950;
+  box-shadow:0 3px 9px #0005;letter-spacing:-.02em
+}
+.coffee-marker.sb{background:#006241}
+.coffee-marker.bb{background:#4b9fca}
+.coffee-legend{
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  padding:9px 13px 12px;border-top:1px dashed var(--line);
+  font-size:11px;color:var(--muted);line-height:1.45
+}
+.coffee-legend span{display:inline-flex;align-items:center;gap:5px}
+.coffee-legend i{
+  width:23px;height:23px;border-radius:50%;display:inline-grid;place-items:center;
+  color:#fff;font-style:normal;font-size:10px;font-weight:950;border:2px solid #fff;box-shadow:0 2px 5px #0003
+}
+.coffee-legend i.sb{background:#006241}.coffee-legend i.bb{background:#4b9fca}
+.coffee-mini{border-top:1px solid var(--line);margin-top:2px;background:#fffdf8}
+.coffee-mini-head{padding:13px 14px 8px;font-weight:900;font-size:14px}
+#map3coffee{height:320px;min-height:280px;margin:0 13px 0;border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.coffee-popup{font-size:12px;line-height:1.5}
+.coffee-popup b{font-size:13px}.coffee-popup a{color:var(--teal);font-weight:900}
+@media(max-width:620px){#map3coffee{height:300px;min-height:270px;margin:0 10px}}
+
 </style>
 </head>
 <body>
@@ -701,6 +727,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
         <a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97%20%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E9%9B%A3%E6%B3%A21%E4%B8%81%E7%9B%AE%E8%99%B9%E3%81%AE%E3%81%BE%E3%81%A13-10%E5%8F%B7%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF2%E7%95%AA%E8%A1%97%E5%8D%97%E9%80%9A%E3%82%8A%20%E3%83%95%E3%82%A9%E3%83%AC%E3%82%B9%E3%83%88%E3%83%91%E3%83%BC%E3%82%AF%E5%89%8D&destination=34.669254%2C135.499904&travelmode=walking&waypoints=34.6646089%2C135.5012633%7C34.6616083%2C135.5019349%7C34.6692891%2C135.5006608" target="_blank">Google Maps ⑫～⑮</a>
         <button class="btn soft" id="fit" type="button">顯示全部</button>
       </div>
+      <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>只標順路／同棟咖啡點，不改主行程順序</span></div>
       <div class="legend"><b>地圖說明：</b>青綠色為飯店，橘紅色為 ①～⑮ 逛街順序。地圖只顯示地點標記，不以虛線連接；需要導航時請點各店的 Google Maps 按鈕。</div>
     </section>
   </main></div>
@@ -765,6 +792,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     <div class="head"><h2>Day 2｜京都・奈良・大阪地圖</h2><span class="pill">只顯示標記</span></div>
     <div id="map2"></div>
     <div class="tools"><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.9954951%2C135.7763166&destination=34.9954951%2C135.7763166&travelmode=walking&waypoints=34.9948561%2C135.7850463%7C34.9956%2C135.7822%7C34.9946%2C135.7775" target="_blank">京都步行路線</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.9954951%2C135.7763166&destination=34.685047%2C135.843012&travelmode=transit" target="_blank">京都 → 奈良</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.685047%2C135.843012&destination=34.6746794%2C135.4963046&travelmode=transit" target="_blank">奈良 → FUJIMOTO</a><button class="btn soft" id="fit2" type="button">顯示全部</button></div>
+    <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>Day 2 只標真正貼近目前主線的咖啡點</span></div>
     <div class="legend"><b>順路判斷：</b>京都段集中在清水寺／五條坂一帶，午餐後回 MOCOMOCO 還衣，再直接前往奈良；地圖不畫虛線。</div>
   </section>
 </main></div>
@@ -1106,6 +1134,11 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <span class="accuracy">這是園區動線示意圖，不是 GPS／經緯度地圖</span><br>
       <b>路線概念：</b>Nintendo → 侏羅紀 → 哈利波特 → JAWS → 小小兵 → Hello Kitty → Hollywood／晚餐 → 夜間活動。
     </div>
+    <div class="coffee-mini">
+      <div class="coffee-mini-head">☕ Day 3｜飯店 → Universal City 順路咖啡（GPS 地圖）</div>
+      <div id="map3coffee"></div>
+      <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>Universal City 站旁 Starbucks 07:00 才開；清晨抵達時尚未營業，離園可用</span></div>
+    </div>
   </section>
 </main>
 </div>
@@ -1196,6 +1229,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     <div class="head"><h2>Day 4｜池田・梅田・難波地圖</h2><span class="pill">主線＋A～D</span></div>
     <div id="map4"></div>
     <div class="tools"><button class="btn soft" id="fit4" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.6675993%2C135.5006679&travelmode=transit&waypoints=34.8180487%2C135.4266758%7C34.7079533%2C135.4993874%7C34.7028186%2C135.4985323%7C34.7012797%2C135.4983196%7C34.7028866%2C135.4953236%7C34.7006219%2C135.4941733%7C34.7038664%2C135.4949205%7C34.7024579%2C135.4913958" target="_blank">開啟主線地圖</a></div>
+    <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>池田站、茶屋町與梅田主線同棟／近旁咖啡點</span></div>
     <div class="legend"><b>灰色 A～D：</b>只代表「有時間再去」。Day 4 不畫連線，避免讓地圖看起來像必須逐點照 GPS 路線走。</div>
   </section>
 </main>
@@ -1264,17 +1298,30 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
     <div class="head"><h2>Day 5｜阿倍野 → 臨空 → KIX</h2><span class="pill">一路往南</span></div>
     <div id="map5"></div>
     <div class="tools"><button class="btn soft" id="fit5" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=Kansai%20International%20Airport%20Terminal%201&travelmode=transit&waypoints=34.6448982%2C135.5116009%7C34.4107338%2C135.2996108" target="_blank">開啟 Day 5 路線</a></div>
+    <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>Q's Mall、臨空 Outlet、KIX T1 直接標在回程主線</span></div>
     <div class="legend"><b>行李策略：</b>飯店退房後一路帶走；阿倍野與臨空城各自先找寄物櫃／寄存，再空手逛。最後一段一定保留機場緩衝。</div>
   </section>
 </main>
 </div>
 
-<div class="foot">Prototype v26｜新增 Day 4 池田・梅田、Day 5 阿倍野・臨空・KIX；加入 A～D 備選、焼肉きんぐ訂位、華航報到，以及百貨／商場精選店家。</div>
+<div class="foot">Prototype v27｜Day 1～5 地圖新增順路 Starbucks／Blue Bottle 咖啡標記；咖啡點只作路線參考，不改原本主行程。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const hotel={"name": "橋樑酒店 心齋橋", "lat": 34.673856, "lng": 135.498128};
+
+function coffeeIcon(kind){
+  const cls=kind==='bb'?'bb':'sb';
+  const label=kind==='bb'?'B':'S';
+  return L.divIcon({className:'',html:'<div class="coffee-marker '+cls+'">'+label+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
+}
+function addCoffeeMarkers(targetMap, items){
+  items.forEach(c=>{
+    const popup='<div class="coffee-popup"><b>'+c.name+'</b><br>'+c.hours+'<br><span style="color:#718087">'+c.note+'</span>'+(c.url?'<br><a href="'+c.url+'" target="_blank" rel="noopener">官方門市 ↗</a>':'')+'</div>';
+    L.marker([c.lat,c.lng],{icon:coffeeIcon(c.kind),zIndexOffset:650}).addTo(targetMap).bindPopup(popup);
+  });
+}
 const points=[{"n": 1, "name": "MooKEN", "lat": 34.6726828, "lng": 135.5016161, "time": "14:20", "tag": "甜點", "note": "先去；時間較敏感"}, {"n": 2, "name": "HOKA 大阪心齋橋店", "lat": 34.6754425, "lng": 135.5018327, "time": "15:50", "tag": "鞋類", "note": "購物"}, {"n": 3, "name": "OS Drug Shinsaibashi", "lat": 34.6744954, "lng": 135.501474, "time": "16:10", "tag": "藥妝", "note": "較早關門店家優先"}, {"n": 4, "name": "心齋橋 PARCO", "lat": 34.6738473, "lng": 135.5009574, "time": "16:25", "tag": "商場", "note": "20:00 前優先"}, {"n": 5, "name": "鬼塚虎 大阪心齋橋店", "lat": 34.6733223, "lng": 135.5014577, "time": "16:50", "tag": "鞋類", "note": "購物"}, {"n": 6, "name": "大丸心齋橋店", "lat": 34.6732406, "lng": 135.5009613, "time": "17:10", "tag": "百貨", "note": "與 BicCamera 同區"}, {"n": 7, "name": "Air BicCamera 大丸心齋橋店", "lat": 34.6725859, "lng": 135.5009065, "time": "17:30", "tag": "電器", "note": "大丸內／周邊"}, {"n": 8, "name": "松本清", "lat": 34.6725206, "lng": 135.5015478, "time": "17:50", "tag": "藥妝", "note": "可彈性縮短"}, {"n": 9, "name": "GU / UNIQLO", "lat": 34.6712548, "lng": 135.501611, "time": "18:10", "tag": "服飾", "note": "同棟處理"}, {"n": 10, "name": "WEGO", "lat": 34.6696023, "lng": 135.5011469, "time": "18:45", "tag": "服飾", "note": "往難波方向"}, {"n": 11, "name": "くろーばー結び なんばウォーク店", "lat": 34.6670875, "lng": 135.5030161, "time": "19:05", "tag": "銅鑼燒", "note": "難波 Walk 地下街・外帶"}, {"n": 12, "name": "大阪高島屋", "lat": 34.6646089, "lng": 135.5012633, "time": "19:25", "tag": "百貨", "note": "19:55 前離開"}, {"n": 13, "name": "難波公園", "lat": 34.6616083, "lng": 135.5019349, "time": "20:00", "tag": "商場", "note": "快速逛重點"}, {"n": 14, "name": "一蘭拉麵 難波御堂筋店", "lat": 34.6692891, "lng": 135.5006608, "time": "20:45", "tag": "晚餐", "note": "20:45–21:30"}, {"n": 15, "name": "唐吉訶德 道頓堀御堂筋", "lat": 34.669254, "lng": 135.499904, "time": "21:35", "tag": "夜間購物", "note": "最後逛"}];
 const map=L.map('map');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
@@ -1286,6 +1333,15 @@ points.forEach(p=>{
   const icon=L.divIcon({className:'',html:'<div class="marker">'+p.n+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
   L.marker([p.lat,p.lng],{icon}).addTo(map).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.time+' · '+p.tag);
 });
+
+const d1Coffee=[
+  {kind:'bb',name:'Blue Bottle Coffee 心齋橋 Cafe',lat:34.6774355,lng:135.4993954,hours:'08:00–20:00（10/9）',note:'HOKA／心齋橋北側附近；只標地圖，不重新排進主時間軸',url:'https://store.bluebottlecoffee.jp/pages/shinsaibashi'},
+  {kind:'sb',name:'Starbucks｜心齋橋 PARCO',lat:34.6738473,lng:135.5009574,hours:'B1 Reserve 08:00–22:30／5F 10:00–20:00',note:'PARCO 同棟，逛第④站時可直接判斷要不要買',url:'https://store.starbucks.co.jp/detail-4614/'},
+  {kind:'sb',name:'Starbucks｜難波 Walk 店',lat:34.6671202,lng:135.5031362,hours:'07:00–22:00',note:'第⑪站銅鑼燒附近，地下街順路',url:'https://store.starbucks.co.jp/detail-1342/'},
+  {kind:'sb',name:'Starbucks｜大阪高島屋 地階西區',lat:34.6644013,lng:135.5004791,hours:'07:00–22:30',note:'第⑫站大阪高島屋同棟',url:'https://store.starbucks.co.jp/detail-1642/'},
+  {kind:'sb',name:'Starbucks｜難波 Parks',lat:34.6616083,lng:135.5019349,hours:'2F Tea & Cafe 08:00–22:30／6F 10:00–22:30',note:'第⑬站難波 Parks 同棟',url:'https://store.starbucks.co.jp/detail-4539/'}
+];
+addCoffeeMarkers(map,d1Coffee);
 
 const bounds=L.latLngBounds(route); map.fitBounds(bounds,{padding:[30,30]});
 document.getElementById('fit').onclick=()=>map.fitBounds(bounds,{padding:[30,30]});
@@ -1301,9 +1357,27 @@ const map2=L.map('map2');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map2);
 const d2coords=[];
 day2points.forEach(p=>{d2coords.push([p.lat,p.lng]);const icon=L.divIcon({className:'',html:'<div class="marker">'+p.n+'</div>',iconSize:[30,30],iconAnchor:[15,15]});L.marker([p.lat,p.lng],{icon}).addTo(map2).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.time+' · '+p.tag);});
-const bounds2=L.latLngBounds(d2coords);map2.fitBounds(bounds2,{padding:[30,30]});document.getElementById('fit2').onclick=()=>map2.fitBounds(bounds2,{padding:[30,30]});
+const d2Coffee=[
+  {kind:'sb',name:'Starbucks｜奈良公園巴士總站店',lat:34.6848018,lng:135.8345378,hours:'07:00–20:00',note:'奈良公園西側／縣廳旁；從近鐵奈良往公園方向屬順路區域',url:'https://store.starbucks.co.jp/detail-1349/'}
+];
+addCoffeeMarkers(map2,d2Coffee);
+const bounds2=L.latLngBounds(d2coords.concat(d2Coffee.map(c=>[c.lat,c.lng])));map2.fitBounds(bounds2,{padding:[30,30]});document.getElementById('fit2').onclick=()=>map2.fitBounds(bounds2,{padding:[30,30]});
 
 
+
+/* --- Day 3 coffee transit map --- */
+const map3coffee=L.map('map3coffee',{zoomControl:true});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map3coffee);
+L.marker([hotel.lat,hotel.lng],{icon:hicon}).addTo(map3coffee).bindPopup('<b>'+hotel.name+'</b><br>清晨出發');
+const usjEntrance={name:'USJ 入口／Universal City 區域',lat:34.667775,lng:135.435286};
+const usjIcon=L.divIcon({className:'',html:'<div class="hotel" style="background:#7a4f9b">🎢</div>',iconSize:[36,36],iconAnchor:[18,18]});
+L.marker([usjEntrance.lat,usjEntrance.lng],{icon:usjIcon}).addTo(map3coffee).bindPopup('<b>'+usjEntrance.name+'</b>');
+const d3Coffee=[
+  {kind:'sb',name:'Starbucks｜Hotel Keihan Universal Tower 店',lat:34.6676818,lng:135.4378099,hours:'07:00–22:00',note:'Universal City 站旁；你約 05:50 抵達時尚未開門，離園時可用',url:'https://store.starbucks.co.jp/detail-332/'}
+];
+addCoffeeMarkers(map3coffee,d3Coffee);
+const bounds3coffee=L.latLngBounds([[hotel.lat,hotel.lng],[usjEntrance.lat,usjEntrance.lng],...d3Coffee.map(c=>[c.lat,c.lng])]);
+map3coffee.fitBounds(bounds3coffee,{padding:[28,28]});
 
 /* --- Day 4 map --- */
 const d4Main=[
@@ -1337,6 +1411,14 @@ d4Optional.forEach(p=>{
   const icon=L.divIcon({className:'',html:'<div class="marker optional">'+p.n+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
   L.marker([p.lat,p.lng],{icon}).addTo(map4).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.tag);
 });
+const d4Coffee=[
+  {kind:'sb',name:'Starbucks｜阪急池田站店',lat:34.821554,lng:135.4257517,hours:'10/12（國定假日）08:00–22:00',note:'池田站改札旁；去杯麵博物館前後最順',url:'https://store.starbucks.co.jp/detail-376/'},
+  {kind:'bb',name:'Blue Bottle Coffee 梅田茶屋町 Cafe',lat:34.7078018,lng:135.4982278,hours:'08:00–21:00',note:'ガチャガチャの森茶屋町店幾乎同一區；不綁固定時間',url:'https://store.bluebottlecoffee.jp/pages/umeda-chayamachi'},
+  {kind:'sb',name:'Starbucks｜KITTE 大阪店',lat:34.7006219,lng:135.4941733,hours:'09:00–22:00',note:'第⑥站 KITTE 大阪 6F',url:'https://store.starbucks.co.jp/detail-4324/'},
+  {kind:'sb',name:'Starbucks｜GRAND FRONT 大阪',lat:34.7038664,lng:135.4949205,hours:'南館6F 11:00–21:00／北館1F Tea & Cafe 07:00–22:00',note:'第⑦站同區，可依當時所在館別選最近一間',url:'https://store.starbucks.co.jp/detail-1113/'}
+];
+addCoffeeMarkers(map4,d4Coffee);
+d4Coffee.forEach(c=>d4coords.push([c.lat,c.lng]));
 const bounds4=L.latLngBounds(d4coords); map4.fitBounds(bounds4,{padding:[30,30]});
 document.getElementById('fit4').onclick=()=>map4.fitBounds(bounds4,{padding:[30,30]});
 
@@ -1356,6 +1438,14 @@ d5Points.forEach(p=>{
   const icon=L.divIcon({className:'',html:'<div class="'+cls+'">'+p.n+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
   L.marker([p.lat,p.lng],{icon}).addTo(map5).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.time+' · '+p.tag);
 });
+const d5Coffee=[
+  {kind:'sb',name:"Starbucks｜阿倍野 Q's Mall 店",lat:34.6444343,lng:135.5115227,hours:'10:00–22:00',note:"第①站 Q's Mall 同棟",url:'https://store.starbucks.co.jp/detail-4015/'},
+  {kind:'sb',name:'Starbucks｜Rinku Premium Outlets 主店',lat:34.4063985,lng:135.2952279,hours:'09:30–20:00',note:'Outlet 1F；部分商品有 Outlet 價',url:'https://store.starbucks.co.jp/detail-187/'},
+  {kind:'sb',name:'Starbucks｜Rinku Premium Outlets Seaside 店',lat:34.406122,lng:135.293393,hours:'09:30–20:00',note:'Sea Side 區 1F；2026 年新店',url:'https://store.starbucks.co.jp/detail-1852/'},
+  {kind:'sb',name:'Starbucks｜KIX Terminal 1',lat:34.4319994,lng:135.2366019,hours:'1F South Gate 06:30–22:30／2F 07:00–22:00',note:'到 T1 後可依報到／托運進度選樓層',url:'https://store.starbucks.co.jp/detail-677/'}
+];
+addCoffeeMarkers(map5,d5Coffee);
+d5Coffee.forEach(c=>d5coords.push([c.lat,c.lng]));
 const bounds5=L.latLngBounds(d5coords); map5.fitBounds(bounds5,{padding:[30,30]});
 document.getElementById('fit5').onclick=()=>map5.fitBounds(bounds5,{padding:[30,30]});
 
@@ -1385,6 +1475,10 @@ function initTrueDayTabs(){
         if (day === 'day2' && typeof map2 !== 'undefined') {
           map2.invalidateSize(true);
           if (typeof bounds2 !== 'undefined') map2.fitBounds(bounds2,{padding:[30,30]});
+        }
+        if (day === 'day3' && typeof map3coffee !== 'undefined') {
+          map3coffee.invalidateSize(true);
+          if (typeof bounds3coffee !== 'undefined') map3coffee.fitBounds(bounds3coffee,{padding:[28,28]});
         }
         if (day === 'day4' && typeof map4 !== 'undefined') {
           map4.invalidateSize(true);
