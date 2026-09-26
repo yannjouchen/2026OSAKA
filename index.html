@@ -9,7 +9,11 @@
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif}
 a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding:20px} .hero{padding:16px 0 18px}
 .kicker{color:var(--teal);font-weight:800;letter-spacing:.1em;font-size:13px} h1{font-size:clamp(32px,5vw,60px);line-height:1;margin:6px 0 8px}
-.muted{color:var(--muted);font-size:13px;line-height:1.5} .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.move{margin-top:6px;padding:7px 9px;border-radius:10px;background:#f2f7f6;color:#356d6b;font-size:12px;line-height:1.5;font-weight:700}
+.stay{display:inline-block;margin-top:5px;padding:4px 7px;border-radius:999px;background:#fff3df;color:#8a5a24;font-size:11px;font-weight:800}
+.calib{background:#eef7f5;border-left:4px solid var(--teal);border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.6;margin:0 0 12px;color:#41615f}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .chip,.pill{border:1px solid var(--line);background:white;border-radius:999px;padding:8px 11px;font-size:12px} .pill{padding:5px 8px;background:#efe5d7}
 .quick{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0} .quick a{background:var(--card);border:1px solid var(--line);padding:13px;border-radius:16px;font-weight:800;box-shadow:0 8px 22px #00000010}
 .quick span{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:4px}
@@ -617,8 +621,9 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
   <main class="grid">
     <div>
       <section class="card">
-        <div class="head"><h2>第一天時間軸</h2><span class="pill">規劃值</span></div>
+        <div class="head"><h2>第一天時間軸</h2><span class="pill">交通校正版</span></div>
         <div class="body">
+          <div class="calib"><b>交通校正：</b>跨區鐵路以 2026 年公開時刻表／路線查詢校正；心齋橋～難波商圈改成「步行時間＋建議停留」。月台與臨時變更仍以當日電子看板為準。</div>
           <div class="section">高雄出發</div>
           <div class="timeline">
             <div class="t"><div class="time">03:45</div><div><b>出發前往高雄機場</b><div class="muted">出發時間已依實際出發地點估算；若出發地點不變，維持 03:45。建議不要晚於 04:00。</div></div></div>
@@ -631,8 +636,8 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
           <div class="timeline">
             <div class="t"><div class="time">11:00</div><div><b>KIX T1</b><div class="muted">入境 → 領行李 → 海關 → 2F 連絡橋 → 關西機場站。</div></div></div>
             <div class="t"><div class="time">12:10</div><div><b>購買兒童 ICOCA</b><div class="muted">JR-WEST 綠色窗口；準備兒童本人官方身分證件／護照資料。</div><div class="actions"><a class="btn mini soft" href="https://www.westjr.co.jp/global/en/support/kansai_airport.html" target="_blank">JR-WEST</a></div></div></div>
-            <div class="t"><div class="time">13:05</div><div><b>目標搭南海特急 Rapi:t</b><div class="muted">若入境或 ICOCA 排隊延誤，就搭下一班，不硬趕。</div></div></div>
-            <div class="t"><div class="time">14:10</div><div><b>橋樑酒店 心齋橋</b><div class="muted">先寄放行李，接著直接開始逛街。</div></div></div>
+            <div class="t"><div class="time">13:05</div><div><b>南海特急 Rapi:t α｜KIX → 難波</b><div class="muted">官方時刻表確認 13:05 發車；路線查詢為 13:43 抵達南海難波，乘車約 38 分鐘。若入境或 ICOCA 排隊延誤，就改搭 13:35 Rapi:t β 或下一班，不硬趕。</div><div class="move">🚆 交通：約 38 分｜關西空港 → 南海難波｜指定席</div></div></div>
+            <div class="t"><div class="time">14:10</div><div><b>橋樑酒店 心齋橋</b><div class="muted">13:43 到南海難波後，抓約 15–20 分鐘步行到住宿，再預留寄放行李時間。14:10 作為保守抵達值。</div><div class="move">🚶 難波 → 住宿：約 15–20 分｜🧳 寄行李：約 5–10 分</div></div></div>
           </div>
 
           <div class="note"><b>Day 1 原則：</b>MooKEN 先處理 → 14:40 午餐待定 → 接著逛街 → 銅鑼燒 → 高島屋 → 難波公園 → 一蘭 → 唐吉訶德收尾。</div>
@@ -648,7 +653,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">1</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">14:20</div><b>MooKEN</b></div><span class="pill">甜點</span></div>
-        <div class="muted">先去；時間較敏感</div>
+        <div class="muted">先去；時間較敏感</div><div class="move">🚶 住宿 → MooKEN：約 5–6 分</div><span class="stay">🛍️ 約 15–20 分；14:40 午餐另保留</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.6726828%2C135.5016161&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="1"> 已完成</label></div>
       </div>
@@ -657,7 +662,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">2</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">15:50</div><b>HOKA 大阪心齋橋店</b></div><span class="pill">鞋類</span></div>
-        <div class="muted">購物</div>
+        <div class="muted">購物</div><div class="move">🚶 前一站 → HOKA：約 5 分</div><span class="stay">🛍️ 約 15 分</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6726828%2C135.5016161&destination=34.6754425%2C135.5018327&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="2"> 已完成</label></div>
       </div>
@@ -666,7 +671,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">3</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">16:10</div><b>OS Drug Shinsaibashi</b></div><span class="pill">藥妝</span></div>
-        <div class="muted">較早關門店家優先</div>
+        <div class="muted">較早關門店家優先</div><div class="move">🚶 HOKA → OS Drug：約 2 分</div><span class="stay">🛍️ 約 10–12 分</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6754425%2C135.5018327&destination=34.6744954%2C135.501474&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="3"> 已完成</label></div>
       </div>
@@ -675,7 +680,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">4</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">16:25</div><b>心齋橋 PARCO</b></div><span class="pill">商場</span></div>
-        <div class="muted">20:00 前優先</div>
+        <div class="muted">20:00 前優先</div><div class="move">🚶 OS Drug → PARCO：約 2 分</div><span class="stay">🛍️ 約 20 分</span>
         <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">MUJI</span><span class="malltag">HANDS</span><span class="malltag">CAPCOM STORE OSAKA</span><span class="malltag">chiikawaland</span><span class="malltag">Disney Store</span><span class="malltag">LEGO® STORE</span><span class="malltag">BANDAI NAMCO Cross Store</span><span class="malltag">HARBS（E｜3F）</span></div><a href="https://shinsaibashi.parco.jp/shop/" target="_blank" rel="noopener">官方店家目錄 ↗</a></div>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6744954%2C135.501474&destination=34.6738473%2C135.5009574&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="4"> 已完成</label></div>
@@ -685,7 +690,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">5</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">16:50</div><b>鬼塚虎 大阪心齋橋店</b></div><span class="pill">鞋類</span></div>
-        <div class="muted">購物</div>
+        <div class="muted">購物</div><div class="move">🚶 PARCO → Onitsuka Tiger：約 2 分</div><span class="stay">🛍️ 約 15 分</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6738473%2C135.5009574&destination=34.6733223%2C135.5014577&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="5"> 已完成</label></div>
       </div>
@@ -694,7 +699,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">6</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">17:10</div><b>大丸心齋橋店</b></div><span class="pill">百貨</span></div>
-        <div class="muted">與 BicCamera 同區</div>
+        <div class="muted">與 BicCamera 同區</div><div class="move">🚶 Onitsuka → 大丸：約 1–2 分</div><span class="stay">🛍️ 約 15 分</span>
         <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">Pokémon Center OSAKA DX</span><span class="malltag">Pokémon Café</span><span class="malltag">JUMP SHOP</span><span class="malltag">Samsonite</span><span class="malltag">Air BicCamera</span></div><a href="https://www.daimaru.co.jp/shinsaibashi-store/e/searchbyshop/" target="_blank" rel="noopener">官方店家目錄 ↗</a></div>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6733223%2C135.5014577&destination=34.6732406%2C135.5009613&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="6"> 已完成</label></div>
@@ -704,7 +709,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">7</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">17:30</div><b>Air BicCamera 大丸心齋橋店</b></div><span class="pill">電器</span></div>
-        <div class="muted">大丸內／周邊</div>
+        <div class="muted">大丸內／周邊</div><div class="move">🚶 同棟／近旁：約 2 分</div><span class="stay">🛍️ 約 15 分</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6732406%2C135.5009613&destination=34.6725859%2C135.5009065&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="7"> 已完成</label></div>
       </div>
@@ -713,7 +718,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">8</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">17:50</div><b>松本清</b></div><span class="pill">藥妝</span></div>
-        <div class="muted">可彈性縮短</div>
+        <div class="muted">可彈性縮短</div><div class="move">🚶 Air BicCamera → 松本清：約 2 分</div><span class="stay">🛍️ 約 15 分</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6725859%2C135.5009065&destination=34.6725206%2C135.5015478&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="8"> 已完成</label></div>
       </div>
@@ -722,7 +727,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">9</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">18:10</div><b>GU / UNIQLO</b></div><span class="pill">服飾</span></div>
-        <div class="muted">同棟處理</div>
+        <div class="muted">同棟處理</div><div class="move">🚶 松本清 → GU／UNIQLO：約 3 分</div><span class="stay">🛍️ 約 30 分</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6725206%2C135.5015478&destination=34.6712548%2C135.501611&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="9"> 已完成</label></div>
       </div>
@@ -731,7 +736,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">10</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">18:45</div><b>WEGO</b></div><span class="pill">服飾</span></div>
-        <div class="muted">往道頓堀方向</div>
+        <div class="muted">往道頓堀方向</div><div class="move">🚶 GU／UNIQLO → WEGO：約 3–4 分</div><span class="stay">🛍️ 約 15 分</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6712548%2C135.501611&destination=34.6696023%2C135.5011469&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="10"> 已完成</label></div>
       </div>
@@ -740,7 +745,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">11</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">19:05</div><b>くろーばー結び なんばウォーク店</b></div><span class="pill">銅鑼燒</span></div>
-        <div class="muted">難波 Walk 地下街 B21 出口旁（2番街南通り・Forest Park 前）｜外帶｜10:00–21:00</div>
+        <div class="muted">難波 Walk 地下街 B21 出口旁（2番街南通り・Forest Park 前）｜外帶｜10:00–21:00</div><div class="move">🚶 WEGO → 銅鑼燒：約 5–6 分</div><span class="stay">🛍️ 外帶約 10 分</span>
         <div class="buy-note"><div class="buy-title">📸 照片購物目標｜銅鑼燒</div><b>店家：</b>くろーばー結び なんばWalk店<br><b>優先找：</b>瀨戶內檸檬／水蜜桃等季節限定口味<br>照片店家就是這間。店內約有多種常溫、冷藏與季節限定口味；10/9 實際販售口味以當日櫃上為準。若照片款已換季，就直接選當日季節限定。</div>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6696023%2C135.5011469&destination=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97%20%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E9%9B%A3%E6%B3%A21%E4%B8%81%E7%9B%AE%E8%99%B9%E3%81%AE%E3%81%BE%E3%81%A13-10%E5%8F%B7%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF2%E7%95%AA%E8%A1%97%E5%8D%97%E9%80%9A%E3%82%8A%20%E3%83%95%E3%82%A9%E3%83%AC%E3%82%B9%E3%83%88%E3%83%91%E3%83%BC%E3%82%AF%E5%89%8D&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="11"> 已完成</label></div>
@@ -750,7 +755,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">12</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">19:25</div><b>大阪高島屋</b></div><span class="pill">百貨</span></div>
-        <div class="muted">19:55 前離開，優先處理較早關門百貨</div>
+        <div class="muted">19:55 前離開，優先處理較早關門百貨</div><div class="move">🚶 銅鑼燒 → 高島屋：約 5–6 分</div><span class="stay">🛍️ 約 25 分</span>
         <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">Aesop</span><span class="malltag">YSL Beauty</span><span class="malltag">SK-II</span><span class="malltag">RMK</span><span class="malltag">GUCCI Beauty</span><span class="malltag">STYLE & EDIT</span></div><a href="https://www.takashimaya.co.jp/osaka/" target="_blank" rel="noopener">官方店家目錄 ↗</a></div>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97%20%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E9%9B%A3%E6%B3%A21%E4%B8%81%E7%9B%AE%E8%99%B9%E3%81%AE%E3%81%BE%E3%81%A13-10%E5%8F%B7%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF2%E7%95%AA%E8%A1%97%E5%8D%97%E9%80%9A%E3%82%8A%20%E3%83%95%E3%82%A9%E3%83%AC%E3%82%B9%E3%83%88%E3%83%91%E3%83%BC%E3%82%AF%E5%89%8D&destination=34.6646089%2C135.5012633&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="12"> 已完成</label></div>
@@ -760,7 +765,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">13</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">20:00</div><b>難波公園</b></div><span class="pill">商場</span></div>
-        <div class="muted">20:00–20:35｜快速逛重點</div>
+        <div class="muted">20:00–20:35｜快速逛重點</div><div class="move">🚶 高島屋 → Namba Parks：約 5–6 分</div><span class="stay">🛍️ 約 35 分</span>
         <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">Bshop</span><span class="malltag">A|X Armani Exchange</span><span class="malltag">POTR</span><span class="malltag">HARBS（20:00 CLOSE）</span><span class="malltag">Venchi</span><span class="malltag">Starbucks Tea & Cafe</span><span class="malltag">Original Pancake House</span></div><a href="https://nambaparks.com/shopresearch" target="_blank" rel="noopener">官方店家目錄 ↗</a></div>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6646089%2C135.5012633&destination=34.6616083%2C135.5019349&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="13"> 已完成</label></div>
@@ -770,7 +775,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">14</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">20:45</div><b>一蘭拉麵 難波御堂筋店</b></div><span class="pill">晚餐</span></div>
-        <div class="muted">20:45–21:30｜晚餐</div>
+        <div class="muted">20:45–21:30｜晚餐</div><div class="move">🚶 Namba Parks → 一蘭：約 12–15 分</div><span class="stay">🍜 約 45 分</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6616083%2C135.5019349&destination=34.6692891%2C135.5006608&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="14"> 已完成</label></div>
       </div>
@@ -779,7 +784,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
       <div class="num">15</div>
       <div class="stopbody">
         <div class="row"><div><div class="smalltime">21:35</div><b>唐吉訶德 道頓堀御堂筋</b></div><span class="pill">夜間購物</span></div>
-        <div class="muted">晚關門店家放最後；逛完再回飯店</div>
+        <div class="muted">晚關門店家放最後；逛完再回飯店</div><div class="move">🚶 一蘭 → 唐吉訶德：約 2 分</div><span class="stay">🛍️ 夜間彈性；累了可直接回住宿</span>
         <div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.6692891%2C135.5006608&destination=34.669254%2C135.499904&travelmode=walking" target="_blank">Google Maps</a>
         <label class="check"><input type="checkbox" data-k="15"> 已完成</label></div>
       </div>
@@ -845,22 +850,23 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 <main class="grid">
   <div>
     <section class="card">
-      <div class="head"><h2>第二天時間軸</h2><span class="pill">最新版</span></div>
+      <div class="head"><h2>第二天時間軸</h2><span class="pill">交通校正版</span></div>
       <div class="body">
+        <div class="calib"><b>交通校正：</b>心齋橋→清水五條站的公開路線查詢約 1 小時 6 分；再加住宿／車站與清水坂步行。京都→奈良以京阪＋近鐵為主，車站間約 55–70 分。以下時間已把步行與轉乘緩衝算入。</div>
         <div class="section">京都｜清水寺</div>
         <div class="timeline">
-          <div class="t"><div class="time">07:30</div><div><b>橋樑酒店 心齋橋出發</b><div class="muted">前往京都清水寺一帶；以 09:15 左右抵達 MOCOMOCO 為目標。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.9954951%2C135.7763166&travelmode=transit" target="_blank">Google Maps</a></div></div></div>
-          <div class="t"><div class="time">09:30</div><div><b>MOCOMOCO 清水寺店｜和服預約</b><div class="muted">換裝＋髮型預留約 45 分鐘。</div></div></div>
-          <div class="t"><div class="time">10:15</div><div><b>清水寺</b><div class="muted">主景點；預計約 55 分鐘。</div></div></div>
-          <div class="t"><div class="time">11:10</div><div><b>GOKAGO</b><div class="muted">抹茶休息約 20–25 分鐘。</div></div></div>
-          <div class="t"><div class="time">11:45</div><div><b>炸牛排 京都勝牛 清水五條坂店</b><div class="muted">午餐約 45 分鐘；吃完回 MOCOMOCO 還和服。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.9954951%2C135.7763166&destination=34.9954951%2C135.7763166&travelmode=walking&waypoints=34.9948561%2C135.7850463%7C34.9956%2C135.7822%7C34.9946%2C135.7775" target="_blank">京都步行總覽</a></div></div></div>
-          <div class="t"><div class="time">12:35</div><div><b>回 MOCOMOCO 還和服</b><div class="muted">約 13:00 完成，隨後直接往奈良。</div></div></div>
+          <div class="t"><div class="time">07:30</div><div><b>橋樑酒店 心齋橋出發</b><div class="muted">建議走：步行至心齋橋 → 御堂筋線到淀屋橋 → 京阪本線到清水五條 → 步行上清水坂至 MOCOMOCO。以 09:05～09:15 抵達為目標。</div><div class="move">🚶 約 5–7 分 → 🚇 心齋橋→淀屋橋 → 🚆 京阪→清水五條｜站到站約 1:06 → 🚶 約 15–20 分</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.9954951%2C135.7763166&travelmode=transit" target="_blank">Google Maps</a></div></div></div>
+          <div class="t"><div class="time">09:30</div><div><b>MOCOMOCO 清水寺店｜和服預約</b><div class="muted">換裝＋髮型預留約 45 分鐘。</div><span class="stay">👘 停留約 45 分</span></div></div>
+          <div class="t"><div class="time">10:15</div><div><b>清水寺</b><div class="muted">主景點；預計約 55 分鐘。</div><div class="move">🚶 MOCOMOCO → 清水寺：約 10–15 分（上坡、人潮時拉長）</div><span class="stay">⛩️ 約 55 分</span></div></div>
+          <div class="t"><div class="time">11:10</div><div><b>GOKAGO</b><div class="muted">抹茶休息約 20–25 分鐘。</div><div class="move">🚶 清水寺 → GOKAGO：約 5–8 分</div><span class="stay">🍵 約 20–25 分</span></div></div>
+          <div class="t"><div class="time">11:45</div><div><b>炸牛排 京都勝牛 清水五條坂店</b><div class="muted">午餐約 45 分鐘；吃完回 MOCOMOCO 還和服。</div><div class="move">🚶 GOKAGO → 勝牛：約 5–8 分</div><span class="stay">🍽️ 約 45 分</span><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.9954951%2C135.7763166&destination=34.9954951%2C135.7763166&travelmode=walking&waypoints=34.9948561%2C135.7850463%7C34.9956%2C135.7822%7C34.9946%2C135.7775" target="_blank">京都步行總覽</a></div></div></div>
+          <div class="t"><div class="time">12:35</div><div><b>回 MOCOMOCO 還和服</b><div class="muted">約 13:00 完成，隨後直接往奈良。</div><div class="move">🚶 勝牛 → MOCOMOCO：約 5–10 分</div><span class="stay">👘 還裝約 15–20 分</span></div></div>
         </div>
         <div class="section">奈良 → 大阪</div>
         <div class="timeline">
-          <div class="t"><div class="time">13:00</div><div><b>京都出發前往奈良</b><div class="muted">不再增加京都景點。</div><div class="actions"><a class="btn mini teal" href="https://www.google.com/maps/dir/?api=1&origin=34.9954951%2C135.7763166&destination=34.685047%2C135.843012&travelmode=transit" target="_blank">前往奈良</a></div></div></div>
-          <div class="t"><div class="time">14:30</div><div><b>奈良公園</b><div class="muted">約 14:30–15:00 抵達；餵鹿、拍照、散步至約 17:00。</div></div></div>
-          <div class="t"><div class="time">17:00</div><div><b>離開奈良 → 回大阪</b><div class="muted">為 19:30 晚餐保留緩衝。</div><div class="actions"><a class="btn mini teal" href="https://www.google.com/maps/dir/?api=1&origin=34.685047%2C135.843012&destination=34.6746794%2C135.4963046&travelmode=transit" target="_blank">回大阪</a></div></div></div>
+          <div class="t"><div class="time">13:00</div><div><b>京都出發前往奈良</b><div class="muted">不再增加京都景點。步行回清水五條後，京阪到丹波橋、步行轉近鐵丹波橋，再往近鐵奈良；若剛好接不上快車，抵達時間會落在 14:30～14:45。</div><div class="move">🚶 約 15–20 分 → 🚆 清水五條→近鐵奈良：約 55–70 分 → 🚶 近鐵奈良→奈良公園：約 10–15 分</div><div class="actions"><a class="btn mini teal" href="https://www.google.com/maps/dir/?api=1&origin=34.9954951%2C135.7763166&destination=34.685047%2C135.843012&travelmode=transit" target="_blank">前往奈良</a></div></div></div>
+          <div class="t"><div class="time">14:30</div><div><b>奈良公園</b><div class="muted">預估 14:30–14:45 抵達；餵鹿、拍照、散步至約 17:00。</div><span class="stay">🦌 約 2 小時 15 分～2 小時 30 分</span></div></div>
+          <div class="t"><div class="time">17:00</div><div><b>離開奈良 → 回大阪</b><div class="muted">近鐵奈良→大阪難波直達快速急行約 40 分；加上奈良公園走回車站與大阪端步行，通常約 65–75 分。19:30 晚餐前仍有明顯緩衝。</div><div class="move">🚶 約 10–15 分 → 🚆 近鐵奈良→大阪難波：約 40 分 → 🚶 約 10–15 分</div><div class="actions"><a class="btn mini teal" href="https://www.google.com/maps/dir/?api=1&origin=34.685047%2C135.843012&destination=34.6746794%2C135.4963046&travelmode=transit" target="_blank">回大阪</a></div></div></div>
           <div class="t"><div class="time">19:30</div><div><b>SUKIYAKI FUJIMOTO｜晚餐</b><div class="muted">⚠️ 需事先訂位，建議準時抵達。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/search/?api=1&query=SUKIYAKI%20FUJIMOTO%20Osaka" target="_blank">Google Maps</a><a class="btn mini teal" href="https://www.google.com/maps/reserve/v/dine/c/53sk8jwCI5w?source=pa&opi=89978449&hl=zh-TW" target="_blank">立即訂位</a></div></div></div>
         </div>
         <div class="note"><b>Day 2 最新原則：</b>京都只保留 MOCOMOCO → 清水寺 → GOKAGO → 京都勝牛 → 還和服；產寧坂、二年坂、八坂塔與祇園皆已刪除。</div>
@@ -1029,12 +1035,13 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 <main class="grid">
   <div>
     <section class="card">
-      <div class="head"><h2>第三天時間軸｜不買快通</h2><span class="pill">家庭版</span></div>
+      <div class="head"><h2>第三天時間軸｜不買快通</h2><span class="pill">交通校正版</span></div>
       <div class="body">
+        <div class="calib"><b>交通校正：</b>鎖定你前面比較後較適合帶小孩的早班方案：心齋橋→動物園前→步行轉 JR 新今宮→西九條→Universal City。西九條 JR→JR 夢咲線不用出站。</div>
         <div class="section">出發 → 入園</div>
         <div class="timeline">
-          <div class="t"><div class="time">05:15</div><div><b>橋樑酒店 心齋橋出發</b><div class="muted">目標提早抵達 USJ；早餐可前一晚先準備方便攜帶的餐點。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=Universal+Studios+Japan&travelmode=transit" target="_blank">Google Maps</a></div></div></div>
-          <div class="t"><div class="time">06:00</div><div><b>USJ 門口排隊</b><div class="muted">抓 06:00～06:15 抵達；官方提醒有機會早於表定時間開始入園。</div></div></div>
+          <div class="t"><div class="time">05:15</div><div><b>橋樑酒店 心齋橋出發</b><div class="muted">目標提早抵達 USJ；早餐可前一晚先準備方便攜帶的餐點。</div><div class="move">🚶 約 6 分到心齋橋 → 05:21 御堂筋線 → 05:27 動物園前 → 🚶 約 3–5 分轉 JR 新今宮 → 05:32 JR 環狀線 → 05:42 西九條 → 05:46 JR 夢咲線 → 05:51 Universal City → 🚶 約 5–10 分到 USJ 排隊區</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=Universal+Studios+Japan&travelmode=transit" target="_blank">Google Maps</a></div></div></div>
+          <div class="t"><div class="time">06:00</div><div><b>USJ 門口排隊</b><div class="muted">依上述早班路線，約 05:55～06:05 可到排隊區；保留少量轉乘／找月台緩衝。官方提醒有機會早於表定時間開始入園。</div></div></div>
           <div class="t"><div class="time">開園後</div><div><b>先處理 SUPER NINTENDO WORLD™</b><div class="muted">2026 起，區域入場號碼券／抽選券須用官方 App；如果可自由入場就直接往任天堂世界。</div><div class="actions"><a class="btn mini teal" href="https://www.usj.co.jp/web/zh/tw/enjoy/app" target="_blank">官方 App</a></div></div></div>
         </div>
 
@@ -1064,7 +1071,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
           <div class="t"><div class="time">17:00</div><div><b>USJ 園內晚餐</b><div class="muted">先把正餐吃完，再進入 18:00 後的萬聖節時段；餐廳暫不鎖死，現階段可優先考慮 Park Side Grille。</div></div></div>
           <div class="t"><div class="time">18:00</div><div><b>Halloween Horror Nights</b><div class="muted">Street Zombies／Zombie de Dance；依孩子膽量彈性調整。</div></div></div>
           <div class="t"><div class="time">18:30+</div><div><b>侏羅紀公園‧乘船遊 ～In the Dark～</b><div class="muted">10/11 屬於 18:00 起的夜間黑暗版本；如果白天沒玩，可把它當夜間主力。</div></div></div>
-          <div class="t"><div class="time">21:00</div><div><b>視體力離園 → 回心齋橋</b><div class="muted">不必硬撐閉園最後一分鐘；現場以官方 App 等待時間和孩子體力為準。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=Universal+Studios+Japan&destination=34.673856%2C135.498128&travelmode=transit" target="_blank">回飯店導航</a></div></div></div>
+          <div class="t"><div class="time">21:00</div><div><b>視體力離園 → 回心齋橋</b><div class="muted">不必硬撐閉園最後一分鐘；現場以官方 App 等待時間和孩子體力為準。</div><div class="move">🚶 USJ→Universal City → JR 夢咲線→西九條 → JR／Metro 回心齋橋；晚間抓約 35–45 分含步行與候車</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=Universal+Studios+Japan&destination=34.673856%2C135.498128&travelmode=transit" target="_blank">回飯店導航</a></div></div></div>
         </div>
 
         <div class="d3callout"><b>國小生插入型備選：</b>主線之外的項目改整理在下方 A～H 清單，並同步標在 USJ 園區圖。可依當日排隊時間、表演時段與孩子體力插入，不綁死固定分鐘。</div>
@@ -1266,45 +1273,46 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 <main class="grid">
   <div>
     <section class="card">
-      <div class="head"><h2>第四天完整時間軸</h2><span class="pill">主線</span></div>
+      <div class="head"><h2>第四天完整時間軸</h2><span class="pill">交通校正版</span></div>
       <div class="body">
+        <div class="calib"><b>交通校正：</b>大阪梅田(阪急)→池田的官方時刻表約 25–30 分。梅田商圈內改成「步行＋停留」；晚餐段以御堂筋線梅田→難波為主。</div>
         <div class="section">上午｜池田</div>
         <div class="timeline">
-          <div class="t" id="d4-1"><div class="time">08:10</div><div><b>橋樑酒店 心齋橋出發</b><div class="muted">往大阪梅田轉阪急寶塚線前往池田；國定假日預留候車與人潮緩衝。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.8180487%2C135.4266758&travelmode=transit" target="_blank">開啟導航</a></div></div></div>
-          <div class="t" id="d4-2"><div class="time">09:20</div><div><b>抵達日清杯麵博物館 大阪池田</b><div class="muted">目標開館前後到；進館先確認 My CUPNOODLES Factory 當日整理券。</div></div></div>
-          <div class="t" id="d4-3"><div class="time">09:30</div><div><b>杯麵博物館＋自製杯麵</b><div class="muted">主體是自己設計杯身、選湯底與配料，把完成的杯麵帶走；不是把這裡當午餐店。</div><div class="actions"><a class="btn mini teal" href="https://www.cupnoodles-museum.jp/ja/osaka_ikeda/attractions/mc-factory/" target="_blank">My CUPNOODLES</a></div></div></div>
-          <div class="t"><div class="time">11:30</div><div><b>池田 → 大阪梅田</b><div class="muted">結束後回阪急大阪梅田；下午開始集中步行逛梅田。</div></div></div>
+          <div class="t" id="d4-1"><div class="time">08:10</div><div><b>橋樑酒店 心齋橋出發</b><div class="muted">往大阪梅田轉阪急寶塚線前往池田；國定假日預留候車與人潮緩衝。</div><div class="move">🚶 約 5–6 分到心齋橋 → 🚇 御堂筋線到梅田約 7–8 分 → 🚶 轉阪急約 8–10 分 → 🚆 大阪梅田→池田約 25–30 分 → 🚶 博物館約 5 分</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.8180487%2C135.4266758&travelmode=transit" target="_blank">開啟導航</a></div></div></div>
+          <div class="t" id="d4-2"><div class="time">09:20</div><div><b>抵達日清杯麵博物館 大阪池田</b><div class="muted">上述交通通常約 55–60 分；09:20 是含找路／國定假日候車的保守值。進館先確認 My CUPNOODLES Factory 當日整理券。</div></div></div>
+          <div class="t" id="d4-3"><div class="time">09:30</div><div><b>杯麵博物館＋自製杯麵</b><div class="muted">主體是自己設計杯身、選湯底與配料，把完成的杯麵帶走；不是把這裡當午餐店。</div><span class="stay">🍜 博物館＋自製杯麵：約 2 小時</span><div class="actions"><a class="btn mini teal" href="https://www.cupnoodles-museum.jp/ja/osaka_ikeda/attractions/mc-factory/" target="_blank">My CUPNOODLES</a></div></div></div>
+          <div class="t"><div class="time">11:30</div><div><b>池田 → 大阪梅田</b><div class="muted">結束後回阪急大阪梅田；下午開始集中步行逛梅田。</div><div class="move">🚶 博物館→池田約 5 分 → 🚆 池田→大阪梅田約 25–30 分 → 🚶 茶屋町約 5–10 分</div></div></div>
         </div>
 
         <div class="section">下午｜梅田購物主線</div>
         <div class="timeline">
-          <div class="t" id="d4-4"><div class="time">12:25</div><div><b>ガチャガチャの森 梅田茶屋町店</b><div class="muted">先讓小孩逛扭蛋；建議控制約 30 分鐘。Blue Bottle 梅田茶屋町就在附近；抓約 10～15 分鐘外帶咖啡，順便找照片中的 Blue Bottle 馬克杯，不安排坐店。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/search/?api=1&query=%E3%82%AC%E3%83%81%E3%83%A3%E3%82%AC%E3%83%81%E3%83%A3%E3%81%AE%E6%A3%AE%20%E6%A2%85%E7%94%B0%E8%8C%B6%E5%B1%8B%E7%94%BA%E5%BA%97" target="_blank">Google Maps</a></div></div></div>
-          <div class="t"><div class="time">13:00</div><div><b>梅田午餐｜現場決定</b><div class="muted">保留約 40 分鐘。HARBS 列 E、WeLoveDonut 列 D；都不當固定午餐。Blue Bottle 只做順路外帶咖啡＋照片購物目標。</div></div></div>
-          <div class="t" id="d4-5"><div class="time">13:45</div><div><b>阪急梅田本店</b><div class="muted">精品／美妝優先，抓重點逛。</div>
+          <div class="t" id="d4-4"><div class="time">12:25</div><div><b>ガチャガチャの森 梅田茶屋町店</b><div class="muted">先讓小孩逛扭蛋；建議控制約 30 分鐘。Blue Bottle 梅田茶屋町就在附近；抓約 10～15 分鐘外帶咖啡，順便找照片中的 Blue Bottle 馬克杯，不安排坐店。</div><div class="move">🚶 阪急大阪梅田→茶屋町：約 5–10 分</div><span class="stay">🎰 約 30 分＋☕ 10–15 分</span><div class="actions"><a class="btn mini" href="https://www.google.com/maps/search/?api=1&query=%E3%82%AC%E3%83%81%E3%83%A3%E3%82%AC%E3%83%81%E3%83%A3%E3%81%AE%E6%A3%AE%20%E6%A2%85%E7%94%B0%E8%8C%B6%E5%B1%8B%E7%94%BA%E5%BA%97" target="_blank">Google Maps</a></div></div></div>
+          <div class="t"><div class="time">13:00</div><div><b>梅田午餐｜現場決定</b><div class="muted">保留約 40 分鐘。HARBS 列 E、WeLoveDonut 列 D；都不當固定午餐。Blue Bottle 只做順路外帶咖啡＋照片購物目標。</div><span class="stay">🍽️ 約 40 分</span></div></div>
+          <div class="t" id="d4-5"><div class="time">13:45</div><div><b>阪急梅田本店</b><div class="muted">精品／美妝優先，抓重點逛。</div><div class="move">🚶 午餐區→阪急：約 5 分</div><span class="stay">🛍️ 約 40–45 分</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">YSL Beauty</span><span class="malltag">SK-II</span><span class="malltag">RMK</span><span class="malltag">Aesop</span><span class="malltag">GUCCI</span><span class="malltag">RIMOWA</span></div><a href="https://www.hankyu-dept.co.jp/honten/floor/index.html" target="_blank" rel="noopener">官方樓層／品牌目錄 ↗</a></div>
           </div></div>
-          <div class="t" id="d4-6"><div class="time">14:35</div><div><b>阪神梅田本店</b><div class="muted">伴手禮、零食、阪神食品館為主；這站也是照片伴手禮重點補貨區。</div>
+          <div class="t" id="d4-6"><div class="time">14:35</div><div><b>阪神梅田本店</b><div class="muted">伴手禮、零食、阪神食品館為主；這站也是照片伴手禮重點補貨區。</div><div class="move">🚶 阪急→阪神：約 5–8 分</div><span class="stay">🛍️ 約 35–40 分</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">BRULEE MERIZE Merchee</span><span class="malltag">菓匠三全</span><span class="malltag">SALTRA（梅田阪神重點）</span><span class="malltag">阪神名物いか焼き</span><span class="malltag">551蓬萊</span><span class="malltag">Club Harie</span></div><a href="https://www.hanshin-dept.jp/hshonten/floor/floorb1.html" target="_blank" rel="noopener">官方 B1 食品館目錄 ↗</a></div>
             <div class="buy-note"><div class="buy-title">📸 照片購物目標｜阪神梅田本店</div><b>BRULEE MERIZE Merchee：</b>布蕾起司可頌酥<br><b>菓匠三全：</b>仙台老舖經典和菓子（可先看萩之月等招牌；以現場為準）<br><b>SALTRA：</b>鹹焦糖夾心奶油餅乾<br>這三個都放在同一站處理，避免梅田段分散找伴手禮。</div>
           </div></div>
-          <div class="t" id="d4-7"><div class="time">15:20</div><div><b>LUCUA Osaka＋LUCUA SOUTH</b><div class="muted">LOFT 在 LUCUA 9F；2026 年角色店已轉到 LUCUA SOUTH 13F。⭐ TEN. 在 LUCUA 1100 3F（10:30–20:30），這站優先留比較多時間；若要找照片裡的日本文具與生活雜貨，也優先集中這一站處理。</div>
+          <div class="t" id="d4-7"><div class="time">15:20</div><div><b>LUCUA Osaka＋LUCUA SOUTH</b><div class="muted">LOFT 在 LUCUA 9F；2026 年角色店已轉到 LUCUA SOUTH 13F。⭐ TEN. 在 LUCUA 1100 3F（10:30–20:30），這站優先留比較多時間；若要找照片裡的日本文具與生活雜貨，也優先集中這一站處理。</div><div class="move">🚶 阪神→LUCUA：約 5–7 分</div><span class="stay">🛍️ 約 60 分</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">LOFT 文具區</span><span class="malltag">Francfranc</span><span class="malltag">Nintendo OSAKA</span><span class="malltag">Pokémon Center OSAKA</span><span class="malltag">CAPCOM STORE & CAFE UMEDA</span><span class="malltag">Tomica / Plarail Shop</span><span class="malltag">ONE PIECE 麥わら Store</span><span class="malltag">⭐ TEN.｜LUCUA 1100 3F</span></div><a href="https://www.lucua.jp/shopguide/shop.html" target="_blank" rel="noopener">官方店家目錄 ↗</a><a href="https://www.lucua.jp/shopguide/id1029.html" target="_blank" rel="noopener">TEN. 官方店舖 ↗</a></div>
             <div class="buy-note"><div class="buy-title">📸 照片購物目標｜文具／生活雜貨</div><b>LOFT：</b>彩色筆、原子筆、手帳／文具小物優先看這站<br><b>Francfranc：</b>照片同款風格的生活雜貨可順路看；若時間不夠，先保 LOFT 文具區與 TEN.</div>
           </div></div>
-          <div class="t" id="d4-8"><div class="time">16:30</div><div><b>KITTE 大阪</b><div class="muted">3F 吉伊卡哇麵包店列為「看得到就看」；10 月優先入場券目前已完售，不把買麵包當成保證行程。</div>
+          <div class="t" id="d4-8"><div class="time">16:30</div><div><b>KITTE 大阪</b><div class="muted">3F 吉伊卡哇麵包店列為「看得到就看」；10 月優先入場券目前已完售，不把買麵包當成保證行程。</div><div class="move">🚶 LUCUA→KITTE：約 5–7 分</div><span class="stay">🛍️ 約 25–30 分</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">ちいかわベーカリー OSAKA</span><span class="malltag">Chiikawa Bakery POP UP</span><span class="malltag">devirock</span><span class="malltag">HOKURIKU+</span><span class="malltag">豊岡鞄</span><span class="malltag">TOBI SHOP</span></div><a href="https://osaka.jp-kitte.jp/shop/index.jsp" target="_blank" rel="noopener">官方店家目錄 ↗</a><a href="https://chiikawabakery.jp/reservation/" target="_blank" rel="noopener">吉伊卡哇入場資訊 ↗</a></div>
           </div></div>
-          <div class="t" id="d4-9"><div class="time">17:05</div><div><b>GRAND FRONT 大阪</b><div class="muted">運動、戶外、生活用品集中；有目標品牌就直攻樓層。</div>
+          <div class="t" id="d4-9"><div class="time">17:05</div><div><b>GRAND FRONT 大阪</b><div class="muted">運動、戶外、生活用品集中；有目標品牌就直攻樓層。</div><div class="move">🚶 KITTE→Grand Front：約 8–10 分</div><span class="stay">🛍️ 約 40 分</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">Apple</span><span class="malltag">MUJI</span><span class="malltag">THE NORTH FACE+</span><span class="malltag">New Balance</span><span class="malltag">GREGORY</span><span class="malltag">mont-bell</span><span class="malltag">Samsonite BLACK LABEL</span></div><a href="https://www.gfo-sc.jp/shop/list/" target="_blank" rel="noopener">官方店家目錄 ↗</a></div>
           </div></div>
-          <div class="t" id="d4-10"><div class="time">17:55</div><div><b>GRAND GREEN OSAKA</b><div class="muted">最後用公園＋商場做放鬆段；時間落後就只散步或直接前往晚餐。</div>
+          <div class="t" id="d4-10"><div class="time">17:55</div><div><b>GRAND GREEN OSAKA</b><div class="muted">最後用公園＋商場做放鬆段；時間落後就只散步或直接前往晚餐。</div><div class="move">🚶 Grand Front→Grand Green：約 5 分</div><span class="stay">🌳 約 30 分</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">Patagonia 大阪・梅田</span><span class="malltag">有隣堂</span><span class="malltag">gardens umekita by kohnan</span><span class="malltag">KEEPGREEN OSAKA</span><span class="malltag">TULLY'S COFFEE</span><span class="malltag">re:Dine 大阪</span></div><a href="https://umekita.com/shop/" target="_blank" rel="noopener">官方店家目錄 ↗</a></div>
           </div></div>
         </div>
 
         <div class="section">晚上｜難波</div>
         <div class="timeline">
-          <div class="t"><div class="time">18:35</div><div><b>梅田離開 → 難波</b><div class="muted">至少抓 40～50 分鐘含進站、搭車、步行；19:20 前到 namBa HIPS 一帶。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.7024579%2C135.4913958&destination=34.6675993%2C135.5006679&travelmode=transit" target="_blank">開啟導航</a></div></div></div>
+          <div class="t"><div class="time">18:35</div><div><b>梅田離開 → 難波</b><div class="muted">實際移動通常約 25–30 分；這裡仍保留約 50 分鐘，讓你們可以上廁所、找電梯、避開走錯出口。19:20 前到 namBa HIPS 一帶。</div><div class="move">🚶 Grand Green→梅田站約 8–10 分 → 🚇 御堂筋線梅田→難波約 9 分 → 🚶 難波→namBa HIPS 約 5 分</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.7024579%2C135.4913958&destination=34.6675993%2C135.5006679&travelmode=transit" target="_blank">開啟導航</a></div></div></div>
           <div class="t" id="d4-11"><div class="time">19:30</div><div><b>焼肉きんぐ namBaHIPS店｜晚餐</b><div class="muted">⚠️ 主行程固定：建議事先完成優先案內預約。店舖位於 namBa HIPS 7F。</div><div class="actions"><a class="btn mini teal" href="https://www.yakiniku-king.jp/shop/2394" target="_blank" rel="noopener">🔥 官方訂位</a><a class="btn mini" href="https://www.google.com/maps/search/?api=1&query=%E7%84%BC%E8%82%89%E3%81%8D%E3%82%93%E3%81%90%20namBaHIPS%E5%BA%97" target="_blank">Google Maps</a></div></div></div>
           <div class="t"><div class="time">21:10</div><div><b>回橋樑酒店 心齋橋</b><div class="muted">Day 5 要退房、帶行李往機場方向，今晚不再追加遠距離行程。</div></div></div>
         </div>
@@ -1382,40 +1390,41 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 <main class="grid">
   <div>
     <section class="card">
-      <div class="head"><h2>第五天完整時間軸</h2><span class="pill">回程日</span></div>
+      <div class="head"><h2>第五天完整時間軸</h2><span class="pill">交通校正版</span></div>
       <div class="body">
+        <div class="calib"><b>交通校正：</b>心齋橋→天王寺御堂筋線車程約 8 分；天王寺→Rinku-Town 的關空快速／同方向列車約 40–50 分；Rinku-Town→KIX 鐵路本體約 6–13 分。行李步行與找月台已另外留緩衝。</div>
         <div class="section">退房前｜先處理飛機</div>
         <div class="timeline">
           <div class="t" id="d5-1"><div class="time">08:30</div><div><b>確認 CI177 全員網路報到</b><div class="muted">先看「預約自動報到」是否已完成並取得座位／登機證；若沒有，立即改做華航網路報到。</div><div class="actions"><a class="btn mini teal" href="https://airportservice.china-airlines.com/autoCheckin/preCheckin_paxlist.aspx?country=tw&locale=zh" target="_blank">確認自動報到</a><a class="btn mini" href="https://calec.china-airlines.com/eCheckin/eCheckin_home.aspx?country=tw&locale=zh" target="_blank">立即網路報到</a></div><div class="trip-alert">華航一般網路報到於起飛前 48 小時開放；「預約自動報到」是要在 48 小時以前先預約。Day 5 這裡的任務是<strong>確認是否已完成</strong>，沒完成就直接網路報到。</div></div></div>
           <div class="t"><div class="time">09:00</div><div><b>整理行李、退房</b><div class="muted">全部行李直接帶走；今天不再回飯店。</div></div></div>
-          <div class="t"><div class="time">09:20</div><div><b>心齋橋 → 天王寺／阿倍野</b><div class="muted">以御堂筋線為主，帶行李時比多次轉乘簡單。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.6448982%2C135.5116009&travelmode=transit" target="_blank">開啟導航</a></div></div></div>
+          <div class="t"><div class="time">09:20</div><div><b>心齋橋 → 天王寺／阿倍野</b><div class="muted">以御堂筋線為主，帶行李時比多次轉乘簡單。</div><div class="move">🚶 住宿→心齋橋約 5–6 分 → 🚇 心齋橋→天王寺約 8 分 → 🚶 到寄物區約 5–10 分</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.6448982%2C135.5116009&travelmode=transit" target="_blank">開啟導航</a></div></div></div>
         </div>
 
         <div class="section">上午｜天王寺・阿倍野</div>
         <div class="timeline">
-          <div class="t"><div class="time">09:45</div><div><b>抵達天王寺｜先寄放大行李</b><div class="muted">改成先在天王寺站／MIO 一帶找大型寄物櫃或寄存，再空手走 Q's Mall、Harukas、MIO。這樣最後直接回 JR 天王寺取行李，不必回 Q's Mall。</div></div></div>
-          <div class="t" id="d5-2"><div class="time">10:00</div><div><b>あべのキューズモール｜BREEZE</b><div class="muted">BREEZE 在 3F；先完成小孩服飾購物。這站抓約 40～45 分鐘，不擴張成整棟慢逛。</div>
+          <div class="t"><div class="time">09:45</div><div><b>抵達天王寺｜先寄放大行李</b><div class="muted">改成先在天王寺站／MIO 一帶找大型寄物櫃或寄存，再空手走 Q's Mall、Harukas、MIO。這樣最後直接回 JR 天王寺取行李，不必回 Q's Mall。</div><span class="stay">🧳 寄物＋找櫃：約 10–15 分</span></div></div>
+          <div class="t" id="d5-2"><div class="time">10:00</div><div><b>あべのキューズモール｜BREEZE</b><div class="muted">BREEZE 在 3F；先完成小孩服飾購物。這站抓約 40～45 分鐘，不擴張成整棟慢逛。</div><div class="move">🚶 天王寺寄物區→Q's Mall：約 5–8 分</div><span class="stay">🛍️ 約 40–45 分</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">BREEZE</span><span class="malltag">Disney Store</span><span class="malltag">UNIQLO</span><span class="malltag">GU</span><span class="malltag">Snoopy Town Shop</span><span class="malltag">Sylvanian Families</span><span class="malltag">BIC CAMERA</span></div><a href="https://qs-mall.jp/abeno/shop/" target="_blank" rel="noopener">官方店家目錄 ↗</a></div>
           </div></div>
-          <div class="t" id="d5-3"><div class="time">10:50</div><div><b>近鐵百貨 阿倍野 Harukas 本店｜B1</b><div class="muted">只逛地下食品樓層，主目標是銀装；控制約 20 分鐘，不逛整棟百貨。</div>
+          <div class="t" id="d5-3"><div class="time">10:50</div><div><b>近鐵百貨 阿倍野 Harukas 本店｜B1</b><div class="muted">只逛地下食品樓層，主目標是銀装；控制約 20 分鐘，不逛整棟百貨。</div><div class="move">🚶 Q's Mall→Harukas：約 5 分</div><span class="stay">🎁 約 20 分</span>
             <div class="mallshops"><b>伴手禮重點：</b><div class="malltags"><span class="malltag">📸 銀装</span><span class="malltag">Gâteau Festa Harada（備援）</span><span class="malltag">Club Harie</span><span class="malltag">Henri Charpentier</span></div><a href="https://abenoharukas.d-kintetsu.co.jp/floor/tower/b1f/" target="_blank" rel="noopener">B1 官方樓層 ↗</a></div>
             <div class="buy-note"><div class="buy-title">📸 照片購物目標｜銀装</div><b>優先找：窯出しカステラ</b><br>照片中的阿倍野 Harukas 本店限定／現場販售款以當日櫃位為準。若 Day 4 漏買 HARADA，這裡可當備援，但不要為補貨拖延後面行程。</div>
           </div></div>
-          <div class="t" id="d5-4"><div class="time">11:15</div><div><b>天王寺 MIO｜目標式快逛</b><div class="muted">JR 天王寺站直結；抓約 30 分鐘。只逛想看的店，不把 MIO 變成另一個完整百貨行程。</div>
+          <div class="t" id="d5-4"><div class="time">11:15</div><div><b>天王寺 MIO｜目標式快逛</b><div class="muted">JR 天王寺站直結；抓約 30 分鐘。只逛想看的店，不把 MIO 變成另一個完整百貨行程。</div><div class="move">🚶 Harukas→MIO：約 3–5 分</div><span class="stay">🛍️ 約 30 分</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">LOFT</span><span class="malltag">Afternoon Tea LIVING</span><span class="malltag">KEYUCA</span><span class="malltag">MUJI</span><span class="malltag">mont-bell</span><span class="malltag">Starbucks</span></div><a href="https://www.tennoji-mio.co.jp/floor" target="_blank" rel="noopener">MIO 官方樓層 ↗</a></div>
           </div></div>
-          <div class="t"><div class="time">11:45</div><div><b>簡單午餐＋取行李</b><div class="muted">吃快速午餐後回天王寺站／MIO 取大行李；不再回 Q's Mall。</div></div></div>
-          <div class="t"><div class="time">12:20</div><div><b>天王寺 → Rinku-Town</b><div class="muted">目標搭 JR 關空快速往臨空城；目前先抓 12:20 左右出發，10/13 實際班次之後再做交通校正，以 Google Maps／車站電子看板為準。</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=Tennoji%20Station%2C%20Osaka&destination=Rinku-Town%20Station%2C%20Osaka&travelmode=transit" target="_blank">開啟導航</a></div></div></div>
+          <div class="t"><div class="time">11:45</div><div><b>簡單午餐＋取行李</b><div class="muted">吃快速午餐後回天王寺站／MIO 取大行李；不再回 Q's Mall。</div><span class="stay">🍽️＋🧳 約 30–35 分</span></div></div>
+          <div class="t"><div class="time">12:20</div><div><b>天王寺 → Rinku-Town</b><div class="muted">目標搭 JR 關空快速往臨空城。公開路線資料顯示天王寺→Rinku-Town 約 40–50 分，直達班次最省力；12:20 左右進站後，以電子看板最接近的「関空快速／関西空港方面」為準。</div><div class="move">🚆 天王寺→Rinku-Town：約 40–50 分｜優先直達關空快速</div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/dir/?api=1&origin=Tennoji%20Station%2C%20Osaka&destination=Rinku-Town%20Station%2C%20Osaka&travelmode=transit" target="_blank">開啟導航</a></div></div></div>
         </div>
 
         <div class="section">下午｜臨空城 → 關西機場</div>
         <div class="timeline">
-          <div class="t" id="d5-5"><div class="time">13:10</div><div><b>Rinku Premium Outlets</b><div class="muted">抵達先寄放行李，再按品牌直接逛；16:20 開始收尾，不要逛到最後一刻。</div>
+          <div class="t" id="d5-5"><div class="time">13:10</div><div><b>Rinku Premium Outlets</b><div class="muted">抵達先寄放行李，再按品牌直接逛；16:20 開始收尾，不要逛到最後一刻。</div><div class="move">🚶 Rinku-Town站→Outlet：約 6–10 分</div><span class="stay">🛍️ 約 3 小時</span>
             <div class="mallshops"><b>精選店家：</b><div class="malltags"><span class="malltag">Nike</span><span class="malltag">New Balance</span><span class="malltag">Onitsuka Tiger</span><span class="malltag">adidas</span><span class="malltag">ASICS</span><span class="malltag">BEAMS</span><span class="malltag">Polo Ralph Lauren</span><span class="malltag">MIKI HOUSE</span></div><a href="https://www.premiumoutlets.co.jp/cht/rinku/brands/" target="_blank" rel="noopener">官方品牌目錄 ↗</a></div>
           </div></div>
           <div class="t"><div class="time">16:20</div><div><b>Outlet 收尾＋取行李</b><div class="muted">結帳、退稅／免稅確認、上廁所、取行李；16:45 左右開始往 KIX。</div></div></div>
-          <div class="t" id="d5-6"><div class="time">16:45</div><div><b>臨空城 → KIX Terminal 1</b><div class="muted">電車或 Outlet 往 KIX 的接駁巴士，以當日班次最順者為準。帶大行李時，接駁巴士若時間剛好會更省步行。</div><div class="actions"><a class="btn mini teal" href="https://www.google.com/maps/dir/?api=1&origin=34.4107338%2C135.2996108&destination=Kansai%20International%20Airport%20Terminal%201&travelmode=transit" target="_blank">前往 KIX</a></div></div></div>
-          <div class="t" id="d5-7"><div class="time">17:15</div><div><b>目標抵達 KIX T1</b><div class="muted">抓 17:15～17:30 到航廈；有托運行李仍需完成行李托運／證件確認。</div></div></div>
+          <div class="t" id="d5-6"><div class="time">16:45</div><div><b>臨空城 → KIX Terminal 1</b><div class="muted">電車或 Outlet 往 KIX 的接駁巴士，以當日班次最順者為準。帶大行李時，接駁巴士若時間剛好會更省步行。</div><div class="move">電車方案：🚶 Outlet→Rinku-Town 約 6–10 分 → 🚆 Rinku-Town→KIX 約 6–13 分 → 🚶 機場站→T1 約 5–10 分｜總抓 25–35 分</div><div class="actions"><a class="btn mini teal" href="https://www.google.com/maps/dir/?api=1&origin=34.4107338%2C135.2996108&destination=Kansai%20International%20Airport%20Terminal%201&travelmode=transit" target="_blank">前往 KIX</a></div></div></div>
+          <div class="t" id="d5-7"><div class="time">17:15</div><div><b>目標抵達 KIX T1</b><div class="muted">抓 17:15～17:30 到航廈；前一段 16:45 開始收尾／移動的配置合理。有托運行李仍需完成行李托運／證件確認。</div></div></div>
           <div class="t"><div class="time">17:35</div><div><b>華航櫃台／行李托運</b><div class="muted">網路報到成功也不要直接略過托運流程；完成後進安檢、出境。</div></div></div>
           <div class="t"><div class="time">18:15</div><div><b>📸 機場必買｜Henri Charpentier 金塊費南雪</b><div class="muted">完成安檢、出境後，在 KIX T1 新國際線出境區找 <b>TASTE OF KANSAI 關西旅日記</b>。照片目標是「金塊費南雪 Gold Bar Financier」；國際線限定包裝，官方資料為 8 入 ¥1,600（未稅）。</div><div class="buy-note"><div class="buy-title">🎁 照片購物目標｜關西機場限定</div><b>Henri Charpentier 金塊費南雪</b><br>同系列另有銀塊抹茶費南雪。店舖位於 T1 新國際線出境區內，官方營業 06:00–24:15；可視需求先用 KIX Duty Free 預約，避免現場缺貨。</div><div class="actions"><a class="btn mini" href="https://www.henri-charpentier.com/twn-financier/" target="_blank" rel="noopener">官方介紹</a><a class="btn mini" href="https://www.kixdutyfree.jp/" target="_blank" rel="noopener">KIX 事前預約</a></div></div></div>
           <div class="t"><div class="time">18:45</div><div><b>管制區內晚餐／最後採買</b><div class="muted">金塊費南雪買完再慢慢吃；19:45 起留意登機口與廣播。</div></div></div>
@@ -1445,7 +1454,7 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 </main>
 </div>
 
-<div class="foot">Prototype v34｜Day 5 新增天王寺 MIO、阿倍野 Harukas B1 銀装窯出しカステラ與天王寺寄行李策略；Day 4 伴手禮主線維持；沿用五日天氣與公開版隱私設定。</div>
+<div class="foot">Prototype v35｜五天交通校正版：跨區鐵路加入校正後路線／時間，商圈內改標步行時間＋建議停留；保留 Day 5 MIO／Harukas 與所有照片購物目標。</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
