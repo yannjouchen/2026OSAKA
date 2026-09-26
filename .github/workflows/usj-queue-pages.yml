@@ -430,6 +430,30 @@ jobs:
                   "latitude": 34.6654,
                   "longitude": 135.4323,
               },
+              "ikeda_day4": {
+                  "date": "2026-10-12",
+                  "label": "大阪・池田",
+                  "latitude": 34.8180487,
+                  "longitude": 135.4266758,
+              },
+              "umeda_day4": {
+                  "date": "2026-10-12",
+                  "label": "大阪・梅田",
+                  "latitude": 34.7028866,
+                  "longitude": 135.4953236,
+              },
+              "abeno_day5": {
+                  "date": "2026-10-13",
+                  "label": "大阪・阿倍野",
+                  "latitude": 34.6448982,
+                  "longitude": 135.5116009,
+              },
+              "rinku_day5": {
+                  "date": "2026-10-13",
+                  "label": "臨空城・KIX",
+                  "latitude": 34.4107338,
+                  "longitude": 135.2996108,
+              },
           }
 
           WEATHER_DAILY_FORECAST = (
@@ -538,7 +562,7 @@ jobs:
               # Reuse the previously published weather bundle for up to 30 minutes.
               old = (previous_live or {}).get("_weather") or {}
               old_fetched = old.get("fetched_at")
-              if old_fetched and old.get("places"):
+              if old_fetched and old.get("places") and set(WEATHER_TARGETS).issubset(set(old.get("places", {}))):
                   try:
                       old_dt = datetime.fromisoformat(old_fetched.replace("Z", "+00:00"))
                       if (now_utc - old_dt).total_seconds() < 1800:
