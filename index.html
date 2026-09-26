@@ -437,6 +437,14 @@ body.d3-video-open{overflow:hidden}
   background:#eee9df;color:#655e54;font-size:9px;font-weight:900;margin-bottom:5px
 }
 .show-item.special{border-width:2px}
+.show-item.special.age-warn{border-color:#e5b5b8;background:#fffafa}
+.usj-special-note{margin:0 0 9px;padding:9px 11px;border-radius:12px;background:#edf7f6;border:1px solid #cfe5e3;color:#41615f;font-size:12px;line-height:1.6}
+.show-item .show-video-strip{max-width:none;margin-top:9px}
+.show-item .d3-video-card{grid-template-columns:96px minmax(0,1fr)}
+.show-actions{margin-top:8px}
+.usj-ended-note{margin-top:9px;border:1px dashed var(--line);border-radius:12px;background:#faf8f3;padding:9px 11px;color:var(--muted);font-size:11px;line-height:1.55}
+.usj-ended-note summary{cursor:pointer;font-weight:900;color:#655e54}
+.usj-ended-note div{margin-top:7px}
 .close-advice{
   display:inline-flex;align-items:center;
   margin-top:6px;border-radius:999px;padding:4px 7px;
@@ -992,19 +1000,77 @@ body.d3-video-open{overflow:hidden}
       </div>
     </div>
 
-    <div class="section">特殊體驗／已公告活動</div>
+    <div class="section">10/11 期間限定活動／特殊體驗</div>
+    <div class="usj-special-note">這區固定保留 <b>10/11 仍在活動期間或需要事先確認的季節活動</b>，不會因「每日 Show Schedule 尚未公布」而消失。表演的精確場次仍以下方自動更新的官方時刻表為準。</div>
     <div class="show-grid" id="usjSpecialGrid">
-      <div class="show-item special">
+      <div class="show-item special ">
         <span class="show-kind">電子號碼券</span>
         <b>葬送的芙莉蓮 故事徒步 ～追憶之旅～</b>
-        <div class="muted">10:00～園區關閉｜官方 App 電子號碼券；人少時可能免號碼券。</div>
+        <div class="muted">10:00～園區關閉｜Stage 18｜約 20 分。原則上需官方 App 的指定入場電子號碼券；人少時可能免號碼券。</div>
+        <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="_4GgmO3dsyY" data-video-title="葬送的芙莉蓮 Story Walk｜USJ 官方特別影片" data-video-source="Universal Studios Japan Official · 2026" aria-label="播放：葬送的芙莉蓮 Story Walk｜USJ 官方特別影片"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/_4GgmO3dsyY/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>葬送的芙莉蓮 Story Walk｜USJ 官方特別影片</b><small>Universal Studios Japan Official · 2026</small></span></button></div>
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/universal-cool-japan-2026/frieren" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
-      <div class="show-item special">
+      <div class="show-item special ">
+        <span class="show-kind">萬聖節</span>
+        <b>Halloween Horror Nights 15 週年</b>
+        <div class="muted">9/11～11/8 活動期間內；10/11 晚上可遇到街頭殭屍與萬聖節舞台內容。親子是否參加請依孩子接受度與各項年齡限制判斷。</div>
+        <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="O7gbH2lwfn8" data-video-title="回顧版殭屍舞～萬聖驚魂夜 15 週年～｜USJ 官方" data-video-source="Universal Studios Japan Official · 2026" aria-label="播放：回顧版殭屍舞～萬聖驚魂夜 15 週年～｜USJ 官方"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/O7gbH2lwfn8/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>回顧版殭屍舞～萬聖驚魂夜 15 週年～｜USJ 官方</b><small>Universal Studios Japan Official · 2026</small></span></button></div>
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights" target="_blank" rel="noopener">官方頁 ↗</a></div>
+      </div>
+      <div class="show-item special ">
+        <span class="show-kind">4-D／恐怖</span>
+        <b>鏈鋸人 The Chaos 4-D</b>
+        <div class="muted">9/11～11/8｜Cinema 4-D Theater。12 歲以下需家長同意；屬萬聖驚魂夜內容，不排入原本國小生主線。</div>
+        <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="hhzUgneLL5s" data-video-title="鏈鋸人 The Chaos 4-D｜2026 現場實拍" data-video-source="鳳閣星のYouTuber · 2026" aria-label="播放：鏈鋸人 The Chaos 4-D｜2026 現場實拍"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/hhzUgneLL5s/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>鏈鋸人 The Chaos 4-D｜2026 現場實拍</b><small>鳳閣星のYouTuber · 2026</small></span></button></div>
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights/chainsaw-man-the-chaos-4d" target="_blank" rel="noopener">官方頁 ↗</a></div>
+      </div>
+      <div class="show-item special age-warn">
+        <span class="show-kind">R-15／整理券</span>
+        <b>Resident Evil Requiem: The Dive</b>
+        <div class="muted">9/11～12/27｜Stage 18｜需指定入場電子號碼券。14 歲以下不可體驗；此卡保留資訊，但不排入親子主線。</div>
+        <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="NL1viu0IAZg" data-video-title="惡靈古堡 Requiem: The Dive｜2026 現場預覽" data-video-source="Hi Japan · 2026" aria-label="播放：惡靈古堡 Requiem: The Dive｜2026 現場預覽"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/NL1viu0IAZg/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>惡靈古堡 Requiem: The Dive｜2026 現場預覽</b><small>Hi Japan · 2026</small></span></button></div>
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights/resident-evil-requiem-the-dive" target="_blank" rel="noopener">官方頁 ↗</a></div>
+      </div>
+      <div class="show-item special age-warn">
+        <span class="show-kind">12歲以下不可</span>
+        <b>KATE PRESENTS Witches of House 18</b>
+        <div class="muted">9/11～11/8｜Stage 18｜需指定入場電子號碼券。12 歲（含國小年齡）以下不可體驗；目前沒有找到符合「非 Shorts＋清楚穩定」條件的影片，所以不硬塞低品質影片。</div>
+        
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights/kate" target="_blank" rel="noopener">官方頁 ↗</a></div>
+      </div>
+      <div class="show-item special age-warn">
+        <span class="show-kind">R-18／另購票</span>
+        <b>Lights Out: Nightmare Isolation</b>
+        <div class="muted">9/11～11/8｜Stage 18｜17 歲以下不可體驗，且需另購票與簽署同意書。官方也限制透露內部內容，因此只保留官方資訊，不放劇透實拍。</div>
+        
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights/lights-out-nightmare-isolation" target="_blank" rel="noopener">官方頁 ↗</a></div>
+      </div>
+      <div class="show-item special ">
+        <span class="show-kind">另購票</span>
+        <b>ONE PIECE PREMIER SHOW 2026</b>
+        <div class="muted">7/30～11/19｜WaterWorld｜18:45 開演、約 80 分；部分日期停演，需另購專用票。10/11 是否演出仍以官方日期表／下方每日時刻表為準。</div>
+        <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="lAFdOhMJ4KA" data-video-title="ONE PIECE PREMIER SUMMER 2026｜USJ 官方" data-video-source="Universal Studios Japan Official · 2026" aria-label="播放：ONE PIECE PREMIER SUMMER 2026｜USJ 官方"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/lAFdOhMJ4KA/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>ONE PIECE PREMIER SUMMER 2026｜USJ 官方</b><small>Universal Studios Japan Official · 2026</small></span></button></div>
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/onepiece/summer-2026/show" target="_blank" rel="noopener">官方頁 ↗</a></div>
+      </div>
+      <div class="show-item special ">
+        <span class="show-kind">角色見面</span>
+        <b>Wicked: The Witches of Oz</b>
+        <div class="muted">2/20～12/27｜可與 Elphaba、Glinda 見面拍照。影片為同類角色見面的清楚實拍參考；2026 實際場次以下方官方時刻表為準。</div>
+        <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="XE-SUnWpOww" data-video-title="Wicked：奧茲女巫角色見面｜實拍參考" data-video-source="L.C.A.STUDIOS · 2025" aria-label="播放：Wicked：奧茲女巫角色見面｜實拍參考"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/XE-SUnWpOww/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>Wicked：奧茲女巫角色見面｜實拍參考</b><small>L.C.A.STUDIOS · 2025</small></span></button></div>
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/attractions/wicked-greeting" target="_blank" rel="noopener">官方頁 ↗</a></div>
+      </div>
+      <div class="show-item special ">
         <span class="show-kind">遊行</span>
         <b>NO LIMIT! 遊行～Discover U!!! 版～</b>
-        <div class="show-times"><span class="show-time">13:00</span><span class="show-time">約 40 分</span></div>
+        <div class="muted">25 週年版遊行。先不把 13:00 寫死；10/11 的正式時間會由下方官方每日 Show Schedule 自動帶入。</div>
+        <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="OU5g6fYs_vY" data-video-title="NO LIMIT! 遊行～Discover U!!! 版～｜4K 60fps 完整實拍" data-video-source="ポぉヌわス · 2026" aria-label="播放：NO LIMIT! 遊行～Discover U!!! 版～｜4K 60fps 完整實拍"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/OU5g6fYs_vY/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">4K 實拍</span></span><span class="d3-video-copy"><b>NO LIMIT! 遊行～Discover U!!! 版～｜4K 60fps 完整實拍</b><small>ポぉヌわス · 2026</small></span></button></div>
+        <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/park-guide/schedule/show-and-attraction-schedule" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
     </div>
+    <details class="usj-ended-note">
+      <summary>已結束／10/11 不適用的展覽（保留說明，避免誤以為漏掉）</summary>
+      <div><b>Wicked: For Good — Special Costume Display</b>：服裝特展已於 2026/5/29 結束；10/11 仍可看的項目是上方的 <b>Wicked: The Witches of Oz</b> 角色見面。</div>
+    </details>
 
     <div class="section">10/11 官方每日表演時刻表</div>
     <div class="show-grid" id="usjShowSchedule">
@@ -1511,7 +1577,7 @@ body.d3-video-open{overflow:hidden}
 </main>
 </div>
 
-<div class="foot">Prototype v36｜Day 3 主線影片卡片版｜地圖同棟 Marker 合併版｜五天交通校正版：跨區鐵路加入校正後路線／時間，商圈內改標步行時間＋建議停留；保留 Day 5 MIO／Harukas 與所有照片購物目標。</div>
+<div class="foot">Prototype v37｜Day 3 季節活動＋表演影片卡片版｜地圖同棟 Marker 合併版｜五天交通校正版：跨區鐵路加入校正後路線／時間，商圈內改標步行時間＋建議停留；保留 Day 5 MIO／Harukas 與所有照片購物目標。</div>
 </div>
 
 
@@ -2005,18 +2071,56 @@ function japanNowParts(){
 
 const SHOW_DISPLAY_ZH = {
   "WaterWorld":"水世界",
+  "WaterWorld: Discover U!!! Version":"水世界～Discover U!!! 版～",
   "SING ON TOUR":"SING 歡樂好聲音巡迴演唱會",
   "NO LIMIT! Parade: Discover U!!! Version":"NO LIMIT! 遊行～Discover U!!! 版～",
   "Wicked: The Witches of Oz":"Wicked：奧茲女巫",
   "The Power of Rock: U Rock!":"The Power of Rock：U Rock!",
   "Kuromi Live: Discover Me, Discover U!!!":"酷洛米 Live：Discover Me, Discover U!!!",
+  "The Ultimate Blues Bash":"終極藍調盛典",
   "Universal Wonderland: Let's Smile Together!":"環球奇境～Let's Smile Together!～",
   "Meet the Hogsmeade Magical Creatures":"霍格莫德魔法生物見面活動",
   "Hippogriff Magical Lesson":"鷹馬魔法課程",
-  "Jurassic Park Dinosaur Meet & Greet":"侏羅紀公園恐龍見面活動"
+  "Jurassic Park Dinosaur Meet & Greet":"侏羅紀公園恐龍見面活動",
+  "ONE PIECE PREMIER SHOW 2026":"ONE PIECE PREMIER SHOW 2026",
+  "ZOMBIE de DANCE":"殭屍舞",
+  "Playback ZOMBIE de DANCE: Halloween Horror Nights 15th Anniversary":"回顧版殭屍舞～萬聖驚魂夜 15 週年～",
+  "Halloween Horror Nights Academy: 15 Years of Screams":"萬聖驚魂夜學院～尖叫 15 年～",
+  "Discover U!!! Time":"Discover U!!! 時刻",
+  "Frog Choir":"青蛙合唱團",
+  "Triwizard Spirit Rally":"魔法三強錦標賽",
+  "Wand Studies":"魔杖課程",
+  "Universal Monsters Live: Rock and Roll Show":"環球妖魔鬼怪搖滾樂表演秀",
+  "Minion BOO-YA Block Party":"小小兵 BOO-YA 街區派對"
 };
 function showDisplayName(show){
   return show?.name_zh || SHOW_DISPLAY_ZH[show?.name] || show?.name || '表演';
+}
+
+// Day 3 show/event video references. Official public YouTube is preferred;
+// otherwise use clear non-Shorts real footage. Dynamic show cards use this map
+// without changing the official schedule parser itself.
+const SHOW_VIDEO_MAP = [
+  {keys:['waterworld'],id:'ekwrWtViHo4',title:'水世界 WATERWORLD｜USJ 官方',source:'Universal Studios Japan Official',kind:'官方',official:true},
+  {keys:['sing on tour'],id:'CeBmGbnIQDw',title:'SING on Tour｜完整 4K 表演實拍',source:'Dean on Vacation · 2025',kind:'完整 4K'},
+  {keys:['no limit! parade','no limit parade'],id:'OU5g6fYs_vY',title:'NO LIMIT! 遊行～Discover U!!! 版～｜4K 60fps 完整實拍',source:'ポぉヌわス · 2026',kind:'4K 實拍'},
+  {keys:['wicked: the witches of oz','wicked：奧茲女巫','wicked'],id:'XE-SUnWpOww',title:'Wicked：奧茲女巫角色見面｜實拍參考',source:'L.C.A.STUDIOS · 2025',kind:'實拍'},
+  {keys:['the power of rock','u rock'],id:'o752MEAEWs0',title:'The Power of Rock：U Rock!｜現場完整實拍',source:'USJ Show · 2026',kind:'實拍'},
+  {keys:['kuromi live','酷洛米'],id:'Mc5CCyswErE',title:'酷洛米 Live：Discover Me, Discover U!!!｜4K HDR 60fps',source:'USJ 實拍 · 2026',kind:'4K HDR'},
+  {keys:['the ultimate blues bash','終極藍調'],id:'54ydJNBAMqw',title:'The Ultimate Blues Bash｜現場實拍',source:'L.C.A.STUDIOS · 2026',kind:'實拍'},
+  {keys:['universal wonderland','let\'s smile together'],id:'vXJwBmGW6pM',title:'環球奇境 Let’s Smile Together!｜現場實拍',source:'USJ Show · 2026',kind:'實拍'},
+  {keys:['meet the hogsmeade magical creatures','魔法生物'],id:'VQGPPPiq2v0',title:'霍格莫德魔法生物見面活動｜現場實拍',source:'Universal studio JAPAN-TV · 2024',kind:'實拍'},
+  {keys:['hippogriff magical lesson','鷹馬魔法課程'],id:'u-NWMaM_VaU',title:'鷹馬魔法課程｜現場實拍',source:'BJFAN · 2026',kind:'實拍'},
+  {keys:['jurassic park dinosaur meet','恐龍見面'],id:'bD74PJCN4vE',title:'侏羅紀公園恐龍見面活動｜現場實拍',source:'USJ 實拍 · 2026',kind:'實拍'},
+  {keys:['one piece premier show'],id:'lAFdOhMJ4KA',title:'ONE PIECE PREMIER SUMMER 2026｜USJ 官方',source:'Universal Studios Japan Official',kind:'官方',official:true},
+  {keys:['playback zombie de dance','zombie de dance','萬聖驚魂夜學院','halloween horror nights academy'],id:'O7gbH2lwfn8',title:'回顧版殭屍舞～萬聖驚魂夜 15 週年～｜USJ 官方',source:'Universal Studios Japan Official · 2026',kind:'官方',official:true}
+];
+function showVideoHtml(show){
+  const hay=[show?.name,show?.name_zh,showDisplayName(show)].filter(Boolean).join(' ').toLowerCase();
+  const v=SHOW_VIDEO_MAP.find(item=>item.keys.some(key=>hay.includes(String(key).toLowerCase())));
+  if(!v) return '';
+  const officialClass=v.official?' official':'';
+  return `<div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="${escapeQueueText(v.id)}" data-video-title="${escapeQueueText(v.title)}" data-video-source="${escapeQueueText(v.source)}" aria-label="播放：${escapeQueueText(v.title)}"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/${escapeQueueText(v.id)}/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind${officialClass}">${escapeQueueText(v.kind)}</span></span><span class="d3-video-copy"><b>${escapeQueueText(v.title)}</b><small>${escapeQueueText(v.source)}</small></span></button></div>`;
 }
 function renderInlineShowTimes(shows,status){
   document.querySelectorAll('[data-inline-show]').forEach(box=>{
@@ -2082,13 +2186,14 @@ function renderUSJOfficialSchedule(data){
         <span class="show-kind">官方時刻表</span>
         <b>${escapeQueueText(showDisplayName(show))}</b>
         <div class="show-times">${times}</div>
+        ${showVideoHtml(show)}
       </div>`;
     }).join('');
   }else{
     const st=usjOfficialSchedule.show_schedule_status;
     showBox.innerHTML=`<div class="show-item">
       <b>${st==='not_published_yet'?'10/11 完整時刻表尚未公布':'暫時沒有可解析的官方場次'}</b>
-      <div class="muted">水世界、舞台秀、街頭表演、角色活動等不是 Queue‑Times 的 wait_time 資料；官方 Show Schedule 發布後會在這裡自動出現。</div>
+      <div class="muted">水世界、舞台秀、街頭表演、角色活動等不是 Queue‑Times 的 wait_time 資料；官方 Show Schedule 發布後會在這裡自動出現，能對應到合適影片的項目也會一起顯示影片卡。</div>
     </div>`;
   }
 
