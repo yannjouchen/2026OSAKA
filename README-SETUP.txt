@@ -41,3 +41,14 @@ GitHub 的 schedule 並不保證準時，可能會延遲。
 --------
 Queue-Times 是第三方資料。
 Super Nintendo World 區域入場券、臨時停駛與最終等待時間仍以 USJ 官方 App 為準。
+
+Day 3 活動場次同步（v38）
+-----------------------
+Day 3 的 ONE PIECE PREMIER SHOW、Wicked、NO LIMIT! 遊行與萬聖節街頭／舞台內容，
+會讀取同一份 2026/10/11 USJ 官方 Show Schedule：
+- 尚未公布：卡片顯示「等待 USJ 公布」
+- 已公布且有場次：卡片直接顯示當日實際時間
+- 已公布但沒有該活動：卡片顯示「10/11 無演出／未排定」
+
+芙莉蓮 Story Walk 不是定時演出；卡片顯示 10:00～閉園，閉園時間公布後會自動補成實際時間。
+4-D／恐怖屋／整理券體驗屬非定時演出，不會誤套 Show Schedule 場次。

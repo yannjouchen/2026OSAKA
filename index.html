@@ -493,6 +493,34 @@ body.d3-video-open{overflow:hidden}
   color:var(--muted);
 }
 
+/* --- Special-event card schedule sync v38 --- */
+.special-schedule-block{
+  margin-top:8px;
+  padding:8px 9px;
+  border:1px solid #d9e5e3;
+  border-radius:10px;
+  background:#f7fbfa;
+}
+.special-schedule-label{
+  font-size:10px;
+  font-weight:950;
+  color:#4b6663;
+  margin-bottom:5px;
+}
+.special-schedule-times{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.special-schedule-time{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:25px;padding:4px 8px;border-radius:7px;
+  background:#dfeeed;color:#1f5f5a;font-size:11px;font-weight:950
+}
+.special-schedule-show{
+  width:100%;font-size:10px;font-weight:900;color:#5b666b;margin-top:2px
+}
+.special-schedule-status{font-size:10px;color:var(--muted);line-height:1.45}
+.special-schedule-block.is-live{border-color:#b9d9d5;background:#f0faf8}
+.special-schedule-block.is-none{border-color:#e1d8cb;background:#fbf8f2}
+.special-schedule-block.is-error{border-color:#ead7d7;background:#fff8f8}
+
 
 /* --- USJ reference-map calibration v25 --- */
 #panel-day3 .mapcard{
@@ -1006,7 +1034,11 @@ body.d3-video-open{overflow:hidden}
       <div class="show-item special ">
         <span class="show-kind">電子號碼券</span>
         <b>葬送的芙莉蓮 故事徒步 ～追憶之旅～</b>
-        <div class="muted">10:00～園區關閉｜Stage 18｜約 20 分。原則上需官方 App 的指定入場電子號碼券；人少時可能免號碼券。</div>
+        <div class="muted">Stage 18｜約 20 分。原則上需官方 App 的指定入場電子號碼券；人少時可能免號碼券。當日營運時段以下方同步狀態為準。</div>
+        <div class="special-schedule-block" data-special-hours="frieren">
+          <div class="special-schedule-label">10/11 營運時段（非定時演出）</div>
+          <div class="special-schedule-times"><span class="special-schedule-time">10:00～閉園</span></div>
+        </div>
         <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="_4GgmO3dsyY" data-video-title="葬送的芙莉蓮 Story Walk｜USJ 官方特別影片" data-video-source="Universal Studios Japan Official · 2026" aria-label="播放：葬送的芙莉蓮 Story Walk｜USJ 官方特別影片"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/_4GgmO3dsyY/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>葬送的芙莉蓮 Story Walk｜USJ 官方特別影片</b><small>Universal Studios Japan Official · 2026</small></span></button></div>
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/universal-cool-japan-2026/frieren" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
@@ -1014,6 +1046,10 @@ body.d3-video-open{overflow:hidden}
         <span class="show-kind">萬聖節</span>
         <b>Halloween Horror Nights 15 週年</b>
         <div class="muted">9/11～11/8 活動期間內；10/11 晚上可遇到街頭殭屍與萬聖節舞台內容。親子是否參加請依孩子接受度與各項年齡限制判斷。</div>
+        <div class="special-schedule-block" data-special-show="Playback ZOMBIE de DANCE: Halloween Horror Nights 15th Anniversary|ZOMBIE de DANCE|Halloween Horror Nights Academy: 15 Years of Screams|Minion BOO-YA Block Party" data-special-show-mode="all">
+          <div class="special-schedule-label">10/11 萬聖節街頭／舞台場次</div>
+          <div class="special-schedule-times"><span class="special-schedule-status">等待 USJ 公布</span></div>
+        </div>
         <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="O7gbH2lwfn8" data-video-title="回顧版殭屍舞～萬聖驚魂夜 15 週年～｜USJ 官方" data-video-source="Universal Studios Japan Official · 2026" aria-label="播放：回顧版殭屍舞～萬聖驚魂夜 15 週年～｜USJ 官方"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/O7gbH2lwfn8/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>回顧版殭屍舞～萬聖驚魂夜 15 週年～｜USJ 官方</b><small>Universal Studios Japan Official · 2026</small></span></button></div>
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
@@ -1021,6 +1057,10 @@ body.d3-video-open{overflow:hidden}
         <span class="show-kind">4-D／恐怖</span>
         <b>鏈鋸人 The Chaos 4-D</b>
         <div class="muted">9/11～11/8｜Cinema 4-D Theater。12 歲以下需家長同意；屬萬聖驚魂夜內容，不排入原本國小生主線。</div>
+        <div class="special-schedule-block is-none" data-special-experience>
+          <div class="special-schedule-label">10/11 體驗時間</div>
+          <div class="special-schedule-times"><span class="special-schedule-status">非定時演出；依當日設施營運／整理券狀況為準</span></div>
+        </div>
         <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="hhzUgneLL5s" data-video-title="鏈鋸人 The Chaos 4-D｜2026 現場實拍" data-video-source="鳳閣星のYouTuber · 2026" aria-label="播放：鏈鋸人 The Chaos 4-D｜2026 現場實拍"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/hhzUgneLL5s/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>鏈鋸人 The Chaos 4-D｜2026 現場實拍</b><small>鳳閣星のYouTuber · 2026</small></span></button></div>
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights/chainsaw-man-the-chaos-4d" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
@@ -1028,6 +1068,10 @@ body.d3-video-open{overflow:hidden}
         <span class="show-kind">R-15／整理券</span>
         <b>Resident Evil Requiem: The Dive</b>
         <div class="muted">9/11～12/27｜Stage 18｜需指定入場電子號碼券。14 歲以下不可體驗；此卡保留資訊，但不排入親子主線。</div>
+        <div class="special-schedule-block is-none" data-special-experience>
+          <div class="special-schedule-label">10/11 體驗時間</div>
+          <div class="special-schedule-times"><span class="special-schedule-status">非定時演出；依當日設施營運／整理券狀況為準</span></div>
+        </div>
         <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="NL1viu0IAZg" data-video-title="惡靈古堡 Requiem: The Dive｜2026 現場預覽" data-video-source="Hi Japan · 2026" aria-label="播放：惡靈古堡 Requiem: The Dive｜2026 現場預覽"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/NL1viu0IAZg/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>惡靈古堡 Requiem: The Dive｜2026 現場預覽</b><small>Hi Japan · 2026</small></span></button></div>
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights/resident-evil-requiem-the-dive" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
@@ -1035,6 +1079,10 @@ body.d3-video-open{overflow:hidden}
         <span class="show-kind">12歲以下不可</span>
         <b>KATE PRESENTS Witches of House 18</b>
         <div class="muted">9/11～11/8｜Stage 18｜需指定入場電子號碼券。12 歲（含國小年齡）以下不可體驗；目前沒有找到符合「非 Shorts＋清楚穩定」條件的影片，所以不硬塞低品質影片。</div>
+        <div class="special-schedule-block is-none" data-special-experience>
+          <div class="special-schedule-label">10/11 體驗時間</div>
+          <div class="special-schedule-times"><span class="special-schedule-status">非定時演出；依當日設施營運／整理券狀況為準</span></div>
+        </div>
         
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights/kate" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
@@ -1042,27 +1090,43 @@ body.d3-video-open{overflow:hidden}
         <span class="show-kind">R-18／另購票</span>
         <b>Lights Out: Nightmare Isolation</b>
         <div class="muted">9/11～11/8｜Stage 18｜17 歲以下不可體驗，且需另購票與簽署同意書。官方也限制透露內部內容，因此只保留官方資訊，不放劇透實拍。</div>
+        <div class="special-schedule-block is-none" data-special-experience>
+          <div class="special-schedule-label">10/11 體驗時間</div>
+          <div class="special-schedule-times"><span class="special-schedule-status">非定時演出；依當日設施營運／整理券狀況為準</span></div>
+        </div>
         
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/halloween-extreme-autumn-2026/halloween-horror-nights/lights-out-nightmare-isolation" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
       <div class="show-item special ">
         <span class="show-kind">另購票</span>
         <b>ONE PIECE PREMIER SHOW 2026</b>
-        <div class="muted">7/30～11/19｜WaterWorld｜18:45 開演、約 80 分；部分日期停演，需另購專用票。10/11 是否演出仍以官方日期表／下方每日時刻表為準。</div>
+        <div class="muted">7/30～11/19｜WaterWorld｜約 80 分；部分日期停演，需另購專用票。10/11 是否演出與正式時間以下方同步狀態為準。</div>
+        <div class="special-schedule-block" data-special-show="ONE PIECE PREMIER SHOW 2026">
+          <div class="special-schedule-label">10/11 正式場次</div>
+          <div class="special-schedule-times"><span class="special-schedule-status">等待 USJ 公布</span></div>
+        </div>
         <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="lAFdOhMJ4KA" data-video-title="ONE PIECE PREMIER SUMMER 2026｜USJ 官方" data-video-source="Universal Studios Japan Official · 2026" aria-label="播放：ONE PIECE PREMIER SUMMER 2026｜USJ 官方"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/lAFdOhMJ4KA/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>ONE PIECE PREMIER SUMMER 2026｜USJ 官方</b><small>Universal Studios Japan Official · 2026</small></span></button></div>
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/events/onepiece/summer-2026/show" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
       <div class="show-item special ">
         <span class="show-kind">角色見面</span>
         <b>Wicked: The Witches of Oz</b>
-        <div class="muted">2/20～12/27｜可與 Elphaba、Glinda 見面拍照。影片為同類角色見面的清楚實拍參考；2026 實際場次以下方官方時刻表為準。</div>
+        <div class="muted">2/20～12/27｜可與 Elphaba、Glinda 見面拍照。影片為同類角色見面的清楚實拍參考；10/11 實際場次以下方同步狀態為準。</div>
+        <div class="special-schedule-block" data-special-show="Wicked: The Witches of Oz">
+          <div class="special-schedule-label">10/11 正式場次</div>
+          <div class="special-schedule-times"><span class="special-schedule-status">等待 USJ 公布</span></div>
+        </div>
         <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="XE-SUnWpOww" data-video-title="Wicked：奧茲女巫角色見面｜實拍參考" data-video-source="L.C.A.STUDIOS · 2025" aria-label="播放：Wicked：奧茲女巫角色見面｜實拍參考"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/XE-SUnWpOww/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>Wicked：奧茲女巫角色見面｜實拍參考</b><small>L.C.A.STUDIOS · 2025</small></span></button></div>
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/attractions/wicked-greeting" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
       <div class="show-item special ">
         <span class="show-kind">遊行</span>
         <b>NO LIMIT! 遊行～Discover U!!! 版～</b>
-        <div class="muted">25 週年版遊行。先不把 13:00 寫死；10/11 的正式時間會由下方官方每日 Show Schedule 自動帶入。</div>
+        <div class="muted">25 週年版遊行。時間不寫死；10/11 正式場次直接與官方每日 Show Schedule 同步。</div>
+        <div class="special-schedule-block" data-special-show="NO LIMIT! Parade: Discover U!!! Version">
+          <div class="special-schedule-label">10/11 正式場次</div>
+          <div class="special-schedule-times"><span class="special-schedule-status">等待 USJ 公布</span></div>
+        </div>
         <div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="OU5g6fYs_vY" data-video-title="NO LIMIT! 遊行～Discover U!!! 版～｜4K 60fps 完整實拍" data-video-source="ポぉヌわス · 2026" aria-label="播放：NO LIMIT! 遊行～Discover U!!! 版～｜4K 60fps 完整實拍"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/OU5g6fYs_vY/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind">4K 實拍</span></span><span class="d3-video-copy"><b>NO LIMIT! 遊行～Discover U!!! 版～｜4K 60fps 完整實拍</b><small>ポぉヌわス · 2026</small></span></button></div>
         <div class="show-actions"><a class="btn mini soft" href="https://www.usj.co.jp/web/en/us/park-guide/schedule/show-and-attraction-schedule" target="_blank" rel="noopener">官方頁 ↗</a></div>
       </div>
@@ -2058,6 +2122,14 @@ function minutesFromHHMM(v){
   if(!m) return null;
   return Number(m[1])*60+Number(m[2]);
 }
+function displayOfficialTime(v){
+  const raw=normalizeOfficialTimeLabel(v);
+  const ampm=raw.match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
+  if(!ampm) return raw;
+  let h=Number(ampm[1])%12;
+  if(ampm[3].toUpperCase()==='PM') h+=12;
+  return `${String(h).padStart(2,'0')}:${ampm[2]}`;
+}
 function japanNowParts(){
   const parts=new Intl.DateTimeFormat('en-CA',{
     timeZone:'Asia/Tokyo',
@@ -2122,6 +2194,63 @@ function showVideoHtml(show){
   const officialClass=v.official?' official':'';
   return `<div class="d3-video-strip show-video-strip"><button class="d3-video-card" type="button" data-youtube-id="${escapeQueueText(v.id)}" data-video-title="${escapeQueueText(v.title)}" data-video-source="${escapeQueueText(v.source)}" aria-label="播放：${escapeQueueText(v.title)}"><span class="d3-video-thumb"><img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/${escapeQueueText(v.id)}/hqdefault.jpg" alt=""><span class="d3-video-play" aria-hidden="true">▶</span><span class="d3-video-kind${officialClass}">${escapeQueueText(v.kind)}</span></span><span class="d3-video-copy"><b>${escapeQueueText(v.title)}</b><small>${escapeQueueText(v.source)}</small></span></button></div>`;
 }
+function normalizedShowText(v){
+  return String(v||'').toLowerCase().replace(/[™®]/g,'').replace(/\s+/g,' ').trim();
+}
+function showMatchesKey(show,key){
+  const k=normalizedShowText(key);
+  if(!k) return false;
+  const names=[show?.name,show?.name_zh,SHOW_DISPLAY_ZH[show?.name]].filter(Boolean).map(normalizedShowText);
+  return names.some(n=>n===k || n.includes(k) || k.includes(n));
+}
+function scheduleStatusMessage(status){
+  if(status==='not_published_yet') return '等待 USJ 公布';
+  if(status==='unavailable') return '官方時刻表暫時讀取失敗，請稍後重試';
+  if(status==='published_but_empty') return '10/11 無演出／未排定';
+  if(status==='ok') return '10/11 無演出／未排定';
+  return '等待 USJ 公布';
+}
+function renderSpecialScheduleCards(shows,status,hours){
+  document.querySelectorAll('[data-special-show]').forEach(box=>{
+    const keys=String(box.dataset.specialShow||'').split('|').map(x=>x.trim()).filter(Boolean);
+    const mode=box.dataset.specialShowMode||'first';
+    const matches=(shows||[]).filter(show=>keys.some(key=>showMatchesKey(show,key)));
+    const timesEl=box.querySelector('.special-schedule-times');
+    if(!timesEl) return;
+    box.classList.remove('is-live','is-none','is-error');
+
+    if(matches.length){
+      box.classList.add('is-live');
+      const list=mode==='all'?matches:[matches[0]];
+      timesEl.innerHTML=list.map(show=>{
+        const times=(show.times||[]).map(t=>`<span class="special-schedule-time">${escapeQueueText(displayOfficialTime(t))}</span>`).join('');
+        const name=list.length>1?`<div class="special-schedule-show">${escapeQueueText(showDisplayName(show))}</div>`:'';
+        return `${name}${times || '<span class="special-schedule-status">官方已列項目，但未解析到時間</span>'}`;
+      }).join('');
+      return;
+    }
+
+    if(status==='unavailable') box.classList.add('is-error');
+    else if(status==='ok'||status==='published_but_empty') box.classList.add('is-none');
+    timesEl.innerHTML=`<span class="special-schedule-status">${scheduleStatusMessage(status)}</span>`;
+  });
+
+  document.querySelectorAll('[data-special-hours="frieren"]').forEach(box=>{
+    const timesEl=box.querySelector('.special-schedule-times');
+    if(!timesEl) return;
+    box.classList.remove('is-live','is-none','is-error');
+    if(hours?.status==='ok' && hours?.close){
+      box.classList.add('is-live');
+      timesEl.innerHTML=`<span class="special-schedule-time">10:00～${escapeQueueText(hours.close)}</span>`;
+    }else if(hours?.status==='unavailable'){
+      box.classList.add('is-error');
+      timesEl.innerHTML='<span class="special-schedule-status">10:00～閉園；官方閉園時間暫時讀取失敗</span>';
+    }else{
+      timesEl.innerHTML='<span class="special-schedule-time">10:00～閉園</span><span class="special-schedule-status">閉園時間等待 USJ 公布</span>';
+    }
+  });
+}
+
 function renderInlineShowTimes(shows,status){
   document.querySelectorAll('[data-inline-show]').forEach(box=>{
     const key=(box.dataset.inlineShow||'').toLowerCase();
@@ -2133,7 +2262,7 @@ function renderInlineShowTimes(shows,status){
     if(!timesEl) return;
 
     if(target && Array.isArray(target.times) && target.times.length){
-      timesEl.innerHTML=target.times.map(t=>`<span class="inline-show-time">${escapeQueueText(t)}</span>`).join('');
+      timesEl.innerHTML=target.times.map(t=>`<span class="inline-show-time">${escapeQueueText(displayOfficialTime(t))}</span>`).join('');
     }else{
       const msg=status==='not_published_yet'
         ? '10/11 場次尚未公布'
@@ -2181,7 +2310,7 @@ function renderUSJOfficialSchedule(data){
   const shows=Array.isArray(usjOfficialSchedule.shows)?usjOfficialSchedule.shows:[];
   if(shows.length){
     showBox.innerHTML=shows.map(show=>{
-      const times=(show.times||[]).map(t=>`<span class="show-time">${escapeQueueText(t)}</span>`).join('');
+      const times=(show.times||[]).map(t=>`<span class="show-time">${escapeQueueText(displayOfficialTime(t))}</span>`).join('');
       return `<div class="show-item">
         <span class="show-kind">官方時刻表</span>
         <b>${escapeQueueText(showDisplayName(show))}</b>
@@ -2196,6 +2325,9 @@ function renderUSJOfficialSchedule(data){
       <div class="muted">水世界、舞台秀、街頭表演、角色活動等不是 Queue‑Times 的 wait_time 資料；官方 Show Schedule 發布後會在這裡自動出現，能對應到合適影片的項目也會一起顯示影片卡。</div>
     </div>`;
   }
+
+  // Keep special-event cards synchronized with the same 10/11 official schedule source.
+  renderSpecialScheduleCards(shows, usjOfficialSchedule.show_schedule_status, hours);
 
   // Also put official show times directly under matching cards in the kids/backup list.
   renderInlineShowTimes(shows, usjOfficialSchedule.show_schedule_status);
