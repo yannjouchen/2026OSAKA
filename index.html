@@ -342,6 +342,9 @@ body.d3-video-open{overflow:hidden}
 }
 .weather-state.forecast{background:#e2f0ef;color:#226563}
 .weather-state.history{background:#e9edf2;color:#4c5d6b}
+.weather-state.short{background:#e3f2e8;color:#286442}
+.weather-state.weekly{background:#e2f0ef;color:#226563}
+.weather-state.expired{background:#e9edf2;color:#4c5d6b}
 .weather-state.waiting{background:#fff0d9;color:#8a5b13}
 .weather-main{
   display:flex;align-items:center;gap:10px;
@@ -370,6 +373,7 @@ body.d3-video-open{overflow:hidden}
   font-size:10px;color:var(--muted)
 }
 .weather-source a{font-weight:900;color:var(--teal)}
+.weather-metric a{color:inherit;text-decoration:none;font-weight:950}
 @media(max-width:620px){
   .trip-weather-grid{grid-template-columns:1fr!important}
   .weather-place + .weather-place{border-left:0;border-top:1px solid var(--line)}
@@ -721,7 +725,7 @@ body.d3-video-open{overflow:hidden}
     </div>
   </section>
 <section class="trip-weather" id="weather-day1">
-  <div class="trip-weather-head"><b>🌤️ 10/9 大阪天氣</b><span>預報 → 日期過後自動切換歷史天氣</span></div>
+  <div class="trip-weather-head"><b>🌤️ 10/9 大阪天氣</b><span>JMA 官方預報｜7 天外等待，進入範圍後自動更新</span></div>
   <div class="trip-weather-grid" style="--weather-cols:1"><div class="weather-place" data-weather="osaka_day1">
   <div class="weather-top"><div class="weather-place-name">大阪・心齋橋</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -729,7 +733,7 @@ body.d3-video-open{overflow:hidden}
   <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-  <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
+  <div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" target="_blank" rel="noopener">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" target="_blank" rel="noopener">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" target="_blank" rel="noopener">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" target="_blank" rel="noopener">2週間氣溫</a>。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 
   <main class="grid">
@@ -945,7 +949,7 @@ body.d3-video-open{overflow:hidden}
   </div>
 </section>
 <section class="trip-weather" id="weather-day2">
-  <div class="trip-weather-head"><b>🌤️ 10/10 京都・奈良天氣</b><span>預報 → 日期過後自動切換歷史天氣</span></div>
+  <div class="trip-weather-head"><b>🌤️ 10/10 京都・奈良天氣</b><span>JMA 官方預報｜7 天外等待，進入範圍後自動更新</span></div>
   <div class="trip-weather-grid" style="--weather-cols:2"><div class="weather-place" data-weather="kyoto_day2">
   <div class="weather-top"><div class="weather-place-name">京都・清水寺</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -959,7 +963,7 @@ body.d3-video-open{overflow:hidden}
   <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-  <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
+  <div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" target="_blank" rel="noopener">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" target="_blank" rel="noopener">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" target="_blank" rel="noopener">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" target="_blank" rel="noopener">2週間氣溫</a>。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 <main class="grid">
   <div>
@@ -1020,7 +1024,7 @@ body.d3-video-open{overflow:hidden}
   </div>
 </section>
 <section class="trip-weather" id="weather-day3">
-  <div class="trip-weather-head"><b>🌤️ 10/11 USJ 天氣</b><span>預報 → 日期過後自動切換歷史天氣</span></div>
+  <div class="trip-weather-head"><b>🌤️ 10/11 USJ 天氣</b><span>JMA 官方預報｜7 天外等待，進入範圍後自動更新</span></div>
   <div class="trip-weather-grid" style="--weather-cols:1"><div class="weather-place" data-weather="usj_day3">
   <div class="weather-top"><div class="weather-place-name">Universal Studios Japan</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -1028,7 +1032,7 @@ body.d3-video-open{overflow:hidden}
   <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-  <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
+  <div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" target="_blank" rel="noopener">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" target="_blank" rel="noopener">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" target="_blank" rel="noopener">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" target="_blank" rel="noopener">2週間氣溫</a>。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 
 
@@ -1511,7 +1515,7 @@ body.d3-video-open{overflow:hidden}
 
 
 <section class="trip-weather" id="weather-day4">
-  <div class="trip-weather-head"><b>🌤️ 10/12 池田・梅田天氣</b><span>預報 → 日期過後自動切換歷史天氣</span></div>
+  <div class="trip-weather-head"><b>🌤️ 10/12 池田・梅田天氣</b><span>JMA 官方預報｜7 天外等待，進入範圍後自動更新</span></div>
   <div class="trip-weather-grid" style="--weather-cols:2"><div class="weather-place" data-weather="ikeda_day4">
   <div class="weather-top"><div class="weather-place-name">大阪・池田</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -1525,7 +1529,7 @@ body.d3-video-open{overflow:hidden}
   <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-  <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
+  <div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" target="_blank" rel="noopener">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" target="_blank" rel="noopener">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" target="_blank" rel="noopener">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" target="_blank" rel="noopener">2週間氣溫</a>。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 
 <main class="grid">
@@ -1628,7 +1632,7 @@ body.d3-video-open{overflow:hidden}
 
 
 <section class="trip-weather" id="weather-day5">
-  <div class="trip-weather-head"><b>🌤️ 10/13 阿倍野・臨空／KIX 天氣</b><span>預報 → 日期過後自動切換歷史天氣</span></div>
+  <div class="trip-weather-head"><b>🌤️ 10/13 阿倍野・臨空／KIX 天氣</b><span>JMA 官方預報｜7 天外等待，進入範圍後自動更新</span></div>
   <div class="trip-weather-grid" style="--weather-cols:2"><div class="weather-place" data-weather="abeno_day5">
   <div class="weather-top"><div class="weather-place-name">大阪・阿倍野</div><span class="weather-state waiting">讀取中</span></div>
   <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -1642,7 +1646,7 @@ body.d3-video-open{overflow:hidden}
   <div class="weather-confidence">預報可信度：—</div>
   <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-  <div class="weather-source">Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>｜降雨量以每日 rain sum / precipitation sum 顯示。</div>
+  <div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" target="_blank" rel="noopener">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" target="_blank" rel="noopener">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" target="_blank" rel="noopener">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" target="_blank" rel="noopener">2週間氣溫</a>。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 
 <main class="grid">
@@ -1712,7 +1716,7 @@ body.d3-video-open{overflow:hidden}
 </main>
 </div>
 
-<div class="foot">Prototype v40｜Google Maps＋Japan Travel by NAVITIME 雙導航｜Day 3 午晚餐自選＋園內餐飲地圖／菜單表｜地圖同棟 Marker 合併版｜五天交通校正版：跨區鐵路加入校正後路線／時間，商圈內改標步行時間＋建議停留；保留 Day 5 MIO／Harukas 與所有照片購物目標。</div>
+<div class="foot">Prototype v41｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME 雙導航｜Day 3 午晚餐自選＋園內餐飲地圖／菜單表｜地圖同棟 Marker 合併版｜五天交通校正版：跨區鐵路加入校正後路線／時間，商圈內改標步行時間＋建議停留；保留 Day 5 MIO／Harukas 與所有照片購物目標。</div>
 </div>
 
 
@@ -2076,49 +2080,52 @@ function crowdText(v){
 }
 
 function weatherCodeInfo(code){
-  const c=Number(code);
-  if(c===0) return ['☀️','晴朗'];
-  if(c===1) return ['🌤️','大致晴朗'];
-  if(c===2) return ['⛅','局部多雲'];
-  if(c===3) return ['☁️','陰天'];
-  if(c===45||c===48) return ['🌫️','有霧'];
-  if(c>=51&&c<=57) return ['🌦️','毛毛雨'];
-  if(c>=61&&c<=67) return ['🌧️','下雨'];
-  if(c>=71&&c<=77) return ['🌨️','降雪'];
-  if(c>=80&&c<=82) return ['🌦️','陣雨'];
-  if(c>=85&&c<=86) return ['🌨️','陣雪'];
-  if(c>=95) return ['⛈️','雷雨'];
-  return ['🌥️','天氣資料'];
+  const c=String(code??'').padStart(3,'0');
+  const exact={
+    '100':['☀️','晴天'],'101':['🌤️','晴時多雲'],'102':['🌦️','晴偶雨'],'103':['🌦️','晴時有雨'],
+    '110':['🌤️','晴轉時多雲'],'111':['🌥️','晴轉多雲'],'112':['🌦️','晴後偶雨'],'113':['🌦️','晴後時有雨'],'114':['🌧️','晴後雨'],
+    '200':['☁️','陰天'],'201':['⛅','陰時晴'],'202':['🌦️','陰偶雨'],'203':['🌧️','陰時有雨'],
+    '210':['🌥️','陰轉時晴'],'211':['🌤️','陰轉晴'],'212':['🌦️','陰後偶雨'],'213':['🌧️','陰後時有雨'],'214':['🌧️','陰後雨'],
+    '300':['🌧️','雨'],'301':['🌦️','雨時晴'],'302':['🌧️','雨時停'],'303':['🌨️','雨時雪'],
+    '311':['🌦️','雨後晴'],'313':['🌧️','雨後陰'],'314':['🌨️','雨後時雪'],'315':['🌨️','雨後雪'],
+    '400':['🌨️','雪'],'401':['🌨️','雪時晴'],'402':['🌨️','雪時停'],'403':['🌨️','雪時雨'],
+    '411':['🌨️','雪後晴'],'413':['🌨️','雪後陰'],'414':['🌨️','雪後雨']
+  };
+  if(exact[c]) return exact[c];
+  const n=Number(c);
+  if(n>=100&&n<200) return ['🌤️','以晴天為主'];
+  if(n>=200&&n<300) return ['☁️','以多雲為主'];
+  if(n>=300&&n<400) return ['🌧️','有雨'];
+  if(n>=400&&n<500) return ['🌨️','有雪'];
+  return ['🌥️','JMA 天氣預報'];
 }
-function fmtWeatherNum(v,d=1){
+function fmtWeatherNum(v,d=0){
   const n=Number(v);
   return Number.isFinite(n) ? n.toFixed(d).replace(/\.0$/,'') : '—';
 }
-
-function japanTodayUTC(){
-  const parts=new Intl.DateTimeFormat('en-US',{
-    timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'
-  }).formatToParts(new Date());
-  const get=t=>Number(parts.find(p=>p.type===t)?.value);
-  return Date.UTC(get('year'),get('month')-1,get('day'));
+function fmtJmaReportTime(v){
+  const m=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+  return m ? `${Number(m[2])}/${Number(m[3])} ${m[4]}:${m[5]}` : '';
 }
-function weatherConfidence(dateStr,mode){
-  if(mode==='historical'||mode==='historical_forecast'){
-    return {label:'歷史資料',cls:'history',detail:'日期已過，顯示過去天氣'};
+function jmaReliabilityInfo(v,mode){
+  const r=String(v||'').toUpperCase();
+  if(r==='A') return {label:'A・確度高',cls:'high',detail:'JMA 週間預報信賴度'};
+  if(r==='B') return {label:'B・確度較高',cls:'medium',detail:'JMA 週間預報信賴度'};
+  if(r==='C') return {label:'C・確度較低',cls:'low',detail:'JMA 週間預報信賴度'};
+  if(mode==='short') return {label:'短期預報',cls:'midhigh',detail:'A/B/C 僅用於第 3 天後週間預報'};
+  return {label:'—',cls:'',detail:'JMA 尚未提供 A/B/C'};
+}
+function tempRangeText(w){
+  const min=fmtWeatherNum(w.temperature_min), max=fmtWeatherNum(w.temperature_max);
+  if(min==='—'&&max==='—') return '氣溫資料待更新';
+  let txt=`${min}–${max}°C`;
+  const minLo=fmtWeatherNum(w.temperature_min_lower), minHi=fmtWeatherNum(w.temperature_min_upper);
+  const maxLo=fmtWeatherNum(w.temperature_max_lower), maxHi=fmtWeatherNum(w.temperature_max_upper);
+  if(minLo!=='—'&&minHi!=='—'&&maxLo!=='—'&&maxHi!=='—'){
+    txt+=`｜最低預測 ${minLo}–${minHi}°・最高 ${maxLo}–${maxHi}°`;
   }
-  const m=String(dateStr||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if(!m) return {label:'—',cls:'',detail:''};
-  const target=Date.UTC(Number(m[1]),Number(m[2])-1,Number(m[3]));
-  const diff=Math.round((target-japanTodayUTC())/86400000);
-
-  if(diff<0) return {label:'歷史資料',cls:'history',detail:'日期已過'};
-  if(diff<=2) return {label:'高',cls:'high',detail:'0–2 天內'};
-  if(diff<=5) return {label:'中高',cls:'midhigh',detail:'3–5 天內'};
-  if(diff<=9) return {label:'中',cls:'medium',detail:'6–9 天內'};
-  if(diff<=16) return {label:'低',cls:'low',detail:'10–16 天內，主要看趨勢'};
-  return {label:'很低',cls:'verylow',detail:'超過 16 天，僅看趨勢'};
+  return txt;
 }
-
 function renderTripWeather(data){
   const weather=data?._weather?.places||{};
   document.querySelectorAll('[data-weather]').forEach(card=>{
@@ -2133,52 +2140,66 @@ function renderTripWeather(data){
 
     if(!w || w.status==='not_available_yet'){
       state.className='weather-state waiting';
-      state.textContent='尚未進入預報範圍';
+      state.textContent='7 日外';
       icon.textContent='🗓️';
-      cond.textContent='等待預報';
-      temp.textContent=w?.date ? w.date : '—';
-      metrics.innerHTML='<span class="weather-metric">🌧️ 降雨量 —</span>';
-      const cf=weatherConfidence(w?.date,w?.mode);
-      confidence.className='weather-confidence '+cf.cls;
-      confidence.textContent=`預報可信度：${cf.label}${cf.detail?' · '+cf.detail:''}`;
-      updated.textContent='Open‑Meteo 最長約 16 天預報；進入範圍後 GitHub Actions 會自動更新。';
+      cond.textContent='尚未進入 JMA 週間預報';
+      temp.textContent=w?.date||'—';
+      const tw=w?.two_week_url||'https://www.data.jma.go.jp/cpd/twoweek/';
+      metrics.innerHTML=`<span class="weather-metric">🌡️ <a href="${tw}" target="_blank" rel="noopener">查看 JMA 2週間氣溫趨勢 ↗</a></span>`;
+      confidence.className='weather-confidence';
+      confidence.textContent='逐日天氣：JMA 只發布至 7 天先';
+      updated.textContent='進入 7 天預報範圍後，GitHub Actions 會自動切換成官方週間預報。';
+      return;
+    }
+    if(w.status==='expired'){
+      state.className='weather-state expired';
+      state.textContent='日期已過';
+      icon.textContent='✓';
+      cond.textContent='JMA 預報期間已結束';
+      temp.textContent=w.date||'—';
+      metrics.innerHTML='<span class="weather-metric">不使用第三方歷史天氣回填</span>';
+      confidence.className='weather-confidence history';
+      confidence.textContent='資料狀態：已結束';
+      updated.textContent='此版天氣模組只使用 JMA 官方預報資料。';
       return;
     }
     if(w.status!=='ok'){
       state.className='weather-state waiting';
       state.textContent='暫無資料';
       icon.textContent='⚠️';
-      cond.textContent='天氣資料暫時無法取得';
+      cond.textContent='JMA 官方資料暫時無法取得';
       temp.textContent=w?.date||'—';
-      metrics.innerHTML='<span class="weather-metric">🌧️ 降雨量 —</span>';
-      const cf=weatherConfidence(w?.date,w?.mode);
-      confidence.className='weather-confidence '+cf.cls;
-      confidence.textContent=`預報可信度：${cf.label}${cf.detail?' · '+cf.detail:''}`;
-      updated.textContent='下一次 GitHub Actions 會再次嘗試。';
+      metrics.innerHTML='<span class="weather-metric">下一次更新會再次嘗試</span>';
+      confidence.className='weather-confidence';
+      confidence.textContent='JMA 資料連線狀態：等待重試';
+      updated.textContent='不會自動改用其他氣象來源。';
       return;
     }
 
     const [ico,label]=weatherCodeInfo(w.weather_code);
-    const historical=w.mode==='historical'||w.mode==='historical_forecast';
-    state.className='weather-state '+(historical?'history':'forecast');
-    state.textContent=historical ? (w.mode==='historical'?'歷史天氣':'歷史回溯') : (w.is_today?'今日':'預報');
+    const mode=w.mode==='short'?'short':'weekly';
+    state.className='weather-state '+mode;
+    state.textContent=mode==='short' ? (w.is_today?'今日・短期':'短期預報') : '週間預報';
     icon.textContent=ico;
     cond.textContent=label;
-    temp.textContent=`${fmtWeatherNum(w.temperature_min)}–${fmtWeatherNum(w.temperature_max)}°C`;
+    temp.textContent=tempRangeText(w);
 
-    let chips=[
-      `<span class="weather-metric">🌧️ 降雨量 ${fmtWeatherNum(w.rain_sum ?? w.precipitation_sum)} mm</span>`,
-      `<span class="weather-metric">💧 總降水 ${fmtWeatherNum(w.precipitation_sum)} mm</span>`
-    ];
-    if(!historical && Number.isFinite(Number(w.precipitation_probability_max))){
-      chips.push(`<span class="weather-metric">☔ 降雨機率 ${Math.round(Number(w.precipitation_probability_max))}%</span>`);
+    const chips=[];
+    if(Number.isFinite(Number(w.precipitation_probability))){
+      chips.push(`<span class="weather-metric">☔ 降雨機率 ${Math.round(Number(w.precipitation_probability))}%</span>`);
     }
-    metrics.innerHTML=chips.join('');
-    const cf=weatherConfidence(w.date,w.mode);
+    if(Array.isArray(w.pop_6h)&&w.pop_6h.length){
+      const parts=w.pop_6h.map(x=>`${x.start}–${x.end} ${x.pop}%`);
+      chips.push(`<span class="weather-metric">🕒 6 小時降雨率 ${parts.join('｜')}</span>`);
+    }
+    if(w.forecast_area) chips.push(`<span class="weather-metric">📍 JMA ${w.forecast_area}</span>`);
+    metrics.innerHTML=chips.length?chips.join(''):'<span class="weather-metric">JMA 降雨資料待更新</span>';
+
+    const cf=jmaReliabilityInfo(w.reliability,mode);
     confidence.className='weather-confidence '+cf.cls;
-    confidence.textContent=`${historical?'資料狀態':'預報可信度'}：${cf.label}${cf.detail?' · '+cf.detail:''}`;
-    const kind=historical?'過去資料':'未來預報';
-    updated.textContent=`${w.date} · ${kind}${w.source_label?' · '+w.source_label:''}`;
+    confidence.textContent=`${cf.detail}：${cf.label}`;
+    const report=fmtJmaReportTime(w.report_datetime);
+    updated.textContent=`${w.date} · ${w.publishing_office||'日本氣象廳'}${report?' · '+report+' 發布':''}`;
   });
 }
 
