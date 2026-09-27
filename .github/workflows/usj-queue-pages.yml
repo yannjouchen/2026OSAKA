@@ -406,164 +406,288 @@ jobs:
               }
 
 
+          # JMA (Japan Meteorological Agency) official forecast configuration.
+          # Forecast JSON is prefecture-based; cards keep the trip-place label but
+          # explicitly show the JMA forecast area used for that location.
           WEATHER_TARGETS = {
               "osaka_day1": {
                   "date": "2026-10-09",
                   "label": "大阪・心齋橋",
-                  "latitude": 34.673856,
-                  "longitude": 135.498128,
+                  "pref_code": "270000",
+                  "weekly_area_code": "270000",
+                  "short_area_code": "270000",
+                  "temp_area_code": "62078",
+                  "forecast_area": "大阪府",
               },
               "kyoto_day2": {
                   "date": "2026-10-10",
                   "label": "京都・清水寺",
-                  "latitude": 34.9954951,
-                  "longitude": 135.7763166,
+                  "pref_code": "260000",
+                  "weekly_area_code": "260000",
+                  "short_area_code": "260010",
+                  "temp_area_code": "61286",
+                  "forecast_area": "京都府南部",
               },
               "nara_day2": {
                   "date": "2026-10-10",
                   "label": "奈良公園",
-                  "latitude": 34.685047,
-                  "longitude": 135.843012,
+                  "pref_code": "290000",
+                  "weekly_area_code": "290000",
+                  "short_area_code": "290010",
+                  "temp_area_code": "64036",
+                  "forecast_area": "奈良県北部",
               },
               "usj_day3": {
                   "date": "2026-10-11",
                   "label": "Universal Studios Japan",
-                  "latitude": 34.6654,
-                  "longitude": 135.4323,
+                  "pref_code": "270000",
+                  "weekly_area_code": "270000",
+                  "short_area_code": "270000",
+                  "temp_area_code": "62078",
+                  "forecast_area": "大阪府",
               },
               "ikeda_day4": {
                   "date": "2026-10-12",
                   "label": "大阪・池田",
-                  "latitude": 34.8180487,
-                  "longitude": 135.4266758,
+                  "pref_code": "270000",
+                  "weekly_area_code": "270000",
+                  "short_area_code": "270000",
+                  "temp_area_code": "62078",
+                  "forecast_area": "大阪府",
               },
               "umeda_day4": {
                   "date": "2026-10-12",
                   "label": "大阪・梅田",
-                  "latitude": 34.7028866,
-                  "longitude": 135.4953236,
+                  "pref_code": "270000",
+                  "weekly_area_code": "270000",
+                  "short_area_code": "270000",
+                  "temp_area_code": "62078",
+                  "forecast_area": "大阪府",
               },
               "abeno_day5": {
                   "date": "2026-10-13",
                   "label": "大阪・阿倍野",
-                  "latitude": 34.6448982,
-                  "longitude": 135.5116009,
+                  "pref_code": "270000",
+                  "weekly_area_code": "270000",
+                  "short_area_code": "270000",
+                  "temp_area_code": "62078",
+                  "forecast_area": "大阪府",
               },
               "rinku_day5": {
                   "date": "2026-10-13",
                   "label": "臨空城・KIX",
-                  "latitude": 34.4107338,
-                  "longitude": 135.2996108,
+                  "pref_code": "270000",
+                  "weekly_area_code": "270000",
+                  "short_area_code": "270000",
+                  "temp_area_code": "62078",
+                  "forecast_area": "大阪府",
               },
           }
 
-          WEATHER_DAILY_FORECAST = (
-              "weather_code,temperature_2m_max,temperature_2m_min,"
-              "precipitation_sum,rain_sum,precipitation_probability_max"
-          )
-          WEATHER_DAILY_HISTORY = (
-              "weather_code,temperature_2m_max,temperature_2m_min,"
-              "precipitation_sum,rain_sum,precipitation_hours"
-          )
+          JMA_FORECAST_BASE = "https://www.jma.go.jp/bosai/forecast/data/forecast"
+          JMA_MULTI_ZHT = "https://www.data.jma.go.jp/multi/index.html?lang=cn_zt"
+          JMA_TWOWEEK = "https://www.data.jma.go.jp/cpd/twoweek/"
 
-          def api_json(base, params, timeout=20):
-              url = base + "?" + urllib.parse.urlencode(params)
-              return request_json(url, timeout)
+          def jma_date(iso_value):
+              return str(iso_value or "")[:10]
 
-          def first_daily(data, key):
-              daily = data.get("daily") or {}
-              values = daily.get(key)
-              if isinstance(values, list) and values:
-                  return values[0]
+          def jma_find_area(series, code):
+              for area in (series or {}).get("areas") or []:
+                  if str((area.get("area") or {}).get("code")) == str(code):
+                      return area
               return None
 
-          def weather_record(target, today):
+          def jma_value_for_date(series, area_code, field, target_date):
+              area = jma_find_area(series, area_code)
+              if not area:
+                  return None
+              values = area.get(field) or []
+              for i, t in enumerate((series or {}).get("timeDefines") or []):
+                  if jma_date(t) == target_date and i < len(values):
+                      v = values[i]
+                      return v if v not in ("", None) else None
+              return None
+
+          def jma_short_temps(short_doc, temp_area_code, target_date):
+              try:
+                  series = short_doc["timeSeries"][2]
+              except Exception:
+                  return (None, None)
+              area = jma_find_area(series, temp_area_code)
+              if not area:
+                  return (None, None)
+              vals = []
+              temps = area.get("temps") or []
+              for i, t in enumerate(series.get("timeDefines") or []):
+                  if jma_date(t) == target_date and i < len(temps):
+                      try:
+                          vals.append(float(temps[i]))
+                      except Exception:
+                          pass
+              if not vals:
+                  return (None, None)
+              return (min(vals), max(vals))
+
+          def jma_short_pop_blocks(short_doc, short_area_code, target_date):
+              try:
+                  series = short_doc["timeSeries"][1]
+              except Exception:
+                  return []
+              area = jma_find_area(series, short_area_code)
+              if not area:
+                  return []
+              pops = area.get("pops") or []
+              blocks = []
+              for i, t in enumerate(series.get("timeDefines") or []):
+                  if jma_date(t) != target_date or i >= len(pops) or pops[i] in ("", None):
+                      continue
+                  try:
+                      hour = int(str(t)[11:13])
+                      pop = int(float(pops[i]))
+                  except Exception:
+                      continue
+                  blocks.append({
+                      "start": f"{hour:02d}:00",
+                      "end": f"{(hour + 6) % 24:02d}:00",
+                      "pop": pop,
+                  })
+              return blocks
+
+          def jma_weather_record(target, today, pref_docs):
               from datetime import date as date_cls
 
               target_date = date_cls.fromisoformat(target["date"])
-              common = {
-                  "latitude": target["latitude"],
-                  "longitude": target["longitude"],
-                  "timezone": "Asia/Tokyo",
-                  "start_date": target["date"],
-                  "end_date": target["date"],
+              diff = (target_date - today).days
+              base = {
+                  "date": target["date"],
+                  "label": target["label"],
+                  "forecast_area": target["forecast_area"],
+                  "source": "JMA",
+                  "source_label": "日本氣象廳 JMA",
+                  "official_zh_url": JMA_MULTI_ZHT,
+                  "two_week_url": JMA_TWOWEEK,
               }
 
-              def pack(data, mode, source_label):
-                  daily = data.get("daily") or {}
-                  times = daily.get("time") or []
-                  if not times:
-                      raise ValueError("No daily weather row returned")
+              if diff < 0:
                   return {
-                      "status": "ok",
-                      "date": target["date"],
-                      "label": target["label"],
-                      "mode": mode,
-                      "is_today": target_date == today,
-                      "weather_code": first_daily(data, "weather_code"),
-                      "temperature_max": first_daily(data, "temperature_2m_max"),
-                      "temperature_min": first_daily(data, "temperature_2m_min"),
-                      "precipitation_sum": first_daily(data, "precipitation_sum"),
-                      "rain_sum": first_daily(data, "rain_sum"),
-                      "precipitation_probability_max": first_daily(data, "precipitation_probability_max"),
-                      "precipitation_hours": first_daily(data, "precipitation_hours"),
-                      "source_label": source_label,
+                      **base,
+                      "status": "expired",
+                      "mode": "expired",
+                      "days_ahead": diff,
                   }
 
-              if target_date >= today:
-                  params = {
-                      **common,
-                      "daily": WEATHER_DAILY_FORECAST,
+              # JMA daily weather forecasts are issued only through 7 days ahead.
+              if diff > 7:
+                  return {
+                      **base,
+                      "status": "not_available_yet",
+                      "mode": "waiting",
+                      "days_ahead": diff,
                   }
-                  try:
-                      data = api_json("https://api.open-meteo.com/v1/forecast", params)
-                      return pack(data, "forecast", "Open‑Meteo Forecast")
-                  except Exception as e:
-                      # Most commonly means the date has not entered the forecast horizon yet.
-                      return {
-                          "status": "not_available_yet",
-                          "date": target["date"],
-                          "label": target["label"],
-                          "mode": "forecast",
-                          "error": str(e)[:250],
-                      }
 
-              archive_params = {
-                  **common,
-                  "daily": WEATHER_DAILY_HISTORY,
+              docs = pref_docs.get(target["pref_code"])
+              if not isinstance(docs, list) or len(docs) < 2:
+                  return {
+                      **base,
+                      "status": "unavailable",
+                      "mode": "jma",
+                      "days_ahead": diff,
+                      "error": "JMA forecast JSON unavailable",
+                  }
+
+              short_doc, weekly_doc = docs[0], docs[1]
+              short_series = short_doc.get("timeSeries") or []
+              weekly_series = weekly_doc.get("timeSeries") or []
+
+              short_code = None
+              short_text = None
+              if short_series:
+                  short_code = jma_value_for_date(
+                      short_series[0], target["short_area_code"], "weatherCodes", target["date"]
+                  )
+                  short_text = jma_value_for_date(
+                      short_series[0], target["short_area_code"], "weathers", target["date"]
+                  )
+
+              weekly_code = None
+              daily_pop = None
+              reliability = None
+              tmin = tmax = None
+              tmin_lo = tmin_hi = tmax_lo = tmax_hi = None
+              if weekly_series:
+                  weekly_code = jma_value_for_date(
+                      weekly_series[0], target["weekly_area_code"], "weatherCodes", target["date"]
+                  )
+                  daily_pop = jma_value_for_date(
+                      weekly_series[0], target["weekly_area_code"], "pops", target["date"]
+                  )
+                  reliability = jma_value_for_date(
+                      weekly_series[0], target["weekly_area_code"], "reliabilities", target["date"]
+                  )
+              if len(weekly_series) > 1:
+                  tseries = weekly_series[1]
+                  tmin = jma_value_for_date(tseries, target["temp_area_code"], "tempsMin", target["date"])
+                  tmax = jma_value_for_date(tseries, target["temp_area_code"], "tempsMax", target["date"])
+                  tmin_lo = jma_value_for_date(tseries, target["temp_area_code"], "tempsMinLower", target["date"])
+                  tmin_hi = jma_value_for_date(tseries, target["temp_area_code"], "tempsMinUpper", target["date"])
+                  tmax_lo = jma_value_for_date(tseries, target["temp_area_code"], "tempsMaxLower", target["date"])
+                  tmax_hi = jma_value_for_date(tseries, target["temp_area_code"], "tempsMaxUpper", target["date"])
+
+              short_min, short_max = jma_short_temps(short_doc, target["temp_area_code"], target["date"])
+              if tmin in (None, "") and short_min is not None:
+                  tmin = short_min
+              if tmax in (None, "") and short_max is not None:
+                  tmax = short_max
+
+              pop_blocks = jma_short_pop_blocks(short_doc, target["short_area_code"], target["date"])
+              if daily_pop in (None, "") and pop_blocks:
+                  daily_pop = max(x["pop"] for x in pop_blocks)
+
+              weather_code = short_code or weekly_code
+              if weather_code in (None, ""):
+                  return {
+                      **base,
+                      "status": "not_available_yet",
+                      "mode": "waiting",
+                      "days_ahead": diff,
+                  }
+
+              mode = "short" if short_code not in (None, "") else "weekly"
+              report_dt = short_doc.get("reportDatetime") if mode == "short" else weekly_doc.get("reportDatetime")
+              office = short_doc.get("publishingOffice") if mode == "short" else weekly_doc.get("publishingOffice")
+
+              return {
+                  **base,
+                  "status": "ok",
+                  "mode": mode,
+                  "days_ahead": diff,
+                  "is_today": diff == 0,
+                  "weather_code": str(weather_code),
+                  "weather_text_ja": short_text,
+                  "temperature_min": tmin,
+                  "temperature_max": tmax,
+                  "temperature_min_lower": tmin_lo,
+                  "temperature_min_upper": tmin_hi,
+                  "temperature_max_lower": tmax_lo,
+                  "temperature_max_upper": tmax_hi,
+                  "precipitation_probability": daily_pop,
+                  "pop_6h": pop_blocks,
+                  "reliability": reliability,
+                  "publishing_office": office,
+                  "report_datetime": report_dt,
               }
-              try:
-                  data = api_json("https://archive-api.open-meteo.com/v1/archive", archive_params)
-                  return pack(data, "historical", "Open‑Meteo Historical Weather")
-              except Exception as archive_error:
-                  # Recent past may not yet be fully available in the long-term archive.
-                  hist_params = {
-                      **common,
-                      "daily": WEATHER_DAILY_FORECAST,
-                  }
-                  try:
-                      data = api_json(
-                          "https://historical-forecast-api.open-meteo.com/v1/forecast",
-                          hist_params,
-                      )
-                      rec = pack(data, "historical_forecast", "Open‑Meteo Historical Forecast")
-                      rec["archive_error"] = str(archive_error)[:200]
-                      return rec
-                  except Exception as hist_error:
-                      return {
-                          "status": "unavailable",
-                          "date": target["date"],
-                          "label": target["label"],
-                          "mode": "historical",
-                          "error": str(hist_error)[:250],
-                      }
 
           def weather_bundle(now_utc, now_jst, previous_live=None):
-              # Weather changes much more slowly than queue times.
-              # Reuse the previously published weather bundle for up to 30 minutes.
+              # JMA forecast products update a few times per day. Reuse an already
+              # published JMA bundle for 30 minutes to avoid unnecessary requests.
               old = (previous_live or {}).get("_weather") or {}
               old_fetched = old.get("fetched_at")
-              if old_fetched and old.get("places") and set(WEATHER_TARGETS).issubset(set(old.get("places", {}))):
+              if (
+                  old.get("source") == "JMA"
+                  and old_fetched
+                  and old.get("places")
+                  and set(WEATHER_TARGETS).issubset(set(old.get("places", {})))
+              ):
                   try:
                       old_dt = datetime.fromisoformat(old_fetched.replace("Z", "+00:00"))
                       if (now_utc - old_dt).total_seconds() < 1800:
@@ -571,22 +695,39 @@ jobs:
                   except Exception:
                       pass
 
+              # Fetch each prefecture only once, then reuse it for all cards in that prefecture.
+              pref_docs = {}
+              needed_pref_codes = sorted({t["pref_code"] for t in WEATHER_TARGETS.values()})
+              for code in needed_pref_codes:
+                  try:
+                      pref_docs[code] = request_json(f"{JMA_FORECAST_BASE}/{code}.json")
+                  except Exception as e:
+                      print(f"JMA forecast fetch failed for {code}: {e}")
+                      pref_docs[code] = None
+
               places = {}
               for key, target in WEATHER_TARGETS.items():
                   try:
-                      places[key] = weather_record(target, now_jst.date())
+                      places[key] = jma_weather_record(target, now_jst.date(), pref_docs)
                   except Exception as e:
                       places[key] = {
                           "status": "unavailable",
                           "date": target["date"],
                           "label": target["label"],
+                          "forecast_area": target["forecast_area"],
+                          "source": "JMA",
+                          "source_label": "日本氣象廳 JMA",
+                          "official_zh_url": JMA_MULTI_ZHT,
+                          "two_week_url": JMA_TWOWEEK,
                           "error": str(e)[:250],
                       }
 
               return {
                   "fetched_at": now_utc.isoformat().replace("+00:00", "Z"),
                   "places": places,
-                  "source": "Open‑Meteo",
+                  "source": "JMA",
+                  "official_zh_url": JMA_MULTI_ZHT,
+                  "two_week_url": JMA_TWOWEEK,
               }
 
 
