@@ -609,7 +609,7 @@ body.d3-video-open{overflow:hidden}
 
 @media(max-width:620px){.option-grid{grid-template-columns:1fr}}
 
-/* --- Coffee markers v27 --- */
+/* --- Coffee / bubble tea markers v44 --- */
 .coffee-marker{
   width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
   color:#fff;border:3px solid #fff;font-size:12px;font-weight:950;
@@ -617,6 +617,7 @@ body.d3-video-open{overflow:hidden}
 }
 .coffee-marker.sb{background:#006241}
 .coffee-marker.bb{background:#4b9fca}
+.coffee-marker.tea{background:#8b4f78}
 .coffee-legend{
   display:flex;gap:10px;flex-wrap:wrap;align-items:center;
   padding:9px 13px 12px;border-top:1px dashed var(--line);
@@ -627,7 +628,7 @@ body.d3-video-open{overflow:hidden}
   width:23px;height:23px;border-radius:50%;display:inline-grid;place-items:center;
   color:#fff;font-style:normal;font-size:10px;font-weight:950;border:2px solid #fff;box-shadow:0 2px 5px #0003
 }
-.coffee-legend i.sb{background:#006241}.coffee-legend i.bb{background:#4b9fca}
+.coffee-legend i.sb{background:#006241}.coffee-legend i.bb{background:#4b9fca}.coffee-legend i.tea{background:#8b4f78}
 .coffee-mini{border-top:1px solid var(--line);margin-top:2px;background:#fffdf8}
 .coffee-mini-head{padding:13px 14px 8px;font-weight:900;font-size:14px}
 #map3coffee{height:320px;min-height:280px;margin:0 13px 0;border:1px solid var(--line);border-radius:15px;overflow:hidden}
@@ -931,7 +932,7 @@ body.d3-video-open{overflow:hidden}
         <a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97%20%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E9%9B%A3%E6%B3%A21%E4%B8%81%E7%9B%AE%E8%99%B9%E3%81%AE%E3%81%BE%E3%81%A13-10%E5%8F%B7%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF2%E7%95%AA%E8%A1%97%E5%8D%97%E9%80%9A%E3%82%8A%20%E3%83%95%E3%82%A9%E3%83%AC%E3%82%B9%E3%83%88%E3%83%91%E3%83%BC%E3%82%AF%E5%89%8D&destination=34.669254%2C135.499904&travelmode=walking&waypoints=34.6646089%2C135.5012633%7C34.6616083%2C135.5019349%7C34.6692891%2C135.5006608" target="_blank">Google Maps ⑫～⑮</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6672000%2C%27lon%27%3A135.5005500%7D&amp;start_name=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3+%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97&amp;goal=%7B%27lat%27%3A34.6692540%2C%27lon%27%3A135.4999040%7D&amp;goal_name=34.669254%2C135.499904" target="_blank" rel="noopener" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a>
         <button class="btn soft" id="fit" type="button">顯示全部</button>
       </div>
-      <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>獨立咖啡店才畫 S／B；同棟或緊鄰主景點的 Starbucks 併入編號 Marker 的 Popup</span></div>
+      <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span><i class="tea">T</i>珍珠奶茶</span><span>S／B／T 只標順路店；同棟飲料店會併入編號 Marker，避免座標重疊</span></div>
       <div class="legend"><b>地圖說明：</b>青綠色為飯店，橘紅色為 ①～⑮ 逛街順序。④ PARCO、⑪ 難波 Walk、⑫ 高島屋、⑬ Namba Parks 的 Starbucks 都改併入主 Marker；E｜HARBS 也併入④資訊，不再互相遮住。地圖不以虛線連接。</div>
     </section>
   </main></div>
@@ -1487,7 +1488,7 @@ body.d3-video-open{overflow:hidden}
     <div class="coffee-mini">
       <div class="coffee-mini-head">☕ Day 3｜飯店 → Universal City 順路咖啡（GPS 地圖）</div>
       <div id="map3coffee"></div>
-      <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>Universal City 站旁 Starbucks 07:00 才開；清晨抵達時尚未營業，離園可用</span></div>
+      <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="tea">T</i>珍珠奶茶</span><span>Starbucks 07:00 才開；Gong cha 10:00 才開，所以都以離園／白天順路為主</span></div>
     </div>
   </section>
 </main>
@@ -1603,7 +1604,7 @@ body.d3-video-open{overflow:hidden}
     <div class="head"><h2>Day 4｜池田・梅田・難波地圖</h2><span class="pill">主線＋A～E</span></div>
     <div id="map4"></div>
     <div class="tools"><button class="btn soft" id="fit4" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=34.6675993%2C135.5006679&travelmode=transit&waypoints=34.8180487%2C135.4266758%7C34.7079533%2C135.4993874%7C34.7028186%2C135.4985323%7C34.7012797%2C135.4983196%7C34.7028866%2C135.4953236%7C34.7006219%2C135.4941733%7C34.7038664%2C135.4949205%7C34.7024579%2C135.4913958" target="_blank">開啟主線地圖</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.6675993%2C%27lon%27%3A135.5006679%7D&amp;goal_name=34.6675993%2C135.5006679" target="_blank" rel="noopener" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a></div>
-    <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>獨立咖啡點保留 Marker；KITTE／GRAND FRONT 同棟 Starbucks 已併入⑥／⑦ Popup</span></div>
+    <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span><i class="tea">T</i>珍珠奶茶</span><span>THE ALLEY 在梅田 EST 1F；KITTE／GRAND FRONT 同棟 Starbucks 仍併入⑥／⑦ Popup</span></div>
     <div class="legend"><b>彈性標記：</b>灰色 A／B／D／E／F 為「有時間再去」；C｜Blue Bottle 保留藍色 B，池田站 Starbucks 保留綠色 S。Day 4 不畫連線。</div>
   </section>
 </main>
@@ -1712,13 +1713,13 @@ body.d3-video-open{overflow:hidden}
     <div class="head"><h2>Day 5｜天王寺・阿倍野 → 臨空 → KIX</h2><span class="pill">主線＋E</span></div>
     <div id="map5"></div>
     <div class="tools"><button class="btn soft" id="fit5" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&origin=34.673856%2C135.498128&destination=Kansai%20International%20Airport%20Terminal%201&travelmode=transit&waypoints=34.6448982%2C135.5116009%7C34.646337%2C135.513389%7C34.646629%2C135.513131%7C34.4107338%2C135.2996108" target="_blank">開啟 Day 5 路線</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.4343600%2C%27lon%27%3A135.2449500%7D&amp;goal_name=%E9%97%9C%E8%A5%BF%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4+%E7%AC%AC1%E8%88%AA%E5%BB%88" target="_blank" rel="noopener" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a></div>
-    <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span>Day 5 的 Starbucks 都位於主行程商場／機場內，因此全部併入編號 Marker，不再另外疊 S</span></div>
+    <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="tea">T</i>珍珠奶茶</span><span>Day 5 的 Starbucks 與 Gong cha 都在主行程商場內：Gong cha あべのキューズモール B1F 已併入①，不另疊 Marker</span></div>
     <div class="legend"><b>行李策略：</b>抵達天王寺先把大行李寄在天王寺站／MIO 一帶，空手走 Q's Mall → Harukas → MIO；午餐後取行李再搭 JR 去臨空城。E｜HARBS 與② Harukas 同棟，改併入② Popup，不另畫灰色 E。最後一段一定保留機場緩衝。</div>
   </section>
 </main>
 </div>
 
-<div class="foot">Prototype v41｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME 雙導航｜Day 3 午晚餐自選＋園內餐飲地圖／菜單表｜地圖同棟 Marker 合併版｜五天交通校正版：跨區鐵路加入校正後路線／時間，商圈內改標步行時間＋建議停留；保留 Day 5 MIO／Harukas 與所有照片購物目標。</div>
+<div class="foot">Prototype v44｜附件基底＋順路珍珠奶茶標記｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME 雙導航｜Day 3 午晚餐自選＋園內餐飲地圖／菜單表｜地圖同棟 Marker 合併版｜五天交通校正版：跨區鐵路加入校正後路線／時間，商圈內改標步行時間＋建議停留；保留 Day 5 MIO／Harukas 與所有照片購物目標。</div>
 </div>
 
 
@@ -1737,13 +1738,13 @@ body.d3-video-open{overflow:hidden}
 const hotel={"name": "橋樑酒店 心齋橋", "lat": 34.673856, "lng": 135.498128};
 
 function coffeeIcon(kind){
-  const cls=kind==='bb'?'bb':'sb';
-  const label=kind==='bb'?'B':'S';
+  const cls=kind==='bb'?'bb':(kind==='tea'?'tea':'sb');
+  const label=kind==='bb'?'B':(kind==='tea'?'T':'S');
   return L.divIcon({className:'',html:'<div class="coffee-marker '+cls+'">'+label+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
 }
 function addCoffeeMarkers(targetMap, items){
   items.forEach(c=>{
-    const popup='<div class="coffee-popup"><b>'+c.name+'</b><br>'+c.hours+'<br><span style="color:#718087">'+c.note+'</span>'+(c.url?'<br><a href="'+c.url+'" target="_blank" rel="noopener">官方門市 ↗</a>':'')+'</div>';
+    const popup='<div class="coffee-popup"><b>'+c.name+'</b><br>'+c.hours+'<br><span style="color:#718087">'+c.note+'</span>'+(c.url?'<br><a href="'+c.url+'" target="_blank" rel="noopener">'+(c.linkLabel||'官方門市')+' ↗</a>':'')+'</div>';
     L.marker([c.lat,c.lng],{icon:coffeeIcon(c.kind),zIndexOffset:650}).addTo(targetMap).bindPopup(popup);
   });
 }
@@ -1769,7 +1770,11 @@ points.forEach(p=>{
 const d1Coffee=[
   {kind:'bb',name:'Blue Bottle Coffee 心齋橋 Cafe',lat:34.6774355,lng:135.4993954,hours:'08:00–20:00（10/9）',note:'HOKA／心齋橋北側附近；只標地圖，不重新排進主時間軸',url:'https://store.bluebottlecoffee.jp/pages/shinsaibashi'}
 ]
+const d1Tea=[
+  {kind:'tea',name:'Gong cha｜心齋橋BIGSTEP店',lat:34.67233,lng:135.49887,hours:'11:00–22:00',note:'BIGSTEP 1F；飯店／PARCO／心齋橋主線旁。可點黑奶茶＋珍珠、抹茶奶茶＋珍珠等；實際品項以當日店頭為準。',url:'https://www.big-step.co.jp/',linkLabel:'BIGSTEP 官方'}
+];
 addCoffeeMarkers(map,d1Coffee);
+addCoffeeMarkers(map,d1Tea);
 
 const bounds=L.latLngBounds(route); map.fitBounds(bounds,{padding:[30,30]});
 document.getElementById('fit').onclick=()=>map.fitBounds(bounds,{padding:[30,30]});
@@ -1803,8 +1808,12 @@ L.marker([usjEntrance.lat,usjEntrance.lng],{icon:usjIcon}).addTo(map3coffee).bin
 const d3Coffee=[
   {kind:'sb',name:'Starbucks｜Hotel Keihan Universal Tower 店',lat:34.6676818,lng:135.4378099,hours:'07:00–22:00',note:'Universal City 站旁；你約 05:50 抵達時尚未開門，離園時可用',url:'https://store.starbucks.co.jp/detail-332/'}
 ];
+const d3Tea=[
+  {kind:'tea',name:'Gong cha｜The Park Front Hotel 店',lat:34.66774,lng:135.43714,hours:'10:00–22:00',note:'The Park Front Hotel 3F；Universal City 站到 USJ 大門的必經區域。黑奶茶＋珍珠、抹茶奶茶＋珍珠等；適合白天或離園後順路買。',url:'https://www.gongcha.co.jp/theparkfronthotel/',linkLabel:'Gong cha 官方'}
+];
 addCoffeeMarkers(map3coffee,d3Coffee);
-const bounds3coffee=L.latLngBounds([[hotel.lat,hotel.lng],[usjEntrance.lat,usjEntrance.lng],...d3Coffee.map(c=>[c.lat,c.lng])]);
+addCoffeeMarkers(map3coffee,d3Tea);
+const bounds3coffee=L.latLngBounds([[hotel.lat,hotel.lng],[usjEntrance.lat,usjEntrance.lng],...d3Coffee.map(c=>[c.lat,c.lng]),...d3Tea.map(c=>[c.lat,c.lng])]);
 map3coffee.fitBounds(bounds3coffee,{padding:[28,28]});
 
 /* --- Day 4 map --- */
@@ -1849,8 +1858,13 @@ const d4Coffee=[
   {kind:'sb',name:'Starbucks｜阪急池田站店',lat:34.821554,lng:135.4257517,hours:'10/12（國定假日）08:00–22:00',note:'池田站改札旁；去杯麵博物館前後最順',url:'https://store.starbucks.co.jp/detail-376/'},
   {kind:'bb',name:'Blue Bottle Coffee 梅田茶屋町 Cafe',lat:34.7078018,lng:135.4982278,hours:'08:00–21:00',note:'ガチャガチャの森茶屋町店幾乎同一區；外帶咖啡＋📸找 HASAMI PORCELAIN MUG，抓約 10～15 分鐘',url:'https://store.bluebottlecoffee.jp/pages/umeda-chayamachi'}
 ]
+const d4Tea=[
+  {kind:'tea',name:'THE ALLEY｜梅田 EST 店',lat:34.705027,lng:135.501006,hours:'11:00–23:00',note:'EST 1F；茶屋町扭蛋店→阪急／阪神百貨動線附近。主打現煮生珍珠「ディリオカ」，可找黑糖珍珠拿鐵、奶茶類。',url:'https://www.potomak.co.jp/shop/7578/',linkLabel:'THE ALLEY 官方'}
+];
 addCoffeeMarkers(map4,d4Coffee);
+addCoffeeMarkers(map4,d4Tea);
 d4Coffee.forEach(c=>d4coords.push([c.lat,c.lng]));
+d4Tea.forEach(c=>d4coords.push([c.lat,c.lng]));
 const bounds4=L.latLngBounds(d4coords); map4.fitBounds(bounds4,{padding:[30,30]});
 document.getElementById('fit4').onclick=()=>map4.fitBounds(bounds4,{padding:[30,30]});
 
@@ -1867,7 +1881,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,att
 const d5coords=[[hotel.lat,hotel.lng]];
 L.marker([hotel.lat,hotel.lng],{icon:hicon}).addTo(map5).bindPopup('<b>'+hotel.name+'</b><br>09:00 退房');
 const d5PopupExtra={
-  '1':"<hr style='border:0;border-top:1px solid #ddd'><b>☕ Starbucks</b>：Q's Mall 同棟・10:00–22:00",
+  '1':"<hr style='border:0;border-top:1px solid #ddd'><b>☕ Starbucks</b>：Q's Mall 同棟・10:00–22:00<br><b>🧋 Gong cha</b>：あべのキューズモール B1F・10:00–21:00｜黑奶茶＋珍珠、抹茶奶茶等；與①同棟所以不另外疊 Marker｜<a href='https://qs-mall.jp/abeno/shop/detail/338' target='_blank' rel='noopener'>官方店舖 ↗</a>",
   '2':'<hr style="border:0;border-top:1px solid #ddd"><b>🍰 E｜HARBS</b>：近鐵阿倍野 Harukas Wing館3F，有時間再去',
   '4':'<hr style="border:0;border-top:1px solid #ddd"><b>☕ Starbucks</b>：Outlet 主店＋Sea Side店（兩間都併入④）',
   '5':'<hr style="border:0;border-top:1px solid #ddd"><b>☕ Starbucks T1</b>：1F South Gate 06:30–22:30／2F 07:00–22:00<br><b>📸 機場必買</b>：Henri Charpentier 金塊費南雪'
