@@ -263,6 +263,35 @@ body.d3-video-open{overflow:hidden}
 }
 
 
+
+/* --- Day 3 v48: one source of truth for waits + compact backup pool --- */
+.queue-quick{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0 12px}
+.queue-quick-group{border:1px solid var(--line);border-radius:13px;background:#fbfaf7;padding:10px;min-width:0}
+.queue-quick-title{font-size:11px;font-weight:950;color:#59656a;margin-bottom:7px}
+.queue-quick-chips{display:flex;gap:6px;flex-wrap:wrap}
+.queue-quick-chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 8px;background:#edf2f1;color:#33494a;font-size:11px;font-weight:900;line-height:1.2}
+.queue-quick-chip.q-green{background:#e1f2e8;color:#23633f}.queue-quick-chip.q-yellow{background:#fff3cd;color:#7b5a00}.queue-quick-chip.q-orange{background:#ffe3ce;color:#a04c17}.queue-quick-chip.q-red{background:#f8d7da;color:#8b2630}.queue-quick-chip.q-closed{background:#eceeef;color:#6b7478}
+.queue-compact-status{margin:2px 0 8px;font-size:11px;color:var(--muted);font-weight:800}.queue-full-details{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px}
+.queue-full-details>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:12px;background:#f5f2eb;padding:10px 12px;font-size:12px;font-weight:950;color:#445157}
+.queue-full-details>summary::-webkit-details-marker{display:none}.queue-full-details>summary::after{content:'＋';font-size:18px;color:var(--teal)}.queue-full-details[open]>summary::after{content:'－'}
+.queue-full-body{padding-top:10px}
+.route-live-wait{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px;margin-top:7px;max-width:100%;font-size:10px;font-weight:900;color:#617076}
+.route-live-chip{display:inline-flex;align-items:center;border-radius:999px;padding:4px 7px;background:#eceeef;color:#58636a;white-space:nowrap}
+.route-live-chip.q-green{background:#e1f2e8;color:#23633f}.route-live-chip.q-yellow{background:#fff3cd;color:#7b5a00}.route-live-chip.q-orange{background:#ffe3ce;color:#a04c17}.route-live-chip.q-red{background:#f8d7da;color:#8b2630}.route-live-chip.q-closed{background:#eceeef;color:#6b7478}
+.nearby-backups{margin:7px 0 2px;padding:8px 10px;border:1px dashed #cbd9d5;border-radius:11px;background:#f5faf8;font-size:11px;line-height:1.55;color:#4d6260}
+.nearby-backups b{color:#264e49}.nearby-backups a{color:var(--teal);font-weight:900;text-decoration:none}.nearby-backups a:hover{text-decoration:underline}
+.alt-wait{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;margin-left:3px;background:#eceeef;color:#58636a;font-size:10px;font-weight:950;vertical-align:middle;white-space:nowrap}
+.alt-wait.q-green{background:#e1f2e8;color:#23633f}.alt-wait.q-yellow{background:#fff3cd;color:#7b5a00}.alt-wait.q-orange{background:#ffe3ce;color:#a04c17}.alt-wait.q-red{background:#f8d7da;color:#8b2630}.alt-wait.q-closed{background:#eceeef;color:#6b7478}
+.alt-pool{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.alt-item{border:1px solid var(--line);border-radius:13px;background:#fff;overflow:hidden;min-width:0}
+.alt-item>summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:9px;align-items:center;padding:9px 10px;min-width:0}
+.alt-item>summary::-webkit-details-marker{display:none}
+.alt-letter{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#476276;color:#fff;font-weight:950;font-size:11px}
+.alt-summary-copy{min-width:0}.alt-summary-copy b{display:block;font-size:12px;line-height:1.35;margin:0}.alt-summary-copy small{display:block;color:var(--muted);font-size:10px;line-height:1.35;margin-top:2px}
+.alt-expand{font-size:16px;font-weight:950;color:#819094}.alt-item[open] .alt-expand{transform:rotate(45deg)}
+.alt-detail{padding:0 10px 10px 49px}.alt-detail .badges{margin-top:0}.alt-detail .d3-video-strip{margin-top:8px;max-width:580px}
+@media(max-width:620px){.queue-quick{grid-template-columns:1fr}.alt-item>summary{grid-template-columns:30px minmax(0,1fr) auto}.alt-detail{padding-left:10px}}
+
 /* --- Day 3 secondary kid-friendly map pins --- */
 .usj-pin.alt{
   width:29px;height:29px;
@@ -1300,7 +1329,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 <section class="card queue-card" id="liveQueueCard">
 <div class="head">
-<h2>USJ 即時排隊看板 <span class="pill">BETA</span></h2>
+<h2>USJ 即時狀況摘要 <span class="pill">BETA</span></h2>
 <span class="pill">約每 5 分鐘更新</span>
 </div>
 <div class="body">
@@ -1321,6 +1350,14 @@ html,body{max-width:100%;overflow-x:hidden}
 </div>
 </div>
 <div class="crowd-note"><b>注意：</b>昨日顯示的是 Queue‑Times 歷史 Crowd level；今日則是本 Dashboard 依主要設施等待時間計算的自訂 0–100 壅擠指數。兩者都不是 USJ 官方入園人數，也不能直接換算成實際入園人數。</div>
+<div class="queue-quick" id="queueQuickSummary" aria-live="polite">
+<div class="queue-quick-group"><div class="queue-quick-title">主線目前較短</div><div class="queue-quick-chips" id="queueQuickShort"><span class="queue-quick-chip">等待即時資料</span></div></div>
+<div class="queue-quick-group"><div class="queue-quick-title">主線目前較長</div><div class="queue-quick-chips" id="queueQuickLong"><span class="queue-quick-chip">等待即時資料</span></div></div>
+</div>
+<div class="queue-compact-status" id="queueCompactUpdated">等待即時資料…</div>
+<details class="queue-full-details" id="queueFullDetails">
+<summary>展開全園區即時等待時間／排序篩選</summary>
+<div class="queue-full-body">
 <div class="queue-top">
 <div aria-live="polite" class="queue-status">
 <span class="queue-dot" id="queueDot"></span>
@@ -1355,7 +1392,10 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="queue-attrib">
       第三方即時資料，非 USJ 官方。GitHub Actions 會在指定時段約每 5 分鐘重新部署資料；排程可能延遲。任天堂世界區域入場券、臨時停駛與現場最終等待時間請以 USJ 官方 App 為準。
       <br/><a href="https://queue-times.com/" rel="noopener" target="_blank">Powered by Queue-Times.com</a>
+
 </div>
+</div>
+</details>
 </div>
 </section>
 <main class="grid">
@@ -1373,21 +1413,21 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="section">推薦遊玩主線</div>
 <div class="d3-video-note">🎬 主線設施已附影片：優先採用 USJ 官方 YouTube；沒有合適官方長影片時，改選清楚、非 Shorts、剪輯較少的實拍／POV。點縮圖可直接在本頁播放。</div>
 <div class="usj-route-list">
-<div class="usj-route-row" id="d3-1"><div class="ord">1</div><div><b>咚奇剛的瘋狂礦車™</b><div class="muted">107cm+；107～未滿122cm需陪同。熱門設施先排。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">107cm+</span></div><div class="d3-video-strip"><button aria-label="播放：咚奇剛的瘋狂礦車｜4K On-Ride POV" class="d3-video-card" data-video-source="Amusement Explorer · 2025" data-video-start="123" data-video-title="咚奇剛的瘋狂礦車｜4K On-Ride POV" data-youtube-id="1wn27QSeu0A" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/1wn27QSeu0A/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">4K POV</span></span><span class="d3-video-copy"><b>咚奇剛的瘋狂礦車｜4K On-Ride POV</b><small>Amusement Explorer · 2025</small></span></button></div></div></div>
-<div class="usj-route-row" id="d3-2"><div class="ord">2</div><div><b>瑪利歐賽車～庫巴的挑戰書～™</b><div class="muted">107cm+；107～未滿122cm需陪同。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">107cm+</span></div><div class="d3-video-strip"><button aria-label="播放：瑪利歐賽車～庫巴的挑戰書～｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="瑪利歐賽車～庫巴的挑戰書～｜USJ 官方" data-youtube-id="Ln_ZSmNAXrc" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/Ln_ZSmNAXrc/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>瑪利歐賽車～庫巴的挑戰書～｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div></div>
-<div class="usj-route-row" id="d3-3"><div class="ord">3</div><div><b>耀西冒險™</b><div class="muted">92cm+；國小生友善，任天堂區一起完成。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">92cm+</span></div><div class="d3-video-strip"><button aria-label="播放：耀西冒險｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="耀西冒險｜USJ 官方" data-youtube-id="dI5GfJv1P0Q" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/dI5GfJv1P0Q/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>耀西冒險｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div></div>
+<div class="usj-route-row" id="d3-1"><div class="ord">1</div><div><b>咚奇剛的瘋狂礦車™</b><div class="muted">107cm+；107～未滿122cm需陪同。熱門設施先排。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">107cm+</span></div><div class="route-live-wait" data-route-wait="1"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：咚奇剛的瘋狂礦車｜4K On-Ride POV" class="d3-video-card" data-video-source="Amusement Explorer · 2025" data-video-start="123" data-video-title="咚奇剛的瘋狂礦車｜4K On-Ride POV" data-youtube-id="1wn27QSeu0A" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/1wn27QSeu0A/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">4K POV</span></span><span class="d3-video-copy"><b>咚奇剛的瘋狂礦車｜4K On-Ride POV</b><small>Amusement Explorer · 2025</small></span></button></div></div></div>
+<div class="usj-route-row" id="d3-2"><div class="ord">2</div><div><b>瑪利歐賽車～庫巴的挑戰書～™</b><div class="muted">107cm+；107～未滿122cm需陪同。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">107cm+</span></div><div class="route-live-wait" data-route-wait="2"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：瑪利歐賽車～庫巴的挑戰書～｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="瑪利歐賽車～庫巴的挑戰書～｜USJ 官方" data-youtube-id="Ln_ZSmNAXrc" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/Ln_ZSmNAXrc/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>瑪利歐賽車～庫巴的挑戰書～｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div></div>
+<div class="usj-route-row" id="d3-3"><div class="ord">3</div><div><b>耀西冒險™</b><div class="muted">92cm+；國小生友善，任天堂區一起完成。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">92cm+</span></div><div class="route-live-wait" data-route-wait="3"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：耀西冒險｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="耀西冒險｜USJ 官方" data-youtube-id="dI5GfJv1P0Q" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/dI5GfJv1P0Q/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>耀西冒險｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div></div>
 </div>
 <div class="timeline" style="margin-top:9px">
 <div class="t"><div class="time">10:30–13:00</div><div><b>午餐｜園內餐廳自行選擇</b><div class="muted">不再鎖定奇諾比奧咖啡店。若仍在 SUPER NINTENDO WORLD，可選 F1 奇諾比奧；若已離開任天堂區，就直接依當下位置從 F2～F14 選最近且想吃的餐廳。下方餐飲表可按「午餐」篩選。</div></div></div>
 </div>
 <div class="usj-route-list" style="margin-top:9px">
-<div class="usj-route-row" id="d3-4"><div class="ord">4</div><div><b>侏羅紀公園‧乘船遊</b><div class="muted">107cm+；107～未滿122cm需陪同。若想玩 18:00 後 In the Dark，可白天先跳過。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">107cm+</span></div><div class="d3-video-strip"><button aria-label="播放：侏羅紀公園・乘船遊｜完整 4K POV" class="d3-video-card" data-video-source="Attractions Atlas · 2025" data-video-title="侏羅紀公園・乘船遊｜完整 4K POV" data-youtube-id="WFZSj4ZlHAs" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/WFZSj4ZlHAs/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">4K POV</span></span><span class="d3-video-copy"><b>侏羅紀公園・乘船遊｜完整 4K POV</b><small>Attractions Atlas · 2025</small></span></button></div></div></div>
-<div class="usj-route-row" id="d3-5"><div class="ord">5</div><div><b>哈利波特禁忌之旅™</b><div class="muted">122cm+；若身高不足，改玩奧利凡德魔杖店體驗。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">122cm+</span></div><div class="d3-video-strip"><button aria-label="播放：哈利波特禁忌之旅｜On-Ride 4K POV" class="d3-video-card" data-video-source="Amusement Explorer · 2026" data-video-title="哈利波特禁忌之旅｜On-Ride 4K POV" data-youtube-id="q2yFF4mv-A0" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/q2yFF4mv-A0/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">4K POV</span></span><span class="d3-video-copy"><b>哈利波特禁忌之旅｜On-Ride 4K POV</b><small>Amusement Explorer · 2026</small></span></button></div></div></div>
-<div class="usj-route-row" id="d3-6"><div class="ord">6</div><div><b>鷹馬飛行™</b><div class="muted">92～195cm；92～未滿122cm需陪同。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">92cm+</span></div><div class="d3-video-strip"><button aria-label="播放：鷹馬飛行｜4K 60fps POV" class="d3-video-card" data-video-source="Michael Mike · 2025" data-video-title="鷹馬飛行｜4K 60fps POV" data-youtube-id="kKpTLIiL0hI" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/kKpTLIiL0hI/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">4K 60fps</span></span><span class="d3-video-copy"><b>鷹馬飛行｜4K 60fps POV</b><small>Michael Mike · 2025</small></span></button></div></div></div>
-<div class="usj-route-row" id="d3-7"><div class="ord">7</div><div><b>大白鯊 JAWS</b><div class="muted">沒有最低身高數字，但需能自己坐穩；未滿122cm需陪同。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">親子友善</span></div><div class="d3-video-strip"><button aria-label="播放：大白鯊 JAWS｜實拍 POV" class="d3-video-card" data-video-source="L.C.A.STUDIOS · 2024 footage" data-video-title="大白鯊 JAWS｜實拍 POV" data-youtube-id="iuGJeK1mJsk" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/iuGJeK1mJsk/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍 POV</span></span><span class="d3-video-copy"><b>大白鯊 JAWS｜實拍 POV</b><small>L.C.A.STUDIOS · 2024 footage</small></span></button></div></div></div>
-<div class="usj-route-row" id="d3-8"><div class="ord">8</div><div><b>小小兵瘋狂乘車遊＋瘋狂任務</b><div class="muted">乘車遊 102cm+；瘋狂任務無最低身高，未滿122cm需陪同。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">國小推薦</span></div><div class="d3-video-strip two"><button aria-label="播放：小小兵瘋狂乘車遊｜完整 Ride POV" class="d3-video-card" data-video-source="Hi Japan · 2025" data-video-title="小小兵瘋狂乘車遊｜完整 Ride POV" data-youtube-id="cuyKc5PdCOo" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/cuyKc5PdCOo/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">完整 POV</span></span><span class="d3-video-copy"><b>小小兵瘋狂乘車遊｜完整 Ride POV</b><small>Hi Japan · 2025</small></span></button><button aria-label="播放：小小兵瘋狂任務｜玩法介紹" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="小小兵瘋狂任務｜玩法介紹" data-youtube-id="NPj2Eh6yoHs" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/NPj2Eh6yoHs/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>小小兵瘋狂任務｜玩法介紹</b><small>Universal Studios Japan Official</small></span></button></div></div></div>
-<div class="usj-route-row kitty" id="d3-9"><div class="ord">9</div><div><b>Hello Kitty 蝴蝶結大收藏</b><div class="muted">無身高限制；孩子喜歡 Hello Kitty，這站列為必排，可和 Kitty 合照。</div><div class="badges"><span class="badge k">🎀 必排</span><span class="badge h">無身高限制</span></div><div class="d3-video-strip"><button aria-label="播放：Hello Kitty 蝴蝶結大收藏｜館內實拍" class="d3-video-card" data-video-source="Kumy · USJ / Travel · 2024" data-video-title="Hello Kitty 蝴蝶結大收藏｜館內實拍" data-youtube-id="Pn4DSDtOh6I" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/Pn4DSDtOh6I/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>Hello Kitty 蝴蝶結大收藏｜館內實拍</b><small>Kumy · USJ / Travel · 2024</small></span></button></div></div></div>
-<div class="usj-route-row kitty" id="d3-10"><div class="ord">10</div><div><b>Hello Kitty 夢幻蛋糕杯</b><div class="muted">可自行坐穩即可；未滿122cm需陪同。逛完接 Ribbon Boutique。</div><div class="badges"><span class="badge k">🎀 必排</span><span class="badge h">親子友善</span></div><div class="d3-video-strip"><button aria-label="播放：Hello Kitty 夢幻蛋糕杯｜設施實拍" class="d3-video-card" data-video-source="USJ Show · 2026" data-video-title="Hello Kitty 夢幻蛋糕杯｜設施實拍" data-youtube-id="544vsJx-x_A" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/544vsJx-x_A/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>Hello Kitty 夢幻蛋糕杯｜設施實拍</b><small>USJ Show · 2026</small></span></button></div></div></div>
+<div class="usj-route-row" id="d3-4"><div class="ord">4</div><div><b>侏羅紀公園‧乘船遊</b><div class="muted">107cm+；107～未滿122cm需陪同。若想玩 18:00 後 In the Dark，可白天先跳過。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">107cm+</span></div><div class="route-live-wait" data-route-wait="4"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：侏羅紀公園・乘船遊｜完整 4K POV" class="d3-video-card" data-video-source="Attractions Atlas · 2025" data-video-title="侏羅紀公園・乘船遊｜完整 4K POV" data-youtube-id="WFZSj4ZlHAs" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/WFZSj4ZlHAs/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">4K POV</span></span><span class="d3-video-copy"><b>侏羅紀公園・乘船遊｜完整 4K POV</b><small>Attractions Atlas · 2025</small></span></button></div></div></div><div class="nearby-backups"><b>附近備選：</b> <a href="#d3-k-h">H 飛天翼龍</a><span class="alt-wait" data-alt-wait="h">讀取中</span> ・ <a href="#d3-k-f">F 水世界</a><span class="alt-wait">看官方場次</span></div>
+<div class="usj-route-row" id="d3-5"><div class="ord">5</div><div><b>哈利波特禁忌之旅™</b><div class="muted">122cm+；若身高不足，改玩奧利凡德魔杖店體驗。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">122cm+</span></div><div class="route-live-wait" data-route-wait="5"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：哈利波特禁忌之旅｜On-Ride 4K POV" class="d3-video-card" data-video-source="Amusement Explorer · 2026" data-video-title="哈利波特禁忌之旅｜On-Ride 4K POV" data-youtube-id="q2yFF4mv-A0" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/q2yFF4mv-A0/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">4K POV</span></span><span class="d3-video-copy"><b>哈利波特禁忌之旅｜On-Ride 4K POV</b><small>Amusement Explorer · 2026</small></span></button></div></div></div>
+<div class="usj-route-row" id="d3-6"><div class="ord">6</div><div><b>鷹馬飛行™</b><div class="muted">92～195cm；92～未滿122cm需陪同。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">92cm+</span></div><div class="route-live-wait" data-route-wait="6"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：鷹馬飛行｜4K 60fps POV" class="d3-video-card" data-video-source="Michael Mike · 2025" data-video-title="鷹馬飛行｜4K 60fps POV" data-youtube-id="kKpTLIiL0hI" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/kKpTLIiL0hI/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">4K 60fps</span></span><span class="d3-video-copy"><b>鷹馬飛行｜4K 60fps POV</b><small>Michael Mike · 2025</small></span></button></div></div></div>
+<div class="usj-route-row" id="d3-7"><div class="ord">7</div><div><b>大白鯊 JAWS</b><div class="muted">沒有最低身高數字，但需能自己坐穩；未滿122cm需陪同。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">親子友善</span></div><div class="route-live-wait" data-route-wait="7"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：大白鯊 JAWS｜實拍 POV" class="d3-video-card" data-video-source="L.C.A.STUDIOS · 2024 footage" data-video-title="大白鯊 JAWS｜實拍 POV" data-youtube-id="iuGJeK1mJsk" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/iuGJeK1mJsk/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍 POV</span></span><span class="d3-video-copy"><b>大白鯊 JAWS｜實拍 POV</b><small>L.C.A.STUDIOS · 2024 footage</small></span></button></div></div></div>
+<div class="usj-route-row" id="d3-8"><div class="ord">8</div><div><b>小小兵瘋狂乘車遊＋瘋狂任務</b><div class="muted">乘車遊 102cm+；瘋狂任務無最低身高，未滿122cm需陪同。</div><div class="badges"><span class="badge e">E 快通可用</span><span class="badge h">國小推薦</span></div><div class="route-live-wait" data-route-wait="8"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip two"><button aria-label="播放：小小兵瘋狂乘車遊｜完整 Ride POV" class="d3-video-card" data-video-source="Hi Japan · 2025" data-video-title="小小兵瘋狂乘車遊｜完整 Ride POV" data-youtube-id="cuyKc5PdCOo" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/cuyKc5PdCOo/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">完整 POV</span></span><span class="d3-video-copy"><b>小小兵瘋狂乘車遊｜完整 Ride POV</b><small>Hi Japan · 2025</small></span></button><button aria-label="播放：小小兵瘋狂任務｜玩法介紹" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="小小兵瘋狂任務｜玩法介紹" data-youtube-id="NPj2Eh6yoHs" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/NPj2Eh6yoHs/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>小小兵瘋狂任務｜玩法介紹</b><small>Universal Studios Japan Official</small></span></button></div></div></div><div class="nearby-backups"><b>同區備選：</b> <a href="#d3-k-a">A 冰凍雷射光乘車遊</a><span class="alt-wait" data-alt-wait="a">讀取中</span></div>
+<div class="usj-route-row kitty" id="d3-9"><div class="ord">9</div><div><b>Hello Kitty 蝴蝶結大收藏</b><div class="muted">無身高限制；孩子喜歡 Hello Kitty，這站列為必排，可和 Kitty 合照。</div><div class="badges"><span class="badge k">🎀 必排</span><span class="badge h">無身高限制</span></div><div class="route-live-wait" data-route-wait="9"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：Hello Kitty 蝴蝶結大收藏｜館內實拍" class="d3-video-card" data-video-source="Kumy · USJ / Travel · 2024" data-video-title="Hello Kitty 蝴蝶結大收藏｜館內實拍" data-youtube-id="Pn4DSDtOh6I" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/Pn4DSDtOh6I/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>Hello Kitty 蝴蝶結大收藏｜館內實拍</b><small>Kumy · USJ / Travel · 2024</small></span></button></div></div></div>
+<div class="usj-route-row kitty" id="d3-10"><div class="ord">10</div><div><b>Hello Kitty 夢幻蛋糕杯</b><div class="muted">可自行坐穩即可；未滿122cm需陪同。逛完接 Ribbon Boutique。</div><div class="badges"><span class="badge k">🎀 必排</span><span class="badge h">親子友善</span></div><div class="route-live-wait" data-route-wait="10"><span class="route-live-chip">即時等待讀取中</span></div><div class="d3-video-strip"><button aria-label="播放：Hello Kitty 夢幻蛋糕杯｜設施實拍" class="d3-video-card" data-video-source="USJ Show · 2026" data-video-title="Hello Kitty 夢幻蛋糕杯｜設施實拍" data-youtube-id="544vsJx-x_A" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/544vsJx-x_A/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>Hello Kitty 夢幻蛋糕杯｜設施實拍</b><small>USJ Show · 2026</small></span></button></div></div></div><div class="nearby-backups"><b>Wonderland／Hollywood 備選：</b> <a href="#d3-k-b">B 飛天史努比</a><span class="alt-wait" data-alt-wait="b">讀取中</span> ・ <a href="#d3-k-c">C 史努比王牌飛行員</a><span class="alt-wait" data-alt-wait="c">讀取中</span> ・ <a href="#d3-k-d">D SING</a><span class="alt-wait">看官方場次</span> ・ <a href="#d3-k-g">G 好萊塢美夢</a><span class="alt-wait" data-alt-wait="g">讀取中</span></div>
 </div>
 <div class="timeline" style="margin-top:9px">
 <div class="t"><div class="time">16:15</div><div><b>Mario Cafe &amp; Store｜鬆餅下午茶</b><div class="muted">排你前面問的 Pancake Sandwich；位置在 Hollywood Area。</div></div></div>
@@ -1429,74 +1469,28 @@ html,body{max-width:100%;overflow-x:hidden}
 </table>
 </div>
 </section>
-<div class="d3callout"><b>國小生插入型備選：</b>主線之外的項目改整理在下方 A～H 清單，並同步標在 USJ 園區圖。可依當日排隊時間、表演時段與孩子體力插入，不綁死固定分鐘。</div>
+<div class="d3callout"><b>機動插入原則：</b>主線卡已直接顯示即時等待；A～H 不再做第二套完整大卡，而改成下方「備選設施池」。同區設施也會在主線附近出現短提示，是否插入仍由你現場決定。</div>
 </div>
 </section>
 <section class="card" style="margin-top:16px">
 <div class="head">
-<h2>國小生可玩清單｜主線以外</h2>
+<h2>機動插入｜備選設施池</h2>
 <span class="pill">A～H = 地圖備選</span>
 </div>
 <div class="body">
 <div class="note" style="margin-top:0">
-<b>這裡只列「推薦遊玩主線沒有出現」的項目。</b>
-          ①～⑩ 已經排進主線的任天堂、侏羅紀、哈利波特、JAWS、小小兵、Hello Kitty 不再重複顯示。
-          A～H 可依當天排隊時間、表演時間與孩子體力插入。
+<b>這裡只保留主線以外的 A～H。</b> 預設只顯示一行：區域＋即時等待／官方場次；需要看影片、身高或更多資訊時再點開。這樣不會和主線時間軸重複。
         </div>
-<div class="d3-video-note">🎬 A～H 也附影片：官方公開片優先；沒有合適官方一般影片時，改用非 Shorts 的設施實拍／POV。點縮圖可在本頁播放。</div>
-<div class="ridegrid" style="margin-top:10px">
-<div class="ride" id="d3-k-a">
-<b>冰凍雷射光乘車遊</b>
-<div class="muted">92cm+｜Minion Park</div>
-<div class="badges"><span class="badge mapref">A 地圖</span></div>
-<div class="d3-video-strip"><button aria-label="播放：冰凍雷射光乘車遊｜實拍 Ride Experience" class="d3-video-card" data-video-source="YouTube 實拍 · 2025" data-video-title="冰凍雷射光乘車遊｜實拍 Ride Experience" data-youtube-id="VxwN1dpvMxs" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/VxwN1dpvMxs/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>冰凍雷射光乘車遊｜實拍 Ride Experience</b><small>YouTube 實拍 · 2025</small></span></button></div></div>
-<div class="ride" id="d3-k-b">
-<b>飛天史努比</b>
-<div class="muted">92cm+｜Universal Wonderland</div>
-<div class="badges"><span class="badge mapref">B 地圖</span></div>
-<div class="d3-video-strip"><button aria-label="播放：飛天史努比｜設施實拍" class="d3-video-card" data-video-source="A Traveller's Journey · 2024" data-video-title="飛天史努比｜設施實拍" data-youtube-id="w3mpJjn0eCs" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/w3mpJjn0eCs/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>飛天史努比｜設施實拍</b><small>A Traveller's Journey · 2024</small></span></button></div></div>
-<div class="ride" id="d3-k-c">
-<b>史努比王牌飛行員冒險</b>
-<div class="muted">92cm+｜Universal Wonderland</div>
-<div class="badges"><span class="badge mapref">C 地圖</span></div>
-<div class="d3-video-strip"><button aria-label="播放：史努比王牌飛行員冒險｜Front Seat POV" class="d3-video-card" data-video-source="Theme Park POV · 2026" data-video-title="史努比王牌飛行員冒險｜Front Seat POV" data-youtube-id="xfWGlR_-w7Y" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/xfWGlR_-w7Y/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">POV</span></span><span class="d3-video-copy"><b>史努比王牌飛行員冒險｜Front Seat POV</b><small>Theme Park POV · 2026</small></span></button></div></div>
-<div class="ride" id="d3-k-d">
-<b>SING 歡樂好聲音巡迴演唱會</b>
-<div class="muted">無身高限制｜Hollywood</div>
-<div class="inline-show-block" data-inline-show="SING ON TOUR">
-<div class="inline-show-label">官方表演時間</div>
-<div class="inline-show-times"><span class="inline-show-waiting">10/11 場次尚未公布</span></div>
-</div>
-<div class="badges"><span class="badge e">E</span><span class="badge mapref">D 地圖</span></div>
-<div class="d3-video-strip"><button aria-label="播放：SING on Tour｜完整 4K 表演實拍" class="d3-video-card" data-video-source="Dean on Vacation · 2025" data-video-title="SING on Tour｜完整 4K 表演實拍" data-youtube-id="CeBmGbnIQDw" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/CeBmGbnIQDw/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">完整 4K</span></span><span class="d3-video-copy"><b>SING on Tour｜完整 4K 表演實拍</b><small>Dean on Vacation · 2025</small></span></button></div></div>
-<div class="ride" id="d3-k-e">
-<b>名偵探柯南 4-D</b>
-<div class="muted">無身高限制｜New York</div>
-<div class="inline-show-block" data-inline-show="Detective Conan">
-<div class="inline-show-label">官方表演時間</div>
-<div class="inline-show-times"><span class="inline-show-waiting">若官方列出場次，會自動顯示</span></div>
-</div>
-<div class="badges"><span class="badge e">E</span><span class="badge mapref">E 地圖</span></div>
-<div class="d3-video-strip"><button aria-label="播放：名偵探柯南 4-D｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="名偵探柯南 4-D｜USJ 官方" data-youtube-id="j5a5GI5L6Zg" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/j5a5GI5L6Zg/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>名偵探柯南 4-D｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div>
-<div class="ride" id="d3-k-f">
-<b>水世界</b>
-<div class="muted">無身高限制｜表演型設施</div>
-<div class="inline-show-block" data-inline-show="WaterWorld">
-<div class="inline-show-label">官方表演時間</div>
-<div class="inline-show-times"><span class="inline-show-waiting">10/11 場次尚未公布</span></div>
-</div>
-<div class="badges"><span class="badge mapref">F 地圖</span></div>
-<div class="d3-video-strip"><button aria-label="播放：水世界 WATERWORLD｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="水世界 WATERWORLD｜USJ 官方" data-youtube-id="ekwrWtViHo4" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/ekwrWtViHo4/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>水世界 WATERWORLD｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div>
-<div class="ride" id="d3-k-g">
-<b>好萊塢美夢乘車遊</b>
-<div class="muted">132cm+｜刺激度高｜Hollywood</div>
-<div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span><span class="badge mapref">G 地圖</span></div>
-<div class="d3-video-strip"><button aria-label="播放：好萊塢美夢乘車遊｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="好萊塢美夢乘車遊｜USJ 官方" data-youtube-id="zHmg4dHJUJo" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/zHmg4dHJUJo/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>好萊塢美夢乘車遊｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div>
-<div class="ride" id="d3-k-h">
-<b>飛天翼龍</b>
-<div class="muted">132～198cm｜刺激度高｜Jurassic Park</div>
-<div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span><span class="badge mapref">H 地圖</span></div>
-<div class="d3-video-strip"><button aria-label="播放：飛天翼龍｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="飛天翼龍｜USJ 官方" data-youtube-id="h1NPf2FQGPc" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/h1NPf2FQGPc/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>飛天翼龍｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div>
+<div class="d3-video-note">🎬 點開備選項目才會顯示影片與詳細資訊；等待時間沿用上方同一份即時資料。</div>
+<div class="alt-pool" id="d3-alt-pool">
+<details class="alt-item" id="d3-k-a"><summary><span class="alt-letter">A</span><span class="alt-summary-copy"><b>冰凍雷射光乘車遊</b><small>Minion Park｜92cm+</small></span><span><span class="alt-wait" data-alt-wait="a">讀取中</span><span class="alt-expand">＋</span></span></summary><div class="alt-detail"><div class="badges"><span class="badge mapref">A 地圖</span></div><div class="d3-video-strip"><button aria-label="播放：冰凍雷射光乘車遊｜實拍 Ride Experience" class="d3-video-card" data-video-source="YouTube 實拍 · 2025" data-video-title="冰凍雷射光乘車遊｜實拍 Ride Experience" data-youtube-id="VxwN1dpvMxs" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/VxwN1dpvMxs/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>冰凍雷射光乘車遊｜實拍 Ride Experience</b><small>YouTube 實拍 · 2025</small></span></button></div></div></details>
+<details class="alt-item" id="d3-k-b"><summary><span class="alt-letter">B</span><span class="alt-summary-copy"><b>飛天史努比</b><small>Universal Wonderland｜92cm+</small></span><span><span class="alt-wait" data-alt-wait="b">讀取中</span><span class="alt-expand">＋</span></span></summary><div class="alt-detail"><div class="badges"><span class="badge mapref">B 地圖</span></div><div class="d3-video-strip"><button aria-label="播放：飛天史努比｜設施實拍" class="d3-video-card" data-video-source="A Traveller's Journey · 2024" data-video-title="飛天史努比｜設施實拍" data-youtube-id="w3mpJjn0eCs" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/w3mpJjn0eCs/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">實拍</span></span><span class="d3-video-copy"><b>飛天史努比｜設施實拍</b><small>A Traveller's Journey · 2024</small></span></button></div></div></details>
+<details class="alt-item" id="d3-k-c"><summary><span class="alt-letter">C</span><span class="alt-summary-copy"><b>史努比王牌飛行員冒險</b><small>Universal Wonderland｜92cm+</small></span><span><span class="alt-wait" data-alt-wait="c">讀取中</span><span class="alt-expand">＋</span></span></summary><div class="alt-detail"><div class="badges"><span class="badge mapref">C 地圖</span></div><div class="d3-video-strip"><button aria-label="播放：史努比王牌飛行員冒險｜Front Seat POV" class="d3-video-card" data-video-source="Theme Park POV · 2026" data-video-title="史努比王牌飛行員冒險｜Front Seat POV" data-youtube-id="xfWGlR_-w7Y" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/xfWGlR_-w7Y/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">POV</span></span><span class="d3-video-copy"><b>史努比王牌飛行員冒險｜Front Seat POV</b><small>Theme Park POV · 2026</small></span></button></div></div></details>
+<details class="alt-item" id="d3-k-d"><summary><span class="alt-letter">D</span><span class="alt-summary-copy"><b>SING 歡樂好聲音巡迴演唱會</b><small>Hollywood｜表演型・無身高限制</small></span><span><span class="alt-wait">看場次</span><span class="alt-expand">＋</span></span></summary><div class="alt-detail"><div class="inline-show-block" data-inline-show="SING ON TOUR"><div class="inline-show-label">官方表演時間</div><div class="inline-show-times"><span class="inline-show-waiting">10/11 場次尚未公布</span></div></div><div class="badges"><span class="badge e">E</span><span class="badge mapref">D 地圖</span></div><div class="d3-video-strip"><button aria-label="播放：SING on Tour｜完整 4K 表演實拍" class="d3-video-card" data-video-source="Dean on Vacation · 2025" data-video-title="SING on Tour｜完整 4K 表演實拍" data-youtube-id="CeBmGbnIQDw" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/CeBmGbnIQDw/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind">完整 4K</span></span><span class="d3-video-copy"><b>SING on Tour｜完整 4K 表演實拍</b><small>Dean on Vacation · 2025</small></span></button></div></div></details>
+<details class="alt-item" id="d3-k-e"><summary><span class="alt-letter">E</span><span class="alt-summary-copy"><b>名偵探柯南 4-D</b><small>New York｜無身高限制</small></span><span><span class="alt-wait" data-alt-wait="e">讀取中</span><span class="alt-expand">＋</span></span></summary><div class="alt-detail"><div class="inline-show-block" data-inline-show="Detective Conan"><div class="inline-show-label">官方表演時間</div><div class="inline-show-times"><span class="inline-show-waiting">若官方列出場次，會自動顯示</span></div></div><div class="badges"><span class="badge e">E</span><span class="badge mapref">E 地圖</span></div><div class="d3-video-strip"><button aria-label="播放：名偵探柯南 4-D｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="名偵探柯南 4-D｜USJ 官方" data-youtube-id="j5a5GI5L6Zg" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/j5a5GI5L6Zg/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>名偵探柯南 4-D｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div></details>
+<details class="alt-item" id="d3-k-f"><summary><span class="alt-letter">F</span><span class="alt-summary-copy"><b>水世界</b><small>表演型設施｜無身高限制</small></span><span><span class="alt-wait">看場次</span><span class="alt-expand">＋</span></span></summary><div class="alt-detail"><div class="inline-show-block" data-inline-show="WaterWorld"><div class="inline-show-label">官方表演時間</div><div class="inline-show-times"><span class="inline-show-waiting">10/11 場次尚未公布</span></div></div><div class="badges"><span class="badge mapref">F 地圖</span></div><div class="d3-video-strip"><button aria-label="播放：水世界 WATERWORLD｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="水世界 WATERWORLD｜USJ 官方" data-youtube-id="ekwrWtViHo4" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/ekwrWtViHo4/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>水世界 WATERWORLD｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div></details>
+<details class="alt-item" id="d3-k-g"><summary><span class="alt-letter">G</span><span class="alt-summary-copy"><b>好萊塢美夢乘車遊</b><small>Hollywood｜132cm+・刺激度高</small></span><span><span class="alt-wait" data-alt-wait="g">讀取中</span><span class="alt-expand">＋</span></span></summary><div class="alt-detail"><div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span><span class="badge mapref">G 地圖</span></div><div class="d3-video-strip"><button aria-label="播放：好萊塢美夢乘車遊｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="好萊塢美夢乘車遊｜USJ 官方" data-youtube-id="zHmg4dHJUJo" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/zHmg4dHJUJo/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>好萊塢美夢乘車遊｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div></details>
+<details class="alt-item" id="d3-k-h"><summary><span class="alt-letter">H</span><span class="alt-summary-copy"><b>飛天翼龍</b><small>Jurassic Park｜132～198cm・刺激度高</small></span><span><span class="alt-wait" data-alt-wait="h">讀取中</span><span class="alt-expand">＋</span></span></summary><div class="alt-detail"><div class="badges"><span class="badge e">E</span><span class="badge opt">選配</span><span class="badge mapref">H 地圖</span></div><div class="d3-video-strip"><button aria-label="播放：飛天翼龍｜USJ 官方" class="d3-video-card" data-video-source="Universal Studios Japan Official" data-video-title="飛天翼龍｜USJ 官方" data-youtube-id="h1NPf2FQGPc" type="button"><span class="d3-video-thumb"><img alt="" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/h1NPf2FQGPc/hqdefault.jpg"/><span aria-hidden="true" class="d3-video-play">▶</span><span class="d3-video-kind official">官方</span></span><span class="d3-video-copy"><b>飛天翼龍｜USJ 官方</b><small>Universal Studios Japan Official</small></span></button></div></div></details>
 </div>
 <div class="actions" style="margin-top:12px">
 <a class="btn mini teal" href="https://www.usj.co.jp/web/zh/tw/service-guide/safe/height-restriction" target="_blank">官方身高限制</a>
@@ -2584,6 +2578,69 @@ function renderCrowdSummary(data){
   }
 }
 
+
+const D3_ALT_QUEUE_NAMES={
+  a:["Freeze Ray Sliders"],
+  b:["The Flying Snoopy"],
+  c:["スヌーピーのフライング•エース•アドベンチャー"],
+  e:["Detective Conan: The World"],
+  g:["Hollywood Dream - The Ride"],
+  h:["The Flying Dinosaur"]
+};
+function routeWaitRows(route){
+  return usjQueueRows.filter(r=>Number(r?.meta?.route)===Number(route));
+}
+function shortRouteName(row,route){
+  if(route===8){
+    if(String(row.name).includes('Mission')||String(row.name).includes('ミッション')) return '任務';
+    return '乘車遊';
+  }
+  if(route===4 && String(row.name).includes('イン・ザ・ダーク')) return 'In the Dark';
+  return '';
+}
+function renderRouteWaits(){
+  document.querySelectorAll('[data-route-wait]').forEach(box=>{
+    const route=Number(box.dataset.routeWait);
+    const rows=routeWaitRows(route);
+    if(!rows.length){box.innerHTML='<span class="route-live-chip">即時等待暫無</span>';return;}
+    box.innerHTML=rows.map(r=>{
+      const label=shortRouteName(r,route);
+      return `<span class="route-live-chip ${qClass(r)}">${label?escapeQueueText(label)+' ':''}${qLabel(r)}</span>`;
+    }).join('');
+  });
+}
+function altQueueRow(letter){
+  const names=D3_ALT_QUEUE_NAMES[letter]||[];
+  return usjQueueRows.find(r=>names.includes(r.name));
+}
+function renderAltWaits(){
+  document.querySelectorAll('[data-alt-wait]').forEach(el=>{
+    const row=altQueueRow(el.dataset.altWait);
+    el.className='alt-wait'+(row?' '+qClass(row):'');
+    el.textContent=row?qLabel(row):'暫無即時資料';
+  });
+}
+function renderQueueQuickSummary(){
+  const shortBox=document.getElementById('queueQuickShort');
+  const longBox=document.getElementById('queueQuickLong');
+  if(!shortBox||!longBox) return;
+  const byRoute=[];
+  for(let route=1;route<=10;route++){
+    const rows=routeWaitRows(route).filter(r=>r.is_open);
+    if(!rows.length) continue;
+    const best=rows.slice().sort((a,b)=>(Number(a.wait_time)||0)-(Number(b.wait_time)||0))[0];
+    byRoute.push({route,row:best,wait:Number(best.wait_time)||0});
+  }
+  if(!byRoute.length){
+    shortBox.innerHTML='<span class="queue-quick-chip">等待即時資料</span>';
+    longBox.innerHTML='<span class="queue-quick-chip">等待即時資料</span>';
+    return;
+  }
+  const chip=x=>`<span class="queue-quick-chip ${qClass(x.row)}">${x.route}・${escapeQueueText(x.row.meta.zh)} ${x.wait}分</span>`;
+  shortBox.innerHTML=byRoute.slice().sort((a,b)=>a.wait-b.wait).slice(0,3).map(chip).join('');
+  longBox.innerHTML=byRoute.slice().sort((a,b)=>b.wait-a.wait).slice(0,3).map(chip).join('');
+}
+
 function renderQueue(){
   const grid = document.getElementById('queueGrid');
   if(!grid) return;
@@ -2639,12 +2696,14 @@ async function refreshUSJQueue(){
   const dot = document.getElementById('queueDot');
   const status = document.getElementById('queueStatusText');
   const updated = document.getElementById('queueUpdated');
+  const compactUpdated = document.getElementById('queueCompactUpdated');
   const err = document.getElementById('queueError');
 
   if(btn){ btn.disabled = true; btn.textContent = '讀取中…'; }
   if(dot) dot.className = 'queue-dot loading';
   if(status) status.textContent = '正在讀取 GitHub Pages 排隊資料…';
   if(updated) updated.textContent = '';
+  if(compactUpdated) compactUpdated.textContent = '正在讀取最新排隊資料…';
   if(err){ err.style.display='none'; err.textContent=''; }
 
   try{
@@ -2657,6 +2716,9 @@ async function refreshUSJQueue(){
     renderTripWeather(data);
     renderUSJOfficialSchedule(data);
     renderCrowdSummary(data);
+    renderRouteWaits();
+    renderAltWaits();
+    renderQueueQuickSummary();
     renderQueue();
 
     const fetchedAt = qJapanTime(queueMeta.fetched_at);
@@ -2673,6 +2735,10 @@ async function refreshUSJQueue(){
         ? `Actions 抓取 ${fetchedAt} JST${latestRideText ? ` · 設施 ${latestRideText} JST` : ''}`
         : (latestRideText ? `設施資料 ${latestRideText} JST` : '');
     }
+    if(compactUpdated){
+      const latestRideText = latestRide ? qJapanTime(latestRide.toISOString()) : '';
+      compactUpdated.textContent = latestRideText ? `即時等待更新：${latestRideText} JST` : (fetchedAt ? `資料更新：${fetchedAt} JST` : '即時等待資料已讀取');
+    }
 
     if(queueMeta.status && queueMeta.status !== 'ok' && err){
       err.style.display='block';
@@ -2681,6 +2747,7 @@ async function refreshUSJQueue(){
   }catch(e){
     if(dot) dot.className = 'queue-dot error';
     if(status) status.textContent = '找不到 usj-queue.json';
+    if(compactUpdated) compactUpdated.textContent = '即時排隊資料暫時無法讀取';
     if(err){
       err.style.display='block';
       err.innerHTML = '請先到 GitHub → Actions 手動執行 <b>USJ Queue → Deploy Pages</b>。第一次成功部署後，這裡就會開始顯示等待時間。';
