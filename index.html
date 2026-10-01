@@ -710,7 +710,7 @@ body.d3-video-open{overflow:hidden}
 @media(max-width:620px){.option-grid{grid-template-columns:1fr}}
 
 
-/* --- Day 4 v59: Umeda shopping clusters + 2.5D walking guide --- */
+/* --- Day 4 v60: Umeda shopping clusters + mobile-safe 3D floor guide --- */
 .walk-guide{
   margin-top:7px;padding:8px 10px;border-radius:11px;
   background:#f4f8f7;border:1px solid #d8e6e3;color:#42575c;
@@ -723,22 +723,36 @@ body.d3-video-open{overflow:hidden}
 .mall-floor .floor-label{display:inline-block;margin-right:5px;padding:2px 6px;border-radius:999px;background:#e9f2f0;color:var(--teal);font-weight:950;font-size:10px}
 .route-choice{margin-top:8px;padding:8px 10px;border-left:4px solid #d3a13a;background:#fff8e7;border-radius:8px;font-size:11px;line-height:1.55;color:#614b1d}
 .route-choice b{color:#7c5812}
-.umeda-nav25d{margin-top:18px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}
-.umeda-nav25d-head{padding:14px 15px 11px;background:linear-gradient(135deg,#eef7f5,#fff7e8)}
-.umeda-nav25d-head h3{margin:0 0 4px;font-size:16px}
-.umeda-nav25d-head p{margin:0;color:var(--muted);font-size:11px;line-height:1.5}
-.umeda-layer{display:grid;grid-template-columns:92px 1fr;border-top:1px solid var(--line);min-height:76px}
-.umeda-level{display:flex;align-items:center;justify-content:center;padding:10px;text-align:center;font-weight:950;font-size:12px}
-.umeda-layer.level2 .umeda-level{background:#e8f2fb;color:#315d7d}
-.umeda-layer.level1 .umeda-level{background:#eaf6ea;color:#3b7041}
-.umeda-layer.levelb1 .umeda-level{background:#fff4d9;color:#806421}
-.umeda-level small{display:block;font-weight:700;font-size:9px;margin-top:2px;opacity:.75}
-.umeda-nodes{display:flex;align-items:center;gap:7px;overflow-x:auto;padding:11px 12px;scrollbar-width:thin}
-.umeda-node{flex:0 0 auto;padding:8px 9px;border:1px solid #d9dedc;border-radius:10px;background:#fff;box-shadow:0 2px 8px #00000008;font-size:11px;font-weight:850;white-space:nowrap}
-.umeda-node.main{border-color:#acd2cb;background:#f3fbf9}
-.umeda-node.optional{border-style:dashed;background:#f6f6f4;color:#667176}
-.umeda-arrow{flex:0 0 auto;color:#829197;font-weight:950}
-.umeda-nav25d-note{padding:10px 13px;border-top:1px dashed var(--line);font-size:10px;line-height:1.55;color:#68777d;background:#fbfaf7}
+
+.umeda-nav3d{margin-top:18px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}
+.umeda-nav3d-head{padding:14px 15px 10px;background:linear-gradient(135deg,#eef7f5,#fff7e8)}
+.umeda-nav3d-head h3{margin:0 0 5px;font-size:16px}
+.umeda-nav3d-head p{margin:0;color:var(--muted);font-size:11px;line-height:1.55}
+.umeda-3d-controls{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fbfaf7}
+.umeda-floor-btn{appearance:none;border:1px solid #cfd8d5;background:#fff;color:#44565c;border-radius:999px;min-height:36px;padding:7px 11px;font:inherit;font-size:11px;font-weight:900;cursor:pointer}
+.umeda-floor-btn.active{background:#244d56;color:#fff;border-color:#244d56}
+.umeda-3d-wrap{padding:8px 7px 4px;background:linear-gradient(#fbfcfb,#f3f6f5)}
+.umeda-3d-svg{display:block;width:100%;height:auto;max-height:620px}
+.umeda-3d-svg .floor-group{transition:opacity .18s ease,filter .18s ease}
+.umeda-3d-svg .floor-group.dim{opacity:.13;filter:grayscale(1)}
+.umeda-3d-svg .floor-plane{stroke:#839395;stroke-width:1.6;vector-effect:non-scaling-stroke}
+.umeda-3d-svg .f2-plane{fill:#dfeef8}.umeda-3d-svg .f1-plane{fill:#e5f3e5}.umeda-3d-svg .b1-plane{fill:#fff0c8}
+.umeda-3d-svg .edge{fill:#d7dfdd;stroke:#839395;stroke-width:1;vector-effect:non-scaling-stroke}
+.umeda-3d-svg .route-line{fill:none;stroke:#3b7774;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;opacity:.92;vector-effect:non-scaling-stroke}
+.umeda-3d-svg .route-line.optional{stroke:#9ca7a5;stroke-dasharray:9 8;opacity:.7}
+.umeda-3d-svg .shaft{stroke:#7a8589;stroke-width:3;stroke-dasharray:5 6;vector-effect:non-scaling-stroke}
+.umeda-3d-svg .shaft-dot{fill:#fff;stroke:#5f7074;stroke-width:2;vector-effect:non-scaling-stroke}
+.umeda-3d-svg .node rect{fill:#fff;stroke:#86aaa5;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.umeda-3d-svg .node.optional rect{stroke:#aeb5b4;stroke-dasharray:5 4;fill:#f7f7f5}
+.umeda-3d-svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC",sans-serif;fill:#26363b}
+.umeda-3d-svg .floor-title{font-size:18px;font-weight:950}
+.umeda-3d-svg .floor-sub{font-size:11px;font-weight:750;fill:#617277}
+.umeda-3d-svg .node text{font-size:12px;font-weight:900;text-anchor:middle;dominant-baseline:middle}
+.umeda-3d-svg .lift-label{font-size:10px;font-weight:900;text-anchor:middle;fill:#536469}
+.umeda-3d-key{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:8px 12px 12px}
+.umeda-3d-key>div{border:1px solid var(--line);border-radius:11px;padding:8px 9px;background:#fff;font-size:10px;line-height:1.5;color:#536469}
+.umeda-3d-key b{display:block;color:#283a3f;margin-bottom:2px;font-size:11px}
+.umeda-nav3d-note{padding:10px 13px;border-top:1px dashed var(--line);font-size:10px;line-height:1.55;color:#68777d;background:#fbfaf7}
 .umeda-clusters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}
 .umeda-cluster{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff}
 .umeda-cluster b{display:block;margin-bottom:4px;font-size:12px}
@@ -746,9 +760,11 @@ body.d3-video-open{overflow:hidden}
 .umeda-cluster .cluster-route{margin-top:6px;color:#45565b;font-weight:800}
 @media(max-width:720px){
   .mall-floor-groups{grid-template-columns:1fr}
-  .umeda-layer{grid-template-columns:74px 1fr}
   .umeda-clusters{grid-template-columns:1fr}
-  .umeda-node{font-size:10px}
+  .umeda-3d-key{grid-template-columns:1fr}
+  .umeda-3d-wrap{padding:4px 2px 2px}
+  .umeda-3d-svg .node text{font-size:11px}
+  .umeda-3d-svg .floor-title{font-size:17px}
 }
 
 /* --- Coffee / bubble tea markers v44 --- */
@@ -1669,14 +1685,14 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="chips">
 <span class="chip">🍜 09:30 杯麵博物館</span>
 <span class="chip">🎨 My CUPNOODLES Factory</span>
-<span class="chip">🛍️ 梅田主線 7 站＋2.5D 導航</span>
+<span class="chip">🛍️ 梅田主線 7 站＋3D 樓層導航</span>
 <span class="chip">🔥 19:30 焼肉きんぐ</span>
 </div>
 <div class="quick">
 <a href="https://www.cupnoodles-museum.jp/ja/osaka_ikeda/" rel="noopener" target="_blank">🍜 杯麵博物館<span>大阪池田官方</span></a>
 <a href="https://www.gachagachanomori.com/shoplist/" rel="noopener" target="_blank">🎰 扭蛋之森<span>梅田茶屋町店</span></a>
 <a href="https://store.alpen-group.jp/Form/RealShop/ShopDetail.aspx?rsid=5600" rel="noopener" target="_blank">👟 Alpen OSAKA<span>茶屋町｜10:00–21:00</span></a>
-<a href="#d4-umeda-25d">🧭 梅田步行導航<span>B1／1F／2F 三層</span></a>
+<a href="#d4-umeda-3d">🧭 梅田 3D 導航<span>B1／1F／2F 疊層</span></a>
 <a href="https://www.yakiniku-king.jp/shop/2394" rel="noopener" target="_blank">🔥 燒肉訂位<span>namBaHIPS｜19:30</span></a>
 <div class="quick-nav-card"><div class="quick-nav-head"><b class="quick-nav-title">🗺️ 飯店 → 池田</b><span class="quick-nav-sub">同一路線雙導航</span></div><div class="quick-nav-actions"><a class="quick-nav-btn google" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.8180487%2C135.4266758&amp;travelmode=transit" rel="noopener" target="_blank">🗺️ Google Maps</a><a class="quick-nav-btn navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.8180487%2C%27lon%27%3A135.4266758%7D&amp;goal_name=34.8180487%2C135.4266758" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">🇯🇵 Japan Travel</a></div></div>
 <div class="quick-nav-card"><div class="quick-nav-head"><b class="quick-nav-title">🚇 梅田 → 晚餐</b><span class="quick-nav-sub">往難波</span></div><div class="quick-nav-actions"><a class="quick-nav-btn google" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.7024579%2C135.4913958&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit" rel="noopener" target="_blank">🗺️ Google Maps</a><a class="quick-nav-btn navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.7024579%2C%27lon%27%3A135.4913958%7D&amp;start_name=34.7024579%2C135.4913958&amp;goal=%7B%27lat%27%3A34.6675993%2C%27lon%27%3A135.5006679%7D&amp;goal_name=34.6675993%2C135.5006679" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">🇯🇵 Japan Travel</a></div></div>
@@ -1723,13 +1739,99 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="t" id="d4-9"><div class="time">17:05</div><div><b>⑥ GRAND FRONT OSAKA｜戶外＋文具</b><div class="muted">附圖的 ARC'TERYX、文具店資訊已更新：大型書店是紀伊國屋，並可順逛伊東屋。目標品牌分散南／北館，先選需求再進館。</div><div class="move">🚶 LUCUA→Grand Front：約 3–5 分（2F 連通層）</div><span class="stay">🛍️ 約 45 分</span><div class="mall-floor-groups"><div class="mall-floor"><b><span class="floor-label">南館 4F</span>戶外</b>ARC'TERYX；另可看 THE NORTH FACE+／New Balance／GREGORY 等目標品牌。</div><div class="mall-floor"><b><span class="floor-label">南館 6F</span>📚 文具／書店</b>紀伊國屋書店＋伊東屋，適合文具控集中處理。</div><div class="mall-floor"><b><span class="floor-label">北館 2–4F</span>生活</b>MUJI；不需要生活用品就跳過，避免跨館耗時。</div><div class="mall-floor"><b>☕ 休息</b>Starbucks 南館 6F／北館 1F；只在需要休息時停。</div></div><div class="walk-guide"><b>🧭 下一站｜2F／1F 往西</b>：出 Grand Front 往 GRAND GREEN OSAKA；如果這時已 18:00 後，直接略過公園，提早往梅田站搭御堂筋線。</div><div class="actions"><a class="btn mini" href="https://www.gfo-sc.jp/shop/list/" rel="noopener" target="_blank">官方店家目錄</a></div></div></div>
 <div class="t" id="d4-10"><div class="time">17:55</div><div><b>⑦ GRAND GREEN OSAKA｜短散步收尾</b><div class="muted">只保留 20 分鐘放鬆；不是購物主力。若前面插入 HEP／KITTE，或 LUCUA 買太久，這站第一個刪。</div><div class="move">🚶 Grand Front→Grand Green：約 5 分</div><span class="stay">🌳 約 20 分</span><div class="mallshops"><b>有時間再看：</b><div class="malltags"><span class="malltag">Patagonia 大阪・梅田</span><span class="malltag">有隣堂</span><span class="malltag">gardens umekita by kohnan</span><span class="malltag">KEEPGREEN OSAKA</span></div><a href="https://umekita.com/shop/" rel="noopener" target="_blank">官方店家目錄 ↗</a></div></div></div>
 </div>
-<div class="umeda-nav25d" id="d4-umeda-25d">
-<div class="umeda-nav25d-head"><h3>🧭 梅田 2.5D 步行導航｜不要只看平面距離</h3><p>梅田最容易迷路的是「走錯樓層」。現場優先記住 B1 地下、1F 地面、2F 空橋三層；這不是建築物室內精密樓層圖，而是拿手機時用來判斷「現在要不要換層」的路線提示。</p></div>
-<div class="umeda-layer level2"><div class="umeda-level">2F 空橋<small>跨站最直覺</small></div><div class="umeda-nodes"><span class="umeda-node optional">阪急周邊</span><span class="umeda-arrow">→</span><span class="umeda-node main">大阪站／LUCUA</span><span class="umeda-arrow">↔</span><span class="umeda-node main">Grand Front</span><span class="umeda-arrow">↔</span><span class="umeda-node optional">Yodobashi／LINKS</span></div></div>
-<div class="umeda-layer level1"><div class="umeda-level">1F 地面<small>茶屋町主線</small></div><div class="umeda-nodes"><span class="umeda-node main">扭蛋＋Blue Bottle</span><span class="umeda-arrow">→</span><span class="umeda-node main">Alpen</span><span class="umeda-arrow">→</span><span class="umeda-node optional">HEP FIVE</span><span class="umeda-arrow">→</span><span class="umeda-node main">阪急</span><span class="umeda-arrow">→</span><span class="umeda-node main">阪神／大阪站</span><span class="umeda-arrow">→</span><span class="umeda-node optional">KITTE</span></div></div>
-<div class="umeda-layer levelb1"><div class="umeda-level">B1 地下<small>百貨間移動</small></div><div class="umeda-nodes"><span class="umeda-node main">阪急 B1</span><span class="umeda-arrow">→</span><span class="umeda-node main">阪神 B1</span><span class="umeda-arrow">→</span><span class="umeda-node main">JR 大阪站地下</span><span class="umeda-arrow">→</span><span class="umeda-node main">LUCUA 地下入口</span></div></div>
-<div class="umeda-nav25d-note">📌 原則：茶屋町用 1F 地面；阪急→阪神→大阪站核心可用 B1；LUCUA→Grand Front 優先回 2F 空橋。若現場施工／封路，以館內最新指標與 Google Maps 步行導航為準。</div>
+<div class="umeda-nav3d" id="d4-umeda-3d">
+<div class="umeda-nav3d-head"><h3>🧭 梅田 3D 樓層導航｜先看樓層，再看方向</h3><p>這張圖把 B1 地下、1F 地面、2F 空橋真的上下堆起來。虛線垂直柱＝建議換樓層的位置；現場先確認自己在哪一層，再沿同層主線走。</p></div>
+<div class="umeda-3d-controls" aria-label="梅田 3D 樓層切換">
+<button class="umeda-floor-btn active" type="button" data-umeda-floor="all">全部樓層</button>
+<button class="umeda-floor-btn" type="button" data-umeda-floor="2f">2F 空橋</button>
+<button class="umeda-floor-btn" type="button" data-umeda-floor="1f">1F 地面</button>
+<button class="umeda-floor-btn" type="button" data-umeda-floor="b1">B1 地下</button>
 </div>
+<div class="umeda-3d-wrap">
+<svg class="umeda-3d-svg" id="umeda3dSvg" viewBox="0 0 760 610" role="img" aria-label="梅田 B1、1F、2F 三層立體步行導航示意圖">
+<defs>
+  <filter id="u3dShadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity=".13"/></filter>
+  <marker id="u3dArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3b7774"/></marker>
+</defs>
+
+<!-- vertical shafts are intentionally schematic; they explain where to change floors -->
+<g aria-hidden="true">
+  <line class="shaft" x1="476" y1="122" x2="476" y2="453"/>
+  <circle class="shaft-dot" cx="476" cy="122" r="7"/><circle class="shaft-dot" cx="476" cy="286" r="7"/><circle class="shaft-dot" cx="476" cy="453" r="7"/>
+  <text class="lift-label" x="476" y="302">大阪站／LUCUA</text>
+  <line class="shaft" x1="334" y1="285" x2="334" y2="452"/>
+  <circle class="shaft-dot" cx="334" cy="285" r="7"/><circle class="shaft-dot" cx="334" cy="452" r="7"/>
+  <text class="lift-label" x="334" y="376">阪急側</text>
+</g>
+
+<g class="floor-group" data-floor-group="2f" filter="url(#u3dShadow)">
+  <polygon class="edge" points="128,91 650,91 690,117 168,117"/>
+  <polygon class="floor-plane f2-plane" points="88,55 610,55 650,91 128,91"/>
+  <text class="floor-title" x="105" y="43">2F 空橋層</text><text class="floor-sub" x="214" y="43">跨大阪站北側最直覺</text>
+  <path class="route-line" d="M235 75 L464 75 L585 75" marker-end="url(#u3dArrow)"/>
+  <path class="route-line optional" d="M585 75 L623 75"/>
+  <g class="node" transform="translate(182,61)"><rect width="116" height="30" rx="9"/><text x="58" y="15">大阪站／LUCUA</text></g>
+  <g class="node" transform="translate(423,61)"><rect width="118" height="30" rx="9"/><text x="59" y="15">Grand Front</text></g>
+  <g class="node optional" transform="translate(560,61)"><rect width="128" height="30" rx="9"/><text x="64" y="15">Yodobashi / LINKS</text></g>
+</g>
+
+<g class="floor-group" data-floor-group="1f" filter="url(#u3dShadow)">
+  <polygon class="edge" points="128,256 650,256 690,282 168,282"/>
+  <polygon class="floor-plane f1-plane" points="88,220 610,220 650,256 128,256"/>
+  <text class="floor-title" x="105" y="208">1F 地面層</text><text class="floor-sub" x="214" y="208">茶屋町主線沿地面往南</text>
+  <path class="route-line" d="M132 242 L226 242 L314 242 L386 242 L493 242" marker-end="url(#u3dArrow)"/>
+  <path class="route-line optional" d="M314 242 L344 242"/>
+  <g class="node" transform="translate(80,228)"><rect width="106" height="30" rx="9"/><text x="53" y="15">扭蛋＋Blue Bottle</text></g>
+  <g class="node" transform="translate(190,228)"><rect width="74" height="30" rx="9"/><text x="37" y="15">Alpen</text></g>
+  <g class="node optional" transform="translate(270,228)"><rect width="82" height="30" rx="9"/><text x="41" y="15">HEP FIVE</text></g>
+  <g class="node" transform="translate(355,228)"><rect width="70" height="30" rx="9"/><text x="35" y="15">阪急</text></g>
+  <g class="node" transform="translate(433,228)"><rect width="124" height="30" rx="9"/><text x="62" y="15">阪神／大阪站</text></g>
+  <g class="node optional" transform="translate(566,228)"><rect width="74" height="30" rx="9"/><text x="37" y="15">KITTE</text></g>
+</g>
+
+<g class="floor-group" data-floor-group="b1" filter="url(#u3dShadow)">
+  <polygon class="edge" points="128,423 650,423 690,449 168,449"/>
+  <polygon class="floor-plane b1-plane" points="88,387 610,387 650,423 128,423"/>
+  <text class="floor-title" x="105" y="375">B1 地下層</text><text class="floor-sub" x="214" y="375">阪急 → 阪神 → 大阪站核心</text>
+  <path class="route-line" d="M204 409 L333 409 L462 409 L575 409" marker-end="url(#u3dArrow)"/>
+  <g class="node" transform="translate(158,395)"><rect width="92" height="30" rx="9"/><text x="46" y="15">阪急 B1</text></g>
+  <g class="node" transform="translate(284,395)"><rect width="98" height="30" rx="9"/><text x="49" y="15">阪神 B1</text></g>
+  <g class="node" transform="translate(408,395)"><rect width="116" height="30" rx="9"/><text x="58" y="15">大阪站地下</text></g>
+  <g class="node" transform="translate(535,395)"><rect width="120" height="30" rx="9"/><text x="60" y="15">LUCUA 地下</text></g>
+</g>
+
+<g aria-hidden="true">
+  <rect x="93" y="493" width="574" height="82" rx="15" fill="#fff" stroke="#d5dedc"/>
+  <text x="112" y="518" style="font-size:13px;font-weight:950">現場判斷只記 3 句：</text>
+  <text x="112" y="541" style="font-size:12px;font-weight:800">① 茶屋町：留在 1F 地面，一路走到阪急。</text>
+  <text x="112" y="559" style="font-size:12px;font-weight:800">② 阪急 → 阪神 → LUCUA：優先用 B1 地下。</text>
+  <text x="112" y="577" style="font-size:12px;font-weight:800">③ LUCUA → Grand Front：回到 2F 空橋再走。</text>
+</g>
+</svg>
+</div>
+<div class="umeda-3d-key">
+<div><b>A｜茶屋町／東側</b>扭蛋之森・Blue Bottle → Alpen →（彈性 HEP）→ 阪急<br><strong>主要樓層：1F</strong></div>
+<div><b>B｜百貨／大阪站核心</b>阪急 → 阪神 → LUCUA／1100／SOUTH<br><strong>主要樓層：B1＋館內電梯</strong></div>
+<div><b>C｜大阪站北側</b>LUCUA → Grand Front → GRAND GREEN；Yodobashi 視需求插入<br><strong>主要樓層：2F</strong></div>
+</div>
+<div class="umeda-nav3d-note">📌 這是「現場判斷樓層」用的立體示意，不是精密室內建築圖。館內施工、臨時封路或連通口變更時，以現場最新指標為準。</div>
+</div>
+<script>
+(function(){
+  var root=document.getElementById('d4-umeda-3d');
+  if(!root || root.dataset.ready==='1') return;
+  root.dataset.ready='1';
+  var buttons=root.querySelectorAll('[data-umeda-floor]');
+  var groups=root.querySelectorAll('[data-floor-group]');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var floor=btn.getAttribute('data-umeda-floor');
+      buttons.forEach(function(b){b.classList.toggle('active',b===btn);});
+      groups.forEach(function(g){g.classList.toggle('dim',floor!=='all' && g.getAttribute('data-floor-group')!==floor);});
+    });
+  });
+})();
+</script>
 <div class="umeda-clusters">
 <div class="umeda-cluster"><b>A｜茶屋町／東側</b><p>扭蛋之森・Blue Bottle・Alpen・（彈性）HEP FIVE</p><div class="cluster-route">1F 地面一次走完</div></div>
 <div class="umeda-cluster"><b>B｜百貨／大阪站核心</b><p>阪急 → 阪神 → LUCUA／1100／SOUTH</p><div class="cluster-route">B1 移動＋館內垂直移動</div></div>
@@ -1765,7 +1867,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div id="map4"></div>
 <div class="tools"><button class="btn soft" id="fit4" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit&amp;waypoints=34.8180487%2C135.4266758%7C34.7079533%2C135.4993874%7C34.705200%2C135.499460%7C34.7028186%2C135.4985323%7C34.7012797%2C135.4983196%7C34.7028866%2C135.4953236%7C34.7038664%2C135.4949205%7C34.7024579%2C135.4913958" target="_blank">開啟主線地圖</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.6675993%2C%27lon%27%3A135.5006679%7D&amp;goal_name=34.6675993%2C135.5006679" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a></div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span><i class="tea">T</i>珍珠奶茶</span><span>THE ALLEY 在梅田 EST 1F；Grand Front Starbucks 併入⑥ Popup；KITTE 已降為 B 彈性</span></div>
-<div class="legend"><b>彈性標記：</b>灰色 A～G 為「有時間再去」；Blue Bottle 已併入主線 ① 茶屋町，地圖仍保留藍色 B 咖啡標記；池田站 Starbucks 保留綠色 S。Day 4 不畫直線，步行請看上方 2.5D 三層導航。</div>
+<div class="legend"><b>彈性標記：</b>灰色 A～G 為「有時間再去」；Blue Bottle 已併入主線 ① 茶屋町，地圖仍保留藍色 B 咖啡標記；池田站 Starbucks 保留綠色 S。Day 4 不畫直線，步行請看上方 3D 三層導航。</div>
 </section>
 </main>
 </div>
@@ -1873,7 +1975,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 </main>
 </div>
-<div class="foot">Prototype v59｜Day 4 梅田購物動線重整：新增 Alpen OSAKA 主線、HEP FIVE／KITTE 彈性分支、LUCUA／阪急／Grand Front 店家與樓層攻略；加入 B1／1F／2F 2.5D 步行導航｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
+<div class="foot">Prototype v60｜Day 4 梅田購物動線重整：保留 Alpen OSAKA 主線、HEP FIVE／KITTE 彈性分支、LUCUA／阪急／Grand Front 店家與樓層攻略；將 2.5D 改為可切換 B1／1F／2F 的 3D 疊層導航｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
 </div>
 <div class="d3-video-modal" hidden="" id="d3VideoModal">
 <div class="d3-video-backdrop" data-d3-video-close=""></div>
