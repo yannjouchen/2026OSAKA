@@ -767,6 +767,48 @@ body.d3-video-open{overflow:hidden}
   .umeda-3d-svg .floor-title{font-size:17px}
 }
 
+
+
+/* --- Day 4 v62: coordinate-true Google-Earth-like SVG Umeda guide --- */
+.umeda-earth{margin-top:18px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}
+.umeda-earth-head{padding:14px 15px 11px;background:linear-gradient(135deg,#eaf4f6,#f7f2e7)}
+.umeda-earth-head h3{margin:0 0 5px;font-size:16px}.umeda-earth-head p{margin:0;color:var(--muted);font-size:11px;line-height:1.65}
+.earth-toolbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;padding:10px 12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fbfaf7}
+.earth-toolbar .tool-label{font-size:10px;font-weight:900;color:#6b797d;margin-right:2px}
+.earth-btn{appearance:none;border:1px solid #cfd8d5;background:#fff;color:#44565c;border-radius:999px;min-height:40px;padding:8px 11px;font:inherit;font-size:11px;font-weight:900;cursor:pointer}
+.earth-btn.active{background:#244d56;color:#fff;border-color:#244d56}.earth-btn:focus-visible{outline:3px solid #96c9c2;outline-offset:2px}
+.earth-stage-wrap{overflow-x:auto;overscroll-behavior-inline:contain;background:linear-gradient(#dce8ea,#f2eee5);scrollbar-width:thin}
+.earth-stage{position:relative;min-width:860px}
+.umeda-earth-svg{display:block;width:100%;height:auto;min-height:560px;touch-action:pan-x pan-y;background:linear-gradient(#cfe0e3 0 16%,#e9ede8 16% 100%)}
+.umeda-earth-svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC",sans-serif}
+.earth-ground{fill:#dfe4dd;stroke:#8fa19f;stroke-width:1.3}
+.earth-ground-grid{stroke:#bdc9c4;stroke-width:.8;opacity:.52;vector-effect:non-scaling-stroke}
+.rail-band{fill:#aeb6b5;opacity:.75}.rail-line{stroke:#737e7e;stroke-width:1.4;opacity:.8;vector-effect:non-scaling-stroke}
+.map-label{font-size:11px;font-weight:900;fill:#4c5b5e;paint-order:stroke;stroke:#f7f7f4;stroke-width:4;stroke-linejoin:round}.rail-label{font-size:12px}
+.earth-route{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;transition:opacity .18s ease}.route-shadow{stroke:#fff;stroke-width:15;opacity:.83}
+.route-1f{stroke:#2d806f;stroke-width:8}.route-b1{stroke:#c18a26;stroke-width:8;stroke-dasharray:10 7}.route-2f{stroke:#467db2;stroke-width:8}
+.earth-route.dim{opacity:.08}
+.earth-building{cursor:pointer;transition:opacity .18s ease}.earth-building .building-side{stroke:#56666a;stroke-width:1;vector-effect:non-scaling-stroke}
+.earth-building .side-0{fill:#aab9bc}.earth-building .side-1{fill:#8fa2a7}.earth-building .side-2{fill:#82979d}.earth-building .side-3{fill:#9fb0b3}
+.earth-building .building-roof{fill:#f4f6f5;stroke:#4f6266;stroke-width:1.35;vector-effect:non-scaling-stroke}
+.earth-building.main .building-roof{fill:#f6f7f6}.earth-building.optional{opacity:.62}.earth-building.optional .building-roof{fill:#ededeb;stroke-dasharray:5 4}
+.earth-building.park .building-side{fill:#8fb18f}.earth-building.park .building-roof{fill:#c8dfbf}.earth-building.small .building-roof{fill:#f7e8c6}
+.earth-building:hover,.earth-building.selected{opacity:1}.earth-building.selected .building-roof,.earth-building.selected .building-side{stroke:#b56d17;stroke-width:2.8}
+.building-label-bg{fill:#fffffff2;stroke:#7c8d90;stroke-width:1}.earth-building.optional .building-label-bg{fill:#f4f4f1ee}
+.building-label{font-size:11px;font-weight:950;text-anchor:middle;dominant-baseline:middle;fill:#24363b}
+.earth-compass circle{fill:#ffffffdf;stroke:#7f9192;stroke-width:1.5}.earth-compass path{fill:#c65742}.earth-compass text{text-anchor:middle;font-size:13px;font-weight:950;fill:#344449}
+.scale-bar line{stroke:#36474b;stroke-width:2.2;vector-effect:non-scaling-stroke}.scale-bar text{font-size:10px;font-weight:900;fill:#36474b;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:3}
+.earth-hint{position:absolute;left:12px;bottom:10px;background:#ffffffde;border:1px solid #cad5d2;border-radius:10px;padding:7px 9px;font-size:10px;line-height:1.45;color:#5d6d71;backdrop-filter:blur(5px)}
+.earth-details{display:grid;grid-template-columns:1.25fr .75fr;gap:9px;padding:10px 12px 12px;border-top:1px solid var(--line);background:#fff}
+.earth-place-card,.earth-legend{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fffdf8;font-size:11px;line-height:1.6}.earth-place-card b{display:block;font-size:13px;margin-bottom:3px;color:#28393e}
+.earth-coord{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#6a777b;font-size:9px;margin-top:5px}
+.earth-place-card .level-chip{display:inline-block;margin-top:5px;padding:3px 7px;border-radius:999px;background:#edf4f2;color:#35615e;font-weight:900;font-size:10px}
+.earth-legend{display:flex;gap:9px;align-items:flex-start;flex-wrap:wrap}.earth-legend span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.earth-legend i{width:22px;height:5px;border-radius:999px;display:inline-block}
+.earth-legend .l1{background:#2e806f}.earth-legend .lb1{background:#c18a26}.earth-legend .l2{background:#497caa}
+.earth-note{padding:9px 13px;border-top:1px dashed var(--line);font-size:10px;line-height:1.55;color:#68777d;background:#fbfaf7}
+@media(max-width:720px){.earth-stage{width:860px}.earth-details{grid-template-columns:1fr}.earth-toolbar{gap:6px}.earth-btn{min-height:42px}}
+
+
 /* --- Coffee / bubble tea markers v44 --- */
 .coffee-marker{
   width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
@@ -1685,14 +1727,14 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="chips">
 <span class="chip">🍜 09:30 杯麵博物館</span>
 <span class="chip">🎨 My CUPNOODLES Factory</span>
-<span class="chip">🛍️ 梅田主線 7 站＋3D 樓層導航</span>
+<span class="chip">🛍️ 梅田主線 7 站＋座標式 3D 導航</span>
 <span class="chip">🔥 19:30 焼肉きんぐ</span>
 </div>
 <div class="quick">
 <a href="https://www.cupnoodles-museum.jp/ja/osaka_ikeda/" rel="noopener" target="_blank">🍜 杯麵博物館<span>大阪池田官方</span></a>
 <a href="https://www.gachagachanomori.com/shoplist/" rel="noopener" target="_blank">🎰 扭蛋之森<span>梅田茶屋町店</span></a>
 <a href="https://store.alpen-group.jp/Form/RealShop/ShopDetail.aspx?rsid=5600" rel="noopener" target="_blank">👟 Alpen OSAKA<span>茶屋町｜10:00–21:00</span></a>
-<a href="#d4-umeda-3d">🧭 梅田 3D 導航<span>B1／1F／2F 疊層</span></a>
+<a href="#d4-umeda-3d">🧭 梅田 3D 導航<span>實際座標 SVG</span></a>
 <a href="https://www.yakiniku-king.jp/shop/2394" rel="noopener" target="_blank">🔥 燒肉訂位<span>namBaHIPS｜19:30</span></a>
 <div class="quick-nav-card"><div class="quick-nav-head"><b class="quick-nav-title">🗺️ 飯店 → 池田</b><span class="quick-nav-sub">同一路線雙導航</span></div><div class="quick-nav-actions"><a class="quick-nav-btn google" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.8180487%2C135.4266758&amp;travelmode=transit" rel="noopener" target="_blank">🗺️ Google Maps</a><a class="quick-nav-btn navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.8180487%2C%27lon%27%3A135.4266758%7D&amp;goal_name=34.8180487%2C135.4266758" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">🇯🇵 Japan Travel</a></div></div>
 <div class="quick-nav-card"><div class="quick-nav-head"><b class="quick-nav-title">🚇 梅田 → 晚餐</b><span class="quick-nav-sub">往難波</span></div><div class="quick-nav-actions"><a class="quick-nav-btn google" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.7024579%2C135.4913958&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit" rel="noopener" target="_blank">🗺️ Google Maps</a><a class="quick-nav-btn navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.7024579%2C%27lon%27%3A135.4913958%7D&amp;start_name=34.7024579%2C135.4913958&amp;goal=%7B%27lat%27%3A34.6675993%2C%27lon%27%3A135.5006679%7D&amp;goal_name=34.6675993%2C135.5006679" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">🇯🇵 Japan Travel</a></div></div>
@@ -1739,99 +1781,136 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="t" id="d4-9"><div class="time">17:05</div><div><b>⑥ GRAND FRONT OSAKA｜戶外＋文具</b><div class="muted">附圖的 ARC'TERYX、文具店資訊已更新：大型書店是紀伊國屋，並可順逛伊東屋。目標品牌分散南／北館，先選需求再進館。</div><div class="move">🚶 LUCUA→Grand Front：約 3–5 分（2F 連通層）</div><span class="stay">🛍️ 約 45 分</span><div class="mall-floor-groups"><div class="mall-floor"><b><span class="floor-label">南館 4F</span>戶外</b>ARC'TERYX；另可看 THE NORTH FACE+／New Balance／GREGORY 等目標品牌。</div><div class="mall-floor"><b><span class="floor-label">南館 6F</span>📚 文具／書店</b>紀伊國屋書店＋伊東屋，適合文具控集中處理。</div><div class="mall-floor"><b><span class="floor-label">北館 2–4F</span>生活</b>MUJI；不需要生活用品就跳過，避免跨館耗時。</div><div class="mall-floor"><b>☕ 休息</b>Starbucks 南館 6F／北館 1F；只在需要休息時停。</div></div><div class="walk-guide"><b>🧭 下一站｜2F／1F 往西</b>：出 Grand Front 往 GRAND GREEN OSAKA；如果這時已 18:00 後，直接略過公園，提早往梅田站搭御堂筋線。</div><div class="actions"><a class="btn mini" href="https://www.gfo-sc.jp/shop/list/" rel="noopener" target="_blank">官方店家目錄</a></div></div></div>
 <div class="t" id="d4-10"><div class="time">17:55</div><div><b>⑦ GRAND GREEN OSAKA｜短散步收尾</b><div class="muted">只保留 20 分鐘放鬆；不是購物主力。若前面插入 HEP／KITTE，或 LUCUA 買太久，這站第一個刪。</div><div class="move">🚶 Grand Front→Grand Green：約 5 分</div><span class="stay">🌳 約 20 分</span><div class="mallshops"><b>有時間再看：</b><div class="malltags"><span class="malltag">Patagonia 大阪・梅田</span><span class="malltag">有隣堂</span><span class="malltag">gardens umekita by kohnan</span><span class="malltag">KEEPGREEN OSAKA</span></div><a href="https://umekita.com/shop/" rel="noopener" target="_blank">官方店家目錄 ↗</a></div></div></div>
 </div>
-<div class="umeda-nav3d" id="d4-umeda-3d">
-<div class="umeda-nav3d-head"><h3>🧭 梅田 3D 樓層導航｜先看樓層，再看方向</h3><p>這張圖把 B1 地下、1F 地面、2F 空橋真的上下堆起來。虛線垂直柱＝建議換樓層的位置；現場先確認自己在哪一層，再沿同層主線走。</p></div>
-<div class="umeda-3d-controls" aria-label="梅田 3D 樓層切換">
-<button class="umeda-floor-btn active" type="button" data-umeda-floor="all">全部樓層</button>
-<button class="umeda-floor-btn" type="button" data-umeda-floor="2f">2F 空橋</button>
-<button class="umeda-floor-btn" type="button" data-umeda-floor="1f">1F 地面</button>
-<button class="umeda-floor-btn" type="button" data-umeda-floor="b1">B1 地下</button>
+
+
+<div class="umeda-earth" id="d4-umeda-earth">
+<div class="umeda-earth-head"><h3>🌍 梅田實際座標 SVG 3D 導航</h3><p>這版不再用手工平面位置：以 Day 4 各站的實際經緯度換算成公尺座標，再用 SVG 做 Google Earth 式斜角投影。相對方向與距離依座標比例呈現；建築輪廓與高度仍為辨識用簡化模型。</p></div>
+<div class="earth-toolbar">
+<span class="tool-label">視角</span>
+<button class="earth-btn" type="button" data-earth-action="left">↶ 左轉</button>
+<button class="earth-btn" type="button" data-earth-action="right">↷ 右轉</button>
+<button class="earth-btn" type="button" data-earth-action="north">N 北向上</button>
+<button class="earth-btn" type="button" data-earth-action="zoomIn">＋ 放大</button>
+<button class="earth-btn" type="button" data-earth-action="zoomOut">－ 縮小</button>
+<span class="tool-label">傾斜</span>
+<button class="earth-btn" type="button" data-earth-action="tilt35">低角度</button>
+<button class="earth-btn active" type="button" data-earth-action="tilt55">Google Earth 斜視</button>
+<button class="earth-btn" type="button" data-earth-action="top">俯視</button>
+<span class="tool-label">路線</span>
+<button class="earth-btn active" type="button" data-earth-route="all">全部</button>
+<button class="earth-btn" type="button" data-earth-route="1f">1F</button>
+<button class="earth-btn" type="button" data-earth-route="b1">B1</button>
+<button class="earth-btn" type="button" data-earth-route="2f">2F</button>
 </div>
-<div class="umeda-3d-wrap">
-<svg class="umeda-3d-svg" id="umeda3dSvg" viewBox="0 0 760 610" role="img" aria-label="梅田 B1、1F、2F 三層立體步行導航示意圖">
-<defs>
-  <filter id="u3dShadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity=".13"/></filter>
-  <marker id="u3dArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3b7774"/></marker>
-</defs>
-
-<!-- vertical shafts are intentionally schematic; they explain where to change floors -->
-<g aria-hidden="true">
-  <line class="shaft" x1="476" y1="122" x2="476" y2="453"/>
-  <circle class="shaft-dot" cx="476" cy="122" r="7"/><circle class="shaft-dot" cx="476" cy="286" r="7"/><circle class="shaft-dot" cx="476" cy="453" r="7"/>
-  <text class="lift-label" x="476" y="302">大阪站／LUCUA</text>
-  <line class="shaft" x1="334" y1="285" x2="334" y2="452"/>
-  <circle class="shaft-dot" cx="334" cy="285" r="7"/><circle class="shaft-dot" cx="334" cy="452" r="7"/>
-  <text class="lift-label" x="334" y="376">阪急側</text>
-</g>
-
-<g class="floor-group" data-floor-group="2f" filter="url(#u3dShadow)">
-  <polygon class="edge" points="128,91 650,91 690,117 168,117"/>
-  <polygon class="floor-plane f2-plane" points="88,55 610,55 650,91 128,91"/>
-  <text class="floor-title" x="105" y="43">2F 空橋層</text><text class="floor-sub" x="214" y="43">跨大阪站北側最直覺</text>
-  <path class="route-line" d="M235 75 L464 75 L585 75" marker-end="url(#u3dArrow)"/>
-  <path class="route-line optional" d="M585 75 L623 75"/>
-  <g class="node" transform="translate(182,61)"><rect width="116" height="30" rx="9"/><text x="58" y="15">大阪站／LUCUA</text></g>
-  <g class="node" transform="translate(423,61)"><rect width="118" height="30" rx="9"/><text x="59" y="15">Grand Front</text></g>
-  <g class="node optional" transform="translate(560,61)"><rect width="128" height="30" rx="9"/><text x="64" y="15">Yodobashi / LINKS</text></g>
-</g>
-
-<g class="floor-group" data-floor-group="1f" filter="url(#u3dShadow)">
-  <polygon class="edge" points="128,256 650,256 690,282 168,282"/>
-  <polygon class="floor-plane f1-plane" points="88,220 610,220 650,256 128,256"/>
-  <text class="floor-title" x="105" y="208">1F 地面層</text><text class="floor-sub" x="214" y="208">茶屋町主線沿地面往南</text>
-  <path class="route-line" d="M132 242 L226 242 L314 242 L386 242 L493 242" marker-end="url(#u3dArrow)"/>
-  <path class="route-line optional" d="M314 242 L344 242"/>
-  <g class="node" transform="translate(80,228)"><rect width="106" height="30" rx="9"/><text x="53" y="15">扭蛋＋Blue Bottle</text></g>
-  <g class="node" transform="translate(190,228)"><rect width="74" height="30" rx="9"/><text x="37" y="15">Alpen</text></g>
-  <g class="node optional" transform="translate(270,228)"><rect width="82" height="30" rx="9"/><text x="41" y="15">HEP FIVE</text></g>
-  <g class="node" transform="translate(355,228)"><rect width="70" height="30" rx="9"/><text x="35" y="15">阪急</text></g>
-  <g class="node" transform="translate(433,228)"><rect width="124" height="30" rx="9"/><text x="62" y="15">阪神／大阪站</text></g>
-  <g class="node optional" transform="translate(566,228)"><rect width="74" height="30" rx="9"/><text x="37" y="15">KITTE</text></g>
-</g>
-
-<g class="floor-group" data-floor-group="b1" filter="url(#u3dShadow)">
-  <polygon class="edge" points="128,423 650,423 690,449 168,449"/>
-  <polygon class="floor-plane b1-plane" points="88,387 610,387 650,423 128,423"/>
-  <text class="floor-title" x="105" y="375">B1 地下層</text><text class="floor-sub" x="214" y="375">阪急 → 阪神 → 大阪站核心</text>
-  <path class="route-line" d="M204 409 L333 409 L462 409 L575 409" marker-end="url(#u3dArrow)"/>
-  <g class="node" transform="translate(158,395)"><rect width="92" height="30" rx="9"/><text x="46" y="15">阪急 B1</text></g>
-  <g class="node" transform="translate(284,395)"><rect width="98" height="30" rx="9"/><text x="49" y="15">阪神 B1</text></g>
-  <g class="node" transform="translate(408,395)"><rect width="116" height="30" rx="9"/><text x="58" y="15">大阪站地下</text></g>
-  <g class="node" transform="translate(535,395)"><rect width="120" height="30" rx="9"/><text x="60" y="15">LUCUA 地下</text></g>
-</g>
-
-<g aria-hidden="true">
-  <rect x="93" y="493" width="574" height="82" rx="15" fill="#fff" stroke="#d5dedc"/>
-  <text x="112" y="518" style="font-size:13px;font-weight:950">現場判斷只記 3 句：</text>
-  <text x="112" y="541" style="font-size:12px;font-weight:800">① 茶屋町：留在 1F 地面，一路走到阪急。</text>
-  <text x="112" y="559" style="font-size:12px;font-weight:800">② 阪急 → 阪神 → LUCUA：優先用 B1 地下。</text>
-  <text x="112" y="577" style="font-size:12px;font-weight:800">③ LUCUA → Grand Front：回到 2F 空橋再走。</text>
-</g>
-</svg>
+<div class="earth-stage-wrap"><div class="earth-stage"><svg class="umeda-earth-svg" id="umedaEarthSvg" viewBox="0 0 1000 680" role="img" aria-label="梅田以實際經緯度建立的 Google Earth 風 SVG 3D 導航"><defs><filter id="earthShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#273c3d" flood-opacity=".18"/></filter><marker id="earthArrow-1f" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#2e806f"/></marker><marker id="earthArrow-b1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#c18a26"/></marker><marker id="earthArrow-2f" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#497caa"/></marker></defs><g id="earthScene" filter="url(#earthShadow)"><polygon class="earth-ground" points="-190.6,272.7 719.0,45.9 1114.1,542.8 204.5,769.6"/>
+<polygon class="rail-band" points="-2.9,419.8 813.5,216.2 808.7,196.8 -7.7,400.4"/>
+<line class="rail-line" x1="-6.5" y1="405.2" x2="809.9" y2="201.7"/>
+<line class="rail-line" x1="-5.3" y1="410.1" x2="811.1" y2="206.5"/>
+<line class="rail-line" x1="-4.1" y1="414.9" x2="812.3" y2="211.4"/>
+<text class="map-label rail-label" x="402.9" y="295.3">JR 大阪站線區</text>
+<path class="earth-route route-shadow" data-route="1f" d="M836.8 543.6 L775.2 388.8 L804.4 306.9 L603.5 281.5 L522.6 204.7"/>
+<path class="earth-route route-1f" data-route="1f" d="M836.8 543.6 L775.2 388.8 L804.4 306.9 L603.5 281.5 L522.6 204.7" marker-end="url(#earthArrow-1f)"/>
+<path class="earth-route route-shadow" data-route="b1" d="M603.5 290.8 L522.6 214.0 L356.9 356.6"/>
+<path class="earth-route route-b1" data-route="b1" d="M603.5 290.8 L522.6 214.0 L356.9 356.6" marker-end="url(#earthArrow-b1)"/>
+<path class="earth-route route-shadow" data-route="2f" d="M356.9 332.4 L366.5 391.8 L527.8 404.3"/>
+<path class="earth-route route-2f" data-route="2f" d="M356.9 332.4 L366.5 391.8 L527.8 404.3" marker-end="url(#earthArrow-2f)"/>
+<g class="earth-building main" data-place="hanshin" tabindex="0" role="button" aria-label="阪神">
+<polygon class="building-side side-0" points="469.5,199.5 548.1,178.1 548.1,101.8 469.5,123.3"/><polygon class="building-side side-1" points="548.1,178.1 575.8,209.9 575.8,133.6 548.1,101.8"/><polygon class="building-side side-2" points="575.8,209.9 497.2,231.4 497.2,155.1 575.8,133.6"/><polygon class="building-side side-3" points="497.2,231.4 469.5,199.5 469.5,123.3 497.2,155.1"/>
+<polygon class="building-roof" points="469.5,123.3 548.1,101.8 575.8,133.6 497.2,155.1"/>
+<rect class="building-label-bg" x="495.6" y="116.4" width="54.0" height="24" rx="7"/>
+<text class="building-label" x="522.6" y="128.4">阪神</text></g>
+<g class="earth-building optional" data-place="kitte" tabindex="0" role="button" aria-label="KITTE">
+<polygon class="building-side side-0" points="114.9,244.4 203.3,222.3 203.3,124.7 114.9,146.7"/><polygon class="building-side side-1" points="203.3,222.3 230.5,256.6 230.5,159.0 203.3,124.7"/><polygon class="building-side side-2" points="230.5,256.6 142.2,278.6 142.2,181.0 230.5,159.0"/><polygon class="building-side side-3" points="142.2,278.6 114.9,244.4 114.9,146.7 142.2,181.0"/>
+<polygon class="building-roof" points="114.9,146.7 203.3,124.7 230.5,159.0 142.2,181.0"/>
+<rect class="building-label-bg" x="135.7" y="140.8" width="74.0" height="24" rx="7"/>
+<text class="building-label" x="172.7" y="152.8">KITTE</text></g>
+<g class="earth-building main" data-place="hankyu" tabindex="0" role="button" aria-label="阪急">
+<polygon class="building-side side-0" points="545.1,277.7 630.5,252.2 630.5,151.8 545.1,177.2"/><polygon class="building-side side-1" points="630.5,252.2 661.9,285.4 661.9,184.9 630.5,151.8"/><polygon class="building-side side-2" points="661.9,285.4 576.5,310.8 576.5,210.3 661.9,184.9"/><polygon class="building-side side-3" points="576.5,310.8 545.1,277.7 545.1,177.2 576.5,210.3"/>
+<polygon class="building-roof" points="545.1,177.2 630.5,151.8 661.9,184.9 576.5,210.3"/>
+<rect class="building-label-bg" x="576.5" y="169.1" width="54.0" height="24" rx="7"/>
+<text class="building-label" x="603.5" y="181.1">阪急</text></g>
+<g class="earth-building optional" data-place="hep" tabindex="0" role="button" aria-label="HEP FIVE">
+<polygon class="building-side side-0" points="762.7,304.9 819.5,285.0 819.5,218.1 762.7,237.9"/><polygon class="building-side side-1" points="819.5,285.0 846.1,308.9 846.1,241.9 819.5,218.1"/><polygon class="building-side side-2" points="846.1,308.9 789.3,328.7 789.3,261.8 846.1,241.9"/><polygon class="building-side side-3" points="789.3,328.7 762.7,304.9 762.7,237.9 789.3,261.8"/>
+<polygon class="building-roof" points="762.7,237.9 819.5,218.1 846.1,241.9 789.3,261.8"/>
+<rect class="building-label-bg" x="752.4" y="227.9" width="104.0" height="24" rx="7"/>
+<text class="building-label" x="804.4" y="239.9">HEP FIVE</text></g>
+<g class="earth-building main" data-place="lucua" tabindex="0" role="button" aria-label="大阪站／LUCUA">
+<polygon class="building-side side-0" points="278.6,343.1 408.0,313.8 408.0,222.7 278.6,252.0"/><polygon class="building-side side-1" points="408.0,313.8 435.1,351.5 435.1,260.4 408.0,222.7"/><polygon class="building-side side-2" points="435.1,351.5 305.8,380.8 305.8,289.6 435.1,260.4"/><polygon class="building-side side-3" points="305.8,380.8 278.6,343.1 278.6,252.0 305.8,289.6"/>
+<polygon class="building-roof" points="278.6,252.0 408.0,222.7 435.1,260.4 305.8,289.6"/>
+<rect class="building-label-bg" x="299.9" y="244.2" width="114.0" height="24" rx="7"/>
+<text class="building-label" x="356.9" y="256.2">大阪站／LUCUA</text></g>
+<g class="earth-building main" data-place="alpen" tabindex="0" role="button" aria-label="Alpen OSAKA">
+<polygon class="building-side side-0" points="742.2,386.2 789.9,372.0 789.9,323.7 742.2,337.8"/><polygon class="building-side side-1" points="789.9,372.0 808.2,391.3 808.2,343.0 789.9,323.7"/><polygon class="building-side side-2" points="808.2,391.3 760.6,405.5 760.6,357.2 808.2,343.0"/><polygon class="building-side side-3" points="760.6,405.5 742.2,386.2 742.2,337.8 760.6,357.2"/>
+<polygon class="building-roof" points="742.2,337.8 789.9,323.7 808.2,343.0 760.6,357.2"/>
+<rect class="building-label-bg" x="708.2" y="328.4" width="134.0" height="24" rx="7"/>
+<text class="building-label" x="775.2" y="340.4">Alpen OSAKA</text></g>
+<g class="earth-building park" data-place="grandgreen" tabindex="0" role="button" aria-label="Grand Green">
+<polygon class="building-side side-0" points="-70.8,391.3 90.6,351.0 90.6,345.5 -70.8,385.7"/><polygon class="building-side side-1" points="90.6,351.0 137.9,410.5 137.9,404.9 90.6,345.5"/><polygon class="building-side side-2" points="137.9,410.5 -23.5,450.8 -23.5,445.2 137.9,404.9"/><polygon class="building-side side-3" points="-23.5,450.8 -70.8,391.3 -70.8,385.7 -23.5,445.2"/>
+<polygon class="building-roof" points="-70.8,385.7 90.6,345.5 137.9,404.9 -23.5,445.2"/>
+<rect class="building-label-bg" x="-33.4" y="383.3" width="134.0" height="24" rx="7"/>
+<text class="building-label" x="33.6" y="395.3">Grand Green</text></g>
+<g class="earth-building main" data-place="grandfront" tabindex="0" role="button" aria-label="Grand Front">
+<polygon class="building-side side-0" points="289.9,396.4 408.9,369.5 408.9,237.5 289.9,264.4"/><polygon class="building-side side-1" points="408.9,369.5 443.1,416.8 443.1,284.8 408.9,237.5"/><polygon class="building-side side-2" points="443.1,416.8 324.1,443.8 324.1,311.7 443.1,284.8"/><polygon class="building-side side-3" points="324.1,443.8 289.9,396.4 289.9,264.4 324.1,311.7"/>
+<polygon class="building-roof" points="289.9,264.4 408.9,237.5 443.1,284.8 324.1,311.7"/>
+<rect class="building-label-bg" x="299.5" y="262.6" width="134.0" height="24" rx="7"/>
+<text class="building-label" x="366.5" y="274.6">Grand Front</text></g>
+<g class="earth-building optional" data-place="yodobashi" tabindex="0" role="button" aria-label="Yodobashi / LINKS">
+<polygon class="building-side side-0" points="456.0,410.9 564.7,383.8 564.7,274.0 456.0,301.1"/><polygon class="building-side side-1" points="564.7,383.8 599.5,427.5 599.5,317.8 564.7,274.0"/><polygon class="building-side side-2" points="599.5,427.5 490.8,454.7 490.8,344.9 599.5,317.8"/><polygon class="building-side side-3" points="490.8,454.7 456.0,410.9 456.0,301.1 490.8,344.9"/>
+<polygon class="building-roof" points="456.0,301.1 564.7,274.0 599.5,317.8 490.8,344.9"/>
+<rect class="building-label-bg" x="442.8" y="297.5" width="170.0" height="24" rx="7"/>
+<text class="building-label" x="527.8" y="309.5">Yodobashi / LINKS</text></g>
+<g class="earth-building small" data-place="gacha" tabindex="0" role="button" aria-label="扭蛋＋Blue Bottle">
+<polygon class="building-side side-0" points="811.3,542.8 848.4,530.8 848.4,514.1 811.3,526.1"/><polygon class="building-side side-1" points="848.4,530.8 862.3,544.3 862.3,527.6 848.4,514.1"/><polygon class="building-side side-2" points="862.3,544.3 825.3,556.3 825.3,539.6 862.3,527.6"/><polygon class="building-side side-3" points="825.3,556.3 811.3,542.8 811.3,526.1 825.3,539.6"/>
+<polygon class="building-roof" points="811.3,526.1 848.4,514.1 862.3,527.6 825.3,539.6"/>
+<rect class="building-label-bg" x="754.8" y="514.8" width="164.0" height="24" rx="7"/>
+<text class="building-label" x="836.8" y="526.8">扭蛋＋Blue Bottle</text></g>
+<g class="scale-bar"><line x1="-141.4" y1="283.2" x2="-56.5" y2="262.0"/><line x1="-141.4" y1="278.2" x2="-141.4" y2="288.2"/><line x1="-56.5" y1="257.0" x2="-56.5" y2="267.0"/><text x="-99.0" y="264.6">100 m</text></g>
+<g class="earth-compass" transform="translate(918 78)"><circle r="32"/><path d="M0,-23 L7,7 L0,2 L-7,7 Z"/><text x="0" y="-8">N</text></g></g></svg><div class="earth-hint">📍 建築中心點＝實際經緯度換算。<br>拖動畫面請左右滑；按「N 北向上」可恢復方向感。</div></div></div>
+<div class="earth-details"><div class="earth-place-card" id="earthPlaceCard" aria-live="polite"><b>這版怎麼看</b>先用「N 北向上」建立方向，再切到「Google Earth 斜視」。點任何建築會顯示建議樓層與實際座標。<span class="level-chip">座標比例模式</span></div><div class="earth-legend"><span><i class="l1"></i><b>1F 地面</b></span><span><i class="lb1"></i><b>B1 地下</b></span><span><i class="l2"></i><b>2F 空橋</b></span><span>灰色＝彈性站</span></div></div>
+<div class="earth-note">📌 「實際」指各站位置、相對方向與距離由經緯度換算；這不是 Google Earth 資料轉檔，也不是精密 BIM。SVG 建築外框／高度是辨識用簡化，JR 線區只作方向基準；館內連通口與施工仍以現場標示為準。</div>
 </div>
-<div class="umeda-3d-key">
-<div><b>A｜茶屋町／東側</b>扭蛋之森・Blue Bottle → Alpen →（彈性 HEP）→ 阪急<br><strong>主要樓層：1F</strong></div>
-<div><b>B｜百貨／大阪站核心</b>阪急 → 阪神 → LUCUA／1100／SOUTH<br><strong>主要樓層：B1＋館內電梯</strong></div>
-<div><b>C｜大阪站北側</b>LUCUA → Grand Front → GRAND GREEN；Yodobashi 視需求插入<br><strong>主要樓層：2F</strong></div>
-</div>
-<div class="umeda-nav3d-note">📌 這是「現場判斷樓層」用的立體示意，不是精密室內建築圖。館內施工、臨時封路或連通口變更時，以現場最新指標為準。</div>
-</div>
+
 <script>
 (function(){
-  var root=document.getElementById('d4-umeda-3d');
-  if(!root || root.dataset.ready==='1') return;
-  root.dataset.ready='1';
-  var buttons=root.querySelectorAll('[data-umeda-floor]');
-  var groups=root.querySelectorAll('[data-floor-group]');
-  buttons.forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var floor=btn.getAttribute('data-umeda-floor');
-      buttons.forEach(function(b){b.classList.toggle('active',b===btn);});
-      groups.forEach(function(g){g.classList.toggle('dim',floor!=='all' && g.getAttribute('data-floor-group')!==floor);});
-    });
-  });
+var root=document.getElementById('d4-umeda-earth');if(!root||root.dataset.ready==='1')return;root.dataset.ready='1';
+var scene=root.querySelector('#earthScene'),card=root.querySelector('#earthPlaceCard');
+var places=[{"id":"gacha","name":"扭蛋＋Blue Bottle","lat":34.7079,"lng":135.4988,"w":46,"d":30,"h":18,"bearing":-6,"kind":"small","floor":"1f","info":"茶屋町起點｜1F 地面。扭蛋之森與 Blue Bottle 幾乎同一區。","x":183.57236107840757,"y":478.0733405999415},{"id":"alpen","name":"Alpen OSAKA","lat":34.7052,"lng":135.49946,"w":58,"d":42,"h":52,"bearing":-4,"kind":"main","floor":"1f","info":"1F 地面主線｜茶屋町往南走，逛完再往 HEP／阪急。","x":243.97366041566698,"y":179.6153405994589},{"id":"hep","name":"HEP FIVE","lat":34.704016,"lng":135.500472,"w":72,"d":54,"h":72,"bearing":-8,"kind":"optional","floor":"1f","info":"彈性站｜Disney、Sanrio、JUMP SHOP。若不逛角色商品可直接跳過。","x":336.5889860649176,"y":48.73598060001527},{"id":"hankyu","name":"阪急","lat":34.7028186,"lng":135.4985323,"w":104,"d":72,"h":108,"bearing":-4,"kind":"main","floor":"b1","info":"百貨核心｜從這裡開始，阪急 → 阪神 → LUCUA 建議優先走 B1 地下。","x":159.07322799959462,"y":-83.62461540024412},{"id":"hanshin","name":"阪神","lat":34.7012797,"lng":135.4983196,"w":94,"d":68,"h":82,"bearing":-2,"kind":"main","floor":"b1","info":"伴手禮主站｜B1 食品館。逛完沿地下指標往 JR 大阪站／LUCUA。","x":139.60753653243674,"y":-253.73462140023292},{"id":"lucua","name":"大阪站／LUCUA","lat":34.7028866,"lng":135.4953236,"w":150,"d":78,"h":98,"bearing":2,"kind":"main","floor":"2f","info":"Day 4 最大購物核心｜館內垂直移動；離開時回到 2F 空橋往 Grand Front 最直覺。","x":-134.57775560589286,"y":-76.1078954003716},{"id":"yodobashi","name":"Yodobashi / LINKS","lat":34.704704,"lng":135.4965441,"w":128,"d":92,"h":118,"bearing":0,"kind":"optional","floor":"2f","info":"彈性站｜家電／UNIQLO／GU／NITORI。通常留到最後、有需求再進去。","x":-22.88111039494188,"y":124.78750059964952},{"id":"grandfront","name":"Grand Front","lat":34.7038664,"lng":135.4949205,"w":138,"d":98,"h":142,"bearing":2,"kind":"main","floor":"2f","info":"2F 空橋主線｜ARC'TERYX、紀伊國屋＋伊東屋、MUJI 等。","x":-171.4683067611146,"y":32.19919659998155},{"id":"grandgreen","name":"Grand Green","lat":34.7024579,"lng":135.4913958,"w":190,"d":125,"h":6,"bearing":0,"kind":"park","floor":"1f","info":"短散步收尾｜不是購物主力；前面延誤時第一個刪除。","x":-494.03870035427497,"y":-123.49639340042728},{"id":"kitte","name":"KITTE","lat":34.7006219,"lng":135.4941733,"w":104,"d":72,"h":105,"bearing":0,"kind":"optional","floor":"1f","info":"彈性站｜已從固定主線降級，有時間再插入。","x":-239.8498989800013,"y":-326.4478334001271}],routes={"1f":["gacha","alpen","hep","hankyu","hanshin"],"b1":["hankyu","hanshin","lucua"],"2f":["lucua","grandfront","yodobashi"]},byId={};places.forEach(function(p){byId[p.id]=p;});
+var centerLat=34.7035751100,centerLng=135.4967941200,cosLat=Math.cos(centerLat*Math.PI/180);
+function meterXY(lat,lng){return[(lng-centerLng)*111320*cosLat,(lat-centerLat)*110540];}
+places.forEach(function(p){var q=meterXY(p.lat,p.lng);p.x=q[0];p.y=q[1];});
+var heading=-24,pitch=.56,zoom=.93,activeRoute='all',selected=null,cx=500,cy=355;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function proj(x,y,z){z=z||0;var a=heading*Math.PI/180,rx=x*Math.cos(a)-y*Math.sin(a),ry=x*Math.sin(a)+y*Math.cos(a);return[cx+rx*zoom,cy+ry*pitch*zoom-z*zoom];}
+function pts(a){return a.map(function(q){return q[0].toFixed(1)+','+q[1].toFixed(1);}).join(' ');}
+function footprint(p){var b=(p.bearing||0)*Math.PI/180,ux=[Math.cos(b),Math.sin(b)],uy=[-Math.sin(b),Math.cos(b)],out=[];[[-.5,-.5],[.5,-.5],[.5,.5],[-.5,.5]].forEach(function(s){out.push([p.x+s[0]*p.w*ux[0]+s[1]*p.d*uy[0],p.y+s[0]*p.w*ux[1]+s[1]*p.d*uy[1]]);});return out;}
+function labelW(n){return Math.max(54,Math.min(170,24+n.length*10));}
+function bld(p){var fp=footprint(p),base=fp.map(function(q){return proj(q[0],q[1],0);}),top=fp.map(function(q){return proj(q[0],q[1],p.h);}),h='<g class="earth-building '+p.kind+(selected===p.id?' selected':'')+'" data-place="'+p.id+'" tabindex="0" role="button" aria-label="'+esc(p.name)+'">';for(var i=0;i<4;i++){var j=(i+1)%4;h+='<polygon class="building-side side-'+i+'" points="'+pts([base[i],base[j],top[j],top[i]])+'"/>';}h+='<polygon class="building-roof" points="'+pts(top)+'"/>';var tx=top.reduce(function(s,q){return s+q[0];},0)/4,ty=top.reduce(function(s,q){return s+q[1];},0)/4,w=labelW(p.name);return h+'<rect class="building-label-bg" x="'+(tx-w/2).toFixed(1)+'" y="'+(ty-12).toFixed(1)+'" width="'+w.toFixed(1)+'" height="24" rx="7"/><text class="building-label" x="'+tx.toFixed(1)+'" y="'+ty.toFixed(1)+'">'+esc(p.name)+'</text></g>';}
+function routePath(ids,k){var z=k==='1f'?0:(k==='b1'?-10:16);return ids.map(function(id,i){var p=byId[id],q=proj(p.x,p.y,z);return(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1);}).join(' ');}
+function local(lat,lng){return[(lng-centerLng)*111320*cosLat,(lat-centerLat)*110540];}
+function render(){
+  var h=[],xs=places.map(function(p){return p.x;}),ys=places.map(function(p){return p.y;}),xmin=Math.min.apply(null,xs)-120,xmax=Math.max.apply(null,xs)+120,ymin=Math.min.apply(null,ys)-120,ymax=Math.max.apply(null,ys)+120;
+  var ground=[[xmin,ymin],[xmax,ymin],[xmax,ymax],[xmin,ymax]].map(function(q){return proj(q[0],q[1],0);});h.push('<polygon class="earth-ground" points="'+pts(ground)+'"/>');
+  // true-coordinate 100m guide grid
+  for(var x=Math.ceil(xmin/100)*100;x<=xmax;x+=100){var a=proj(x,ymin,0),b=proj(x,ymax,0);h.push('<line class="earth-ground-grid" x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'"/>');}
+  for(var y=Math.ceil(ymin/100)*100;y<=ymax;y+=100){var c=proj(xmin,y,0),d=proj(xmax,y,0);h.push('<line class="earth-ground-grid" x1="'+c[0].toFixed(1)+'" y1="'+c[1].toFixed(1)+'" x2="'+d[0].toFixed(1)+'" y2="'+d[1].toFixed(1)+'"/>');}
+  // JR Osaka station rail corridor, simplified alignment on real coordinate plane
+  var a0=local(34.70245,135.4909),b0=local(34.70245,135.5014),ra=proj(a0[0],a0[1],0),rb=proj(b0[0],b0[1],0),dx=rb[0]-ra[0],dy=rb[1]-ra[1],L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L;
+  var poly=[[ra[0]+nx*10,ra[1]+ny*10],[rb[0]+nx*10,rb[1]+ny*10],[rb[0]-nx*10,rb[1]-ny*10],[ra[0]-nx*10,ra[1]-ny*10]];h.push('<polygon class="rail-band" points="'+pts(poly)+'"/>');
+  [-5,0,5].forEach(function(o){h.push('<line class="rail-line" x1="'+(ra[0]+nx*o).toFixed(1)+'" y1="'+(ra[1]+ny*o).toFixed(1)+'" x2="'+(rb[0]+nx*o).toFixed(1)+'" y2="'+(rb[1]+ny*o).toFixed(1)+'"/>');});
+  h.push('<text class="map-label rail-label" x="'+((ra[0]+rb[0])/2).toFixed(1)+'" y="'+(((ra[1]+rb[1])/2)-13).toFixed(1)+'">JR 大阪站線區</text>');
+  ['1f','b1','2f'].forEach(function(k){var d=routePath(routes[k],k),dim=(activeRoute!=='all'&&activeRoute!==k)?' dim':'';h.push('<path class="earth-route route-shadow'+dim+'" data-route="'+k+'" d="'+d+'"/>');h.push('<path class="earth-route route-'+k+dim+'" data-route="'+k+'" d="'+d+'" marker-end="url(#earthArrow-'+k+')"/>');});
+  places.slice().sort(function(a,b){return proj(a.x,a.y,0)[1]-proj(b.x,b.y,0)[1];}).forEach(function(p){h.push(bld(p));});
+  var s1=proj(xmin+40,ymin+40,0),s2=proj(xmin+140,ymin+40,0);h.push('<g class="scale-bar"><line x1="'+s1[0].toFixed(1)+'" y1="'+s1[1].toFixed(1)+'" x2="'+s2[0].toFixed(1)+'" y2="'+s2[1].toFixed(1)+'"/><line x1="'+s1[0].toFixed(1)+'" y1="'+(s1[1]-5).toFixed(1)+'" x2="'+s1[0].toFixed(1)+'" y2="'+(s1[1]+5).toFixed(1)+'"/><line x1="'+s2[0].toFixed(1)+'" y1="'+(s2[1]-5).toFixed(1)+'" x2="'+s2[0].toFixed(1)+'" y2="'+(s2[1]+5).toFixed(1)+'"/><text x="'+((s1[0]+s2[0])/2).toFixed(1)+'" y="'+(((s1[1]+s2[1])/2)-8).toFixed(1)+'">100 m</text></g>');
+  h.push('<g class="earth-compass" transform="translate(918 78) rotate('+(-heading).toFixed(1)+')"><circle r="32"/><path d="M0,-23 L7,7 L0,2 L-7,7 Z"/><text x="0" y="-8">N</text></g>');scene.innerHTML=h.join('');
+}
+function show(id){var p=byId[id];if(!p)return;selected=id;render();var level=p.floor==='1f'?'1F 地面':p.floor==='b1'?'B1 地下':'2F 空橋';card.innerHTML='<b>'+esc(p.name)+'</b>'+esc(p.info)+'<span class="level-chip">'+level+'</span><div class="earth-coord">'+p.lat.toFixed(6)+', '+p.lng.toFixed(6)+'</div>';}
+root.addEventListener('click',function(e){var a=e.target.closest('[data-earth-action]');if(a){var v=a.getAttribute('data-earth-action');if(v==='left')heading-=12;if(v==='right')heading+=12;if(v==='north')heading=0;if(v==='tilt35')pitch=.42;if(v==='tilt55')pitch=.60;if(v==='top')pitch=.96;if(v==='zoomIn')zoom=Math.min(1.35,zoom+.10);if(v==='zoomOut')zoom=Math.max(.65,zoom-.10);root.querySelectorAll('[data-earth-action="tilt35"],[data-earth-action="tilt55"],[data-earth-action="top"]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-earth-action')===v);});render();return;}var rb=e.target.closest('[data-earth-route]');if(rb){activeRoute=rb.getAttribute('data-earth-route');root.querySelectorAll('[data-earth-route]').forEach(function(b){b.classList.toggle('active',b===rb);});render();return;}var b=e.target.closest('[data-place]');if(b)show(b.getAttribute('data-place'));});
+root.addEventListener('keydown',function(e){var b=e.target.closest&&e.target.closest('[data-place]');if(b&&(e.key==='Enter'||e.key===' ')){e.preventDefault();show(b.getAttribute('data-place'));}});
+render();
 })();
 </script>
+
+
 <div class="umeda-clusters">
 <div class="umeda-cluster"><b>A｜茶屋町／東側</b><p>扭蛋之森・Blue Bottle・Alpen・（彈性）HEP FIVE</p><div class="cluster-route">1F 地面一次走完</div></div>
 <div class="umeda-cluster"><b>B｜百貨／大阪站核心</b><p>阪急 → 阪神 → LUCUA／1100／SOUTH</p><div class="cluster-route">B1 移動＋館內垂直移動</div></div>
@@ -1975,7 +2054,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 </main>
 </div>
-<div class="foot">Prototype v60｜Day 4 梅田購物動線重整：保留 Alpen OSAKA 主線、HEP FIVE／KITTE 彈性分支、LUCUA／阪急／Grand Front 店家與樓層攻略；將 2.5D 改為可切換 B1／1F／2F 的 3D 疊層導航｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
+<div class="foot">Prototype v62｜Day 4 梅田購物動線重整：保留 Alpen OSAKA 主線、HEP FIVE／KITTE 彈性分支、LUCUA／阪急／Grand Front 店家與樓層攻略；梅田導航改為以實際經緯度換算的 Google Earth 風 SVG 3D，並分色顯示 1F／B1／2F 路線｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
 </div>
 <div class="d3-video-modal" hidden="" id="d3VideoModal">
 <div class="d3-video-backdrop" data-d3-video-close=""></div>
