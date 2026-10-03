@@ -30,6 +30,33 @@ a{text-decoration:none;color:inherit} .wrap{max-width:1440px;margin:auto;padding
 .num{width:34px;height:34px;border-radius:50%;background:var(--coral);color:white;display:grid;place-items:center;font-weight:900}
 .row{display:flex;gap:10px;align-items:flex-start;justify-content:space-between} .smalltime{font-size:12px;color:var(--teal);font-weight:900;margin-bottom:2px} .done{opacity:.5}
 .mapcard{position:sticky;top:12px} #map,#map2,#map4,#map5{height:min(69vh,720px);min-height:520px} .tools{display:flex;gap:8px;flex-wrap:wrap;padding:13px;border-top:1px solid var(--line)}
+.locate-btn{display:inline-flex;align-items:center;gap:5px}
+.locate-btn.locating{opacity:.72;pointer-events:none}
+.locate-btn.located{border-color:#2f80ed;background:#eef6ff;color:#1459a6}
+.locate-btn.loc-error{border-color:#c95f55;background:#fff3f1;color:#9c342d}
+.user-location-icon{background:none!important;border:0!important}
+.user-location-dot{
+  position:relative;width:20px;height:20px;border-radius:50%;
+  background:#2f80ed;border:3px solid #fff;
+  box-shadow:0 1px 5px #0006,0 0 0 1px #2f80ed;
+}
+.user-location-dot::after{
+  content:"";position:absolute;left:50%;top:50%;width:30px;height:30px;
+  transform:translate(-50%,-50%);border-radius:50%;
+  border:2px solid rgba(47,128,237,.45);
+  animation:userLocPulse 1.8s ease-out infinite;
+}
+@keyframes userLocPulse{
+  0%{transform:translate(-50%,-50%) scale(.45);opacity:.9}
+  100%{transform:translate(-50%,-50%) scale(1.45);opacity:0}
+}
+.location-note{
+  margin:0 13px 11px;padding:8px 10px;border-radius:10px;
+  background:#f4f7f8;border:1px solid var(--line);font-size:11px;
+  line-height:1.5;color:var(--muted)
+}
+@media (prefers-reduced-motion:reduce){.user-location-dot::after{animation:none}}
+
 .legend{padding:0 13px 13px;font-size:12px;color:var(--muted);line-height:1.55} .marker{width:30px;height:30px;border-radius:50%;background:var(--coral);color:white;border:3px solid white;display:grid;place-items:center;font-weight:900;box-shadow:0 3px 8px #0004}
 .hotel{width:36px;height:36px;border-radius:10px;background:var(--teal);color:white;border:3px solid white;display:grid;place-items:center;box-shadow:0 3px 8px #0004}
 .leaflet-div-icon{background:none;border:0}
@@ -1157,10 +1184,10 @@ html,body{max-width:100%;overflow-x:hidden}
 <a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.6725859%2C135.5009065&amp;travelmode=walking&amp;waypoints=34.6726828%2C135.5016161%7C34.6754425%2C135.5018327%7C34.6744954%2C135.501474%7C34.6738473%2C135.5009574%7C34.6733223%2C135.5014577%7C34.6732406%2C135.5009613" target="_blank">Google Maps ①～⑦</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.6725859%2C%27lon%27%3A135.5009065%7D&amp;goal_name=34.6725859%2C135.5009065" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a>
 <a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.6725859%2C135.5009065&amp;destination=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97%20%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E9%9B%A3%E6%B3%A21%E4%B8%81%E7%9B%AE%E8%99%B9%E3%81%AE%E3%81%BE%E3%81%A13-10%E5%8F%B7%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF2%E7%95%AA%E8%A1%97%E5%8D%97%E9%80%9A%E3%82%8A%20%E3%83%95%E3%82%A9%E3%83%AC%E3%82%B9%E3%83%88%E3%83%91%E3%83%BC%E3%82%AF%E5%89%8D&amp;travelmode=walking&amp;waypoints=34.6725206%2C135.5015478%7C34.6712548%2C135.501611%7C34.6696023%2C135.5011469" target="_blank">Google Maps ⑧～⑪</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6725859%2C%27lon%27%3A135.5009065%7D&amp;start_name=34.6725859%2C135.5009065&amp;goal=%7B%27lat%27%3A34.6672000%2C%27lon%27%3A135.5005500%7D&amp;goal_name=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3+%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a>
 <a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97%20%E5%A4%A7%E9%98%AA%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E9%9B%A3%E6%B3%A21%E4%B8%81%E7%9B%AE%E8%99%B9%E3%81%AE%E3%81%BE%E3%81%A13-10%E5%8F%B7%20%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF2%E7%95%AA%E8%A1%97%E5%8D%97%E9%80%9A%E3%82%8A%20%E3%83%95%E3%82%A9%E3%83%AC%E3%82%B9%E3%83%88%E3%83%91%E3%83%BC%E3%82%AF%E5%89%8D&amp;destination=34.669254%2C135.499904&amp;travelmode=walking&amp;waypoints=34.6646089%2C135.5012633%7C34.6616083%2C135.5019349%7C34.6692891%2C135.5006608" target="_blank">Google Maps ⑫～⑮</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6672000%2C%27lon%27%3A135.5005500%7D&amp;start_name=%E3%81%8F%E3%82%8D%E3%83%BC%E3%81%B0%E3%83%BC%E7%B5%90%E3%81%B3+%E3%81%AA%E3%82%93%E3%81%B0%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%BA%97&amp;goal=%7B%27lat%27%3A34.6692540%2C%27lon%27%3A135.4999040%7D&amp;goal_name=34.669254%2C135.499904" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a>
-<button class="btn soft" id="fit" type="button">顯示全部</button>
+<button class="btn soft locate-btn" id="locate1" type="button">📍 我的位置</button><button class="btn soft" id="fit" type="button">顯示全部</button>
 </div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span><i class="tea">T</i>珍珠奶茶</span><span>S／B／T 只標順路店；同棟飲料店會併入編號 Marker，避免座標重疊</span></div>
-<div class="legend"><b>地圖說明：</b>青綠色為飯店，橘紅色為 ①～⑮ 逛街順序。④ PARCO、⑪ 難波 Walk、⑫ 高島屋、⑬ Namba Parks 的 Starbucks 都改併入主 Marker；E｜HARBS 也併入④資訊，不再互相遮住。地圖不以虛線連接。</div>
+<div class="location-note">📍「我的位置」會使用手機 GPS；第一次使用請允許瀏覽器取得位置。定位成功會顯示藍點與誤差圈。</div><div class="legend"><b>地圖說明：</b>青綠色為飯店，橘紅色為 ①～⑮ 逛街順序。④ PARCO、⑪ 難波 Walk、⑫ 高島屋、⑬ Namba Parks 的 Starbucks 都改併入主 Marker；E｜HARBS 也併入④資訊，不再互相遮住。地圖不以虛線連接。</div>
 </section>
 </main></div>
 <div class="day-panel" data-panel="day2" id="panel-day2"><section class="hero" id="day2" style="padding-top:38px">
@@ -1222,9 +1249,9 @@ html,body{max-width:100%;overflow-x:hidden}
 <section class="card mapcard">
 <div class="head"><h2>Day 2｜京都・奈良・大阪地圖</h2><span class="pill">只顯示標記</span></div>
 <div id="map2"></div>
-<div class="tools"><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.9954951%2C135.7763166&amp;destination=34.9954951%2C135.7763166&amp;travelmode=walking&amp;waypoints=34.9948561%2C135.7850463%7C34.9956%2C135.7822%7C34.9946%2C135.7775" target="_blank">京都步行路線</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.9954951%2C%27lon%27%3A135.7763166%7D&amp;start_name=34.9954951%2C135.7763166&amp;goal=%7B%27lat%27%3A34.9954951%2C%27lon%27%3A135.7763166%7D&amp;goal_name=34.9954951%2C135.7763166" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.9954951%2C135.7763166&amp;destination=34.685047%2C135.843012&amp;travelmode=transit" target="_blank">京都 → 奈良</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.9954951%2C%27lon%27%3A135.7763166%7D&amp;start_name=34.9954951%2C135.7763166&amp;goal=%7B%27lat%27%3A34.6850470%2C%27lon%27%3A135.8430120%7D&amp;goal_name=34.685047%2C135.843012" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">Japan Travel</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.685047%2C135.843012&amp;destination=34.6746794%2C135.4963046&amp;travelmode=transit" target="_blank">奈良 → FUJIMOTO</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6850470%2C%27lon%27%3A135.8430120%7D&amp;start_name=34.685047%2C135.843012&amp;goal=%7B%27lat%27%3A34.6746794%2C%27lon%27%3A135.4963046%7D&amp;goal_name=34.6746794%2C135.4963046" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">Japan Travel</a><button class="btn soft" id="fit2" type="button">顯示全部</button></div>
+<div class="tools"><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.9954951%2C135.7763166&amp;destination=34.9954951%2C135.7763166&amp;travelmode=walking&amp;waypoints=34.9948561%2C135.7850463%7C34.9956%2C135.7822%7C34.9946%2C135.7775" target="_blank">京都步行路線</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.9954951%2C%27lon%27%3A135.7763166%7D&amp;start_name=34.9954951%2C135.7763166&amp;goal=%7B%27lat%27%3A34.9954951%2C%27lon%27%3A135.7763166%7D&amp;goal_name=34.9954951%2C135.7763166" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.9954951%2C135.7763166&amp;destination=34.685047%2C135.843012&amp;travelmode=transit" target="_blank">京都 → 奈良</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.9954951%2C%27lon%27%3A135.7763166%7D&amp;start_name=34.9954951%2C135.7763166&amp;goal=%7B%27lat%27%3A34.6850470%2C%27lon%27%3A135.8430120%7D&amp;goal_name=34.685047%2C135.843012" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">Japan Travel</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.685047%2C135.843012&amp;destination=34.6746794%2C135.4963046&amp;travelmode=transit" target="_blank">奈良 → FUJIMOTO</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6850470%2C%27lon%27%3A135.8430120%7D&amp;start_name=34.685047%2C135.843012&amp;goal=%7B%27lat%27%3A34.6746794%2C%27lon%27%3A135.4963046%7D&amp;goal_name=34.6746794%2C135.4963046" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">Japan Travel</a><button class="btn soft locate-btn" id="locate2" type="button">📍 我的位置</button><button class="btn soft" id="fit2" type="button">顯示全部</button></div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span>Day 2 只標真正貼近目前主線的咖啡點</span></div>
-<div class="legend"><b>順路判斷：</b>京都段集中在清水寺／五條坂一帶，午餐後回 MOCOMOCO 還衣，再直接前往奈良；地圖不畫虛線。</div>
+<div class="location-note">📍「我的位置」會使用手機 GPS；再次點擊可更新位置，「顯示全部」可回到整日行程範圍。</div><div class="legend"><b>順路判斷：</b>京都段集中在清水寺／五條坂一帶，午餐後回 MOCOMOCO 還衣，再直接前往奈良；地圖不畫虛線。</div>
 </section>
 </main></div>
 <div class="day-panel" data-panel="day3" id="panel-day3">
@@ -1656,6 +1683,8 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="coffee-mini">
 <div class="coffee-mini-head">☕ Day 3｜飯店 → Universal City 順路咖啡（GPS 地圖）</div>
 <div id="map3coffee"></div>
+<div class="tools"><button class="btn soft locate-btn" id="locate3" type="button">📍 我的位置</button><button class="btn soft" id="fit3" type="button">顯示全部</button></div>
+<div class="location-note">📍 定位只作用在這張「飯店 ↔ Universal City」OpenStreetMap。上方 USJ 園區圖是動線示意圖，不是經緯度 GPS 地圖。</div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="tea">T</i>珍珠奶茶</span><span>Starbucks 07:00 才開；Gong cha 10:00 才開，所以都以離園／白天順路為主</span></div>
 </div>
 </section>
@@ -1763,9 +1792,9 @@ html,body{max-width:100%;overflow-x:hidden}
 <section class="card mapcard">
 <div class="head"><h2>Day 4｜池田・梅田・難波地圖</h2><span class="pill">主線＋A～G</span></div>
 <div id="map4"></div>
-<div class="tools"><button class="btn soft" id="fit4" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit&amp;waypoints=34.8180487%2C135.4266758%7C34.7079533%2C135.4993874%7C34.705200%2C135.499460%7C34.7028186%2C135.4985323%7C34.7012797%2C135.4983196%7C34.7028866%2C135.4953236%7C34.7038664%2C135.4949205%7C34.7024579%2C135.4913958" target="_blank">開啟主線地圖</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.6675993%2C%27lon%27%3A135.5006679%7D&amp;goal_name=34.6675993%2C135.5006679" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a></div>
+<div class="tools"><button class="btn soft locate-btn" id="locate4" type="button">📍 我的位置</button><button class="btn soft" id="fit4" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit&amp;waypoints=34.8180487%2C135.4266758%7C34.7079533%2C135.4993874%7C34.705200%2C135.499460%7C34.7028186%2C135.4985323%7C34.7012797%2C135.4983196%7C34.7028866%2C135.4953236%7C34.7038664%2C135.4949205%7C34.7024579%2C135.4913958" target="_blank">開啟主線地圖</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.6675993%2C%27lon%27%3A135.5006679%7D&amp;goal_name=34.6675993%2C135.5006679" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a></div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="bb">B</i>Blue Bottle</span><span><i class="tea">T</i>珍珠奶茶</span><span>THE ALLEY 在梅田 EST 1F；Grand Front Starbucks 併入⑥ Popup；KITTE 已降為 B 彈性</span></div>
-<div class="legend"><b>彈性標記：</b>灰色 A～G 為「有時間再去」；Blue Bottle 已併入主線 ① 茶屋町，地圖仍保留藍色 B 咖啡標記；池田站 Starbucks 保留綠色 S。Day 4 不畫直線，步行請看上方 2.5D 三層導航。</div>
+<div class="location-note">📍 梅田現場容易迷路時可先按「我的位置」確認自己在哪一側；定位後仍可按「顯示全部」回到 Day 4 全圖。</div><div class="legend"><b>彈性標記：</b>灰色 A～G 為「有時間再去」；Blue Bottle 已併入主線 ① 茶屋町，地圖仍保留藍色 B 咖啡標記；池田站 Starbucks 保留綠色 S。Day 4 不畫直線，步行請看上方 2.5D 三層導航。</div>
 </section>
 </main>
 </div>
@@ -1867,13 +1896,13 @@ html,body{max-width:100%;overflow-x:hidden}
 <section class="card mapcard">
 <div class="head"><h2>Day 5｜天王寺・阿倍野 → 臨空 → KIX</h2><span class="pill">主線＋E</span></div>
 <div id="map5"></div>
-<div class="tools"><button class="btn soft" id="fit5" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=Kansai%20International%20Airport%20Terminal%201&amp;travelmode=transit&amp;waypoints=34.6448982%2C135.5116009%7C34.646337%2C135.513389%7C34.646629%2C135.513131%7C34.4107338%2C135.2996108" target="_blank">開啟 Day 5 路線</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.4343600%2C%27lon%27%3A135.2449500%7D&amp;goal_name=%E9%97%9C%E8%A5%BF%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4+%E7%AC%AC1%E8%88%AA%E5%BB%88" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a></div>
+<div class="tools"><button class="btn soft locate-btn" id="locate5" type="button">📍 我的位置</button><button class="btn soft" id="fit5" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=Kansai%20International%20Airport%20Terminal%201&amp;travelmode=transit&amp;waypoints=34.6448982%2C135.5116009%7C34.646337%2C135.513389%7C34.646629%2C135.513131%7C34.4107338%2C135.2996108" target="_blank">開啟 Day 5 路線</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.4343600%2C%27lon%27%3A135.2449500%7D&amp;goal_name=%E9%97%9C%E8%A5%BF%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4+%E7%AC%AC1%E8%88%AA%E5%BB%88" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a></div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="tea">T</i>珍珠奶茶</span><span>Day 5 的 Starbucks 與 Gong cha 都在主行程商場內：Gong cha あべのキューズモール B1F 已併入①，不另疊 Marker</span></div>
-<div class="legend"><b>行李＋午餐策略：</b>抵達天王寺先把大行李寄在天王寺站／MIO 一帶，空手走 Q's Mall；11:00 在 Q's Mall 4F 吃大起水產壽司，再走 Harukas → MIO → 取行李 → 臨空。大起水產與① Q's Mall 同棟，不另外疊 Marker；E｜HARBS 與② Harukas 同棟。最後一段一定保留機場緩衝。</div>
+<div class="location-note">📍 Day 5 跨天王寺、臨空、KIX 範圍很大；定位會直接拉到你目前的位置，再按「顯示全部」即可回到整日全景。</div><div class="legend"><b>行李＋午餐策略：</b>抵達天王寺先把大行李寄在天王寺站／MIO 一帶，空手走 Q's Mall；11:00 在 Q's Mall 4F 吃大起水產壽司，再走 Harukas → MIO → 取行李 → 臨空。大起水產與① Q's Mall 同棟，不另外疊 Marker；E｜HARBS 與② Harukas 同棟。最後一段一定保留機場緩衝。</div>
 </section>
 </main>
 </div>
-<div class="foot">Prototype v64｜Day 4 梅田購物動線重整：新增 Alpen OSAKA 主線、HEP FIVE／KITTE 彈性分支、LUCUA／阪急／Grand Front 店家與樓層攻略；加入 LUCUA 8F MUJI＋3COINS+plus 同層必逛｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
+<div class="foot">Prototype v65｜Day 4 梅田購物動線重整：新增 Alpen OSAKA 主線、HEP FIVE／KITTE 彈性分支、LUCUA／阪急／Grand Front 店家與樓層攻略；加入 LUCUA 8F MUJI＋3COINS+plus 同層必逛｜Day 1～5 OpenStreetMap GPS 定位｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
 </div>
 <div class="d3-video-modal" hidden="" id="d3VideoModal">
 <div class="d3-video-backdrop" data-d3-video-close=""></div>
@@ -1899,6 +1928,99 @@ function addCoffeeMarkers(targetMap, items){
     L.marker([c.lat,c.lng],{icon:coffeeIcon(c.kind),zIndexOffset:650}).addTo(targetMap).bindPopup(popup);
   });
 }
+
+/* --- Current-location control for all OpenStreetMap / Leaflet maps --- */
+const userLocationLayers = new WeakMap();
+
+function userLocationIcon(){
+  return L.divIcon({
+    className:'user-location-icon',
+    html:'<div class="user-location-dot" aria-hidden="true"></div>',
+    iconSize:[20,20],
+    iconAnchor:[10,10]
+  });
+}
+
+function geolocationErrorText(err){
+  if (!err) return '定位失敗';
+  if (err.code === 1) return '未允許定位';
+  if (err.code === 2) return '目前無法取得位置';
+  if (err.code === 3) return '定位逾時';
+  return '定位失敗';
+}
+
+function setupLocateButton(targetMap, buttonId){
+  const btn=document.getElementById(buttonId);
+  if(!btn || !targetMap) return;
+
+  btn.addEventListener('click',()=>{
+    if(!navigator.geolocation){
+      btn.textContent='⚠️ 不支援定位';
+      btn.classList.add('loc-error');
+      return;
+    }
+
+    btn.classList.remove('loc-error','located');
+    btn.classList.add('locating');
+    btn.textContent='⌛ 定位中…';
+
+    navigator.geolocation.getCurrentPosition(
+      pos=>{
+        const lat=pos.coords.latitude;
+        const lng=pos.coords.longitude;
+        const accuracy=Math.max(1,Math.round(pos.coords.accuracy||0));
+        const ll=L.latLng(lat,lng);
+
+        let layers=userLocationLayers.get(targetMap);
+        if(!layers){
+          const marker=L.marker(ll,{
+            icon:userLocationIcon(),
+            zIndexOffset:2000,
+            keyboard:true,
+            title:'我的位置'
+          }).addTo(targetMap);
+          const circle=L.circle(ll,{
+            radius:accuracy,
+            weight:1.5,
+            opacity:.75,
+            fillOpacity:.09
+          }).addTo(targetMap);
+          layers={marker,circle};
+          userLocationLayers.set(targetMap,layers);
+        }else{
+          layers.marker.setLatLng(ll);
+          layers.circle.setLatLng(ll).setRadius(accuracy);
+        }
+
+        layers.marker.bindPopup(
+          '<b>📍 我的目前位置</b><br>GPS 精度：約 ±'+accuracy+' 公尺'
+        ).openPopup();
+
+        const zoom=accuracy<=40?18:(accuracy<=100?17:(accuracy<=300?16:15));
+        targetMap.setView(ll,zoom,{animate:true});
+
+        btn.classList.remove('locating');
+        btn.classList.add('located');
+        btn.textContent='📍 更新位置';
+      },
+      err=>{
+        btn.classList.remove('locating','located');
+        btn.classList.add('loc-error');
+        const msg=geolocationErrorText(err);
+        btn.textContent='⚠️ '+msg;
+        btn.title = (location.protocol === 'https:' || location.hostname === 'localhost')
+          ? '請檢查瀏覽器／手機的定位權限後再試'
+          : '手機瀏覽器通常需要 HTTPS 網站才能使用定位';
+      },
+      {
+        enableHighAccuracy:true,
+        timeout:12000,
+        maximumAge:15000
+      }
+    );
+  });
+}
+
 const points=[{"n": 1, "name": "MooKEN", "lat": 34.6726828, "lng": 135.5016161, "time": "14:20", "tag": "甜點", "note": "先去；時間較敏感"}, {"n": 2, "name": "HOKA 大阪心齋橋店", "lat": 34.6754425, "lng": 135.5018327, "time": "15:50", "tag": "鞋類", "note": "購物"}, {"n": 3, "name": "OS Drug Shinsaibashi", "lat": 34.6744954, "lng": 135.501474, "time": "16:10", "tag": "藥妝", "note": "較早關門店家優先"}, {"n": 4, "name": "心齋橋 PARCO", "lat": 34.6738473, "lng": 135.5009574, "time": "16:25", "tag": "商場", "note": "20:00 前優先"}, {"n": 5, "name": "鬼塚虎 大阪心齋橋店", "lat": 34.6733223, "lng": 135.5014577, "time": "16:50", "tag": "鞋類", "note": "購物"}, {"n": 6, "name": "大丸心齋橋店", "lat": 34.6732406, "lng": 135.5009613, "time": "17:10", "tag": "百貨", "note": "與 BicCamera 同區"}, {"n": 7, "name": "Air BicCamera 大丸心齋橋店", "lat": 34.6725859, "lng": 135.5009065, "time": "17:30", "tag": "電器", "note": "大丸內／周邊"}, {"n": 8, "name": "松本清", "lat": 34.6725206, "lng": 135.5015478, "time": "17:50", "tag": "藥妝", "note": "可彈性縮短"}, {"n": 9, "name": "GU / UNIQLO", "lat": 34.6712548, "lng": 135.501611, "time": "18:10", "tag": "服飾", "note": "同棟處理"}, {"n": 10, "name": "WEGO", "lat": 34.6696023, "lng": 135.5011469, "time": "18:45", "tag": "服飾", "note": "往難波方向"}, {"n": 11, "name": "くろーばー結び なんばウォーク店", "lat": 34.6670875, "lng": 135.5030161, "time": "19:05", "tag": "📸必買・銅鑼燒", "note": "照片店家｜B21出口旁，10:00–21:00；優先找瀨戶內檸檬／水蜜桃等季節限定；實際口味以當日為準"}, {"n": 12, "name": "大阪高島屋", "lat": 34.6646089, "lng": 135.5012633, "time": "19:25", "tag": "百貨", "note": "19:55 前離開"}, {"n": 13, "name": "難波公園", "lat": 34.6616083, "lng": 135.5019349, "time": "20:00", "tag": "商場", "note": "快速逛重點"}, {"n": 14, "name": "一蘭拉麵 難波御堂筋店", "lat": 34.6692891, "lng": 135.5006608, "time": "20:45", "tag": "晚餐", "note": "20:45–21:30"}, {"n": 15, "name": "唐吉訶德 道頓堀御堂筋", "lat": 34.669254, "lng": 135.499904, "time": "21:35", "tag": "夜間購物", "note": "最後逛"}];
 const map=L.map('map');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
@@ -1966,6 +2088,7 @@ addCoffeeMarkers(map3coffee,d3Coffee);
 addCoffeeMarkers(map3coffee,d3Tea);
 const bounds3coffee=L.latLngBounds([[hotel.lat,hotel.lng],[usjEntrance.lat,usjEntrance.lng],...d3Coffee.map(c=>[c.lat,c.lng]),...d3Tea.map(c=>[c.lat,c.lng])]);
 map3coffee.fitBounds(bounds3coffee,{padding:[28,28]});
+document.getElementById('fit3').onclick=()=>map3coffee.fitBounds(bounds3coffee,{padding:[28,28]});
 
 /* --- Day 4 map --- */
 const d4Main=[
@@ -2051,6 +2174,14 @@ addCoffeeMarkers(map5,d5Coffee);
 d5Coffee.forEach(c=>d5coords.push([c.lat,c.lng]));
 const bounds5=L.latLngBounds(d5coords); map5.fitBounds(bounds5,{padding:[30,30]});
 document.getElementById('fit5').onclick=()=>map5.fitBounds(bounds5,{padding:[30,30]});
+
+
+/* GPS buttons: Day 1–5 OpenStreetMap maps */
+setupLocateButton(map,'locate1');
+setupLocateButton(map2,'locate2');
+setupLocateButton(map3coffee,'locate3');
+setupLocateButton(map4,'locate4');
+setupLocateButton(map5,'locate5');
 
 
 function initTrueDayTabs(){
