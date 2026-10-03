@@ -808,6 +808,8 @@ jobs:
                   "temperature_max_upper": tmax_hi,
                   "precipitation_probability": daily_pop,
                   "pop_6h": pop_blocks,
+                  "short_period_resolution_hours": 6 if pop_blocks else None,
+                  "short_period_source": "JMA official forecast JSON" if pop_blocks else None,
                   "reliability": reliability,
                   "publishing_office": office,
                   "report_datetime": report_dt,
@@ -882,6 +884,7 @@ jobs:
                   "official_zh_url": JMA_MULTI_ZHT,
                   "two_week_url": JMA_TWOWEEK,
                   "twoweek_enabled": True,
+                  "short_period_detail": "JMA official 6-hour precipitation-probability blocks when published; no artificial hourly interpolation",
               }
 
 
