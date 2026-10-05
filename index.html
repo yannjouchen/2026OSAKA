@@ -489,6 +489,31 @@ body.d3-video-open{overflow:hidden}
 .weather-short-note{
   margin-top:7px;font-size:10px;line-height:1.45;color:var(--muted)
 }
+.weather-hourly-grid{
+  display:flex;gap:7px;overflow-x:auto;padding:0 9px 10px;scroll-snap-type:x proximity;
+}
+.weather-hour{
+  position:relative;flex:0 0 112px;scroll-snap-align:start;
+  border:1px solid var(--line);border-radius:11px;background:#fff;padding:8px 9px;
+}
+.weather-hour.past{opacity:.48;background:#f1f2f1}
+.weather-hour.current{border-color:#2f80ed;background:#eef6ff;box-shadow:inset 0 0 0 1px #2f80ed33}
+.weather-hour.current::before{
+  content:"現在";position:absolute;right:6px;top:6px;padding:2px 5px;border-radius:999px;
+  background:#2f80ed;color:#fff;font-size:8px;font-weight:950
+}
+.weather-hour-time{font-size:11px;font-weight:950}
+.weather-hour-icon{font-size:22px;margin-top:5px}
+.weather-hour-weather{margin-top:3px;font-size:10px;font-weight:900;line-height:1.25}
+.weather-hour-temp{margin-top:4px;font-size:15px;font-weight:950}
+.weather-hour-wind{margin-top:2px;font-size:9px;color:var(--muted);line-height:1.3}
+.weather-rain-now{
+  margin:0 9px 9px;padding:9px 10px;border-radius:11px;background:#eef6ff;border:1px solid #cfe0f3;
+  font-size:10px;line-height:1.55
+}
+.weather-rain-now b{font-size:11px}
+.weather-rain-now a{font-weight:900;color:var(--teal)}
+
 
 @media(max-width:620px){
   .trip-weather-grid{grid-template-columns:1fr!important}
@@ -1020,7 +1045,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </div>
 </section>
 <section class="trip-weather" id="weather-day1">
-<div class="trip-weather-head"><b>🌤️ 10/9 大阪天氣</b><span>JMA 官方｜8–12 天看趨勢・7 天內看逐日・短期自動顯示 6 小時分時降雨</span></div>
+<div class="trip-weather-head"><b>🌤️ 10/9 大阪天氣</b><span>JMA 官方｜8–12 天趨勢・7 天內逐日・約 43 小時內 3 小時天氣・當天 1 小時實測雨量</span></div>
 <div class="trip-weather-grid" style="--weather-cols:1"><div class="weather-place" data-weather="osaka_day1">
 <div class="weather-top"><div class="weather-place-name">大阪・心齋橋</div><span class="weather-state waiting">讀取中</span></div>
 <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -1028,7 +1053,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="weather-confidence">預報可信度：—</div>
 <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；7 天內自動切換逐日週間預報；進入 JMA 短期預報範圍且官方有發布時，再顯示 6 小時降雨機率區間。JMA 標準預報並非真正逐小時資料，因此本站不做人工內插。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
+<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；只要 JMA 週間資料已包含行程日就切換逐日預報，不再單靠午夜日期差判斷；進入地域時系列預報範圍後顯示 3 小時天氣／氣溫／風；當天另顯示 AMeDAS 最近 1 小時實測雨量。未來雨勢仍連到 JMA 官方「今後の雨」，本站不把 6 小時降雨機率人工拆成假每小時值。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 <main class="grid">
 <div>
@@ -1237,7 +1262,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </div>
 </section>
 <section class="trip-weather" id="weather-day2">
-<div class="trip-weather-head"><b>🌤️ 10/10 京都・奈良天氣</b><span>JMA 官方｜8–12 天看趨勢・7 天內看逐日・短期自動顯示 6 小時分時降雨</span></div>
+<div class="trip-weather-head"><b>🌤️ 10/10 京都・奈良天氣</b><span>JMA 官方｜8–12 天趨勢・7 天內逐日・約 43 小時內 3 小時天氣・當天 1 小時實測雨量</span></div>
 <div class="trip-weather-grid" style="--weather-cols:2"><div class="weather-place" data-weather="kyoto_day2">
 <div class="weather-top"><div class="weather-place-name">京都・清水寺</div><span class="weather-state waiting">讀取中</span></div>
 <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -1251,7 +1276,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="weather-confidence">預報可信度：—</div>
 <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；7 天內自動切換逐日週間預報；進入 JMA 短期預報範圍且官方有發布時，再顯示 6 小時降雨機率區間。JMA 標準預報並非真正逐小時資料，因此本站不做人工內插。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
+<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；只要 JMA 週間資料已包含行程日就切換逐日預報，不再單靠午夜日期差判斷；進入地域時系列預報範圍後顯示 3 小時天氣／氣溫／風；當天另顯示 AMeDAS 最近 1 小時實測雨量。未來雨勢仍連到 JMA 官方「今後の雨」，本站不把 6 小時降雨機率人工拆成假每小時值。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 <main class="grid">
 <div>
@@ -1315,7 +1340,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="usj-special-note"><b>⚡ 快速通關備援：</b>本行程仍以不買快通為主。入園後若等待時間過長，可用手機查看 USJ 官方 WEB Ticket Store 的當日 Express Pass 庫存；官方當日票售完即止。入口售票亭已停止現場售票，因此不要把「進園後到櫃台買」當備案。Klook 是否仍有當日方案，請以當下頁面可選日期／場次為準。<div class="actions" style="margin-top:10px"><a class="btn mini" href="https://store.usj.co.jp/ja/jp/store/c/expresspass" rel="noopener" target="_blank">🎟️ USJ 官方快速通關</a></div></div>
 </section>
 <section class="trip-weather" id="weather-day3">
-<div class="trip-weather-head"><b>🌤️ 10/11 USJ 天氣</b><span>JMA 官方｜8–12 天看趨勢・7 天內看逐日・短期自動顯示 6 小時分時降雨</span></div>
+<div class="trip-weather-head"><b>🌤️ 10/11 USJ 天氣</b><span>JMA 官方｜8–12 天趨勢・7 天內逐日・約 43 小時內 3 小時天氣・當天 1 小時實測雨量</span></div>
 <div class="trip-weather-grid" style="--weather-cols:1"><div class="weather-place" data-weather="usj_day3">
 <div class="weather-top"><div class="weather-place-name">Universal Studios Japan</div><span class="weather-state waiting">讀取中</span></div>
 <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -1323,7 +1348,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="weather-confidence">預報可信度：—</div>
 <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；7 天內自動切換逐日週間預報；進入 JMA 短期預報範圍且官方有發布時，再顯示 6 小時降雨機率區間。JMA 標準預報並非真正逐小時資料，因此本站不做人工內插。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
+<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；只要 JMA 週間資料已包含行程日就切換逐日預報，不再單靠午夜日期差判斷；進入地域時系列預報範圍後顯示 3 小時天氣／氣溫／風；當天另顯示 AMeDAS 最近 1 小時實測雨量。未來雨勢仍連到 JMA 官方「今後の雨」，本站不把 6 小時降雨機率人工拆成假每小時值。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 <section class="card usj-official-card" id="usjOfficialSchedule">
 <div class="head">
@@ -1745,7 +1770,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </div>
 </section>
 <section class="trip-weather" id="weather-day4">
-<div class="trip-weather-head"><b>🌤️ 10/12 池田・梅田天氣</b><span>JMA 官方｜8–12 天看趨勢・7 天內看逐日・短期自動顯示 6 小時分時降雨</span></div>
+<div class="trip-weather-head"><b>🌤️ 10/12 池田・梅田天氣</b><span>JMA 官方｜8–12 天趨勢・7 天內逐日・約 43 小時內 3 小時天氣・當天 1 小時實測雨量</span></div>
 <div class="trip-weather-grid" style="--weather-cols:2"><div class="weather-place" data-weather="ikeda_day4">
 <div class="weather-top"><div class="weather-place-name">大阪・池田</div><span class="weather-state waiting">讀取中</span></div>
 <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -1759,7 +1784,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="weather-confidence">預報可信度：—</div>
 <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；7 天內自動切換逐日週間預報；進入 JMA 短期預報範圍且官方有發布時，再顯示 6 小時降雨機率區間。JMA 標準預報並非真正逐小時資料，因此本站不做人工內插。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
+<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；只要 JMA 週間資料已包含行程日就切換逐日預報，不再單靠午夜日期差判斷；進入地域時系列預報範圍後顯示 3 小時天氣／氣溫／風；當天另顯示 AMeDAS 最近 1 小時實測雨量。未來雨勢仍連到 JMA 官方「今後の雨」，本站不把 6 小時降雨機率人工拆成假每小時值。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 <main class="grid">
 <div>
@@ -1856,7 +1881,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </div>
 </section>
 <section class="trip-weather" id="weather-day5">
-<div class="trip-weather-head"><b>🌤️ 10/13 阿倍野・臨空／KIX 天氣</b><span>JMA 官方｜8–12 天看趨勢・7 天內看逐日・短期自動顯示 6 小時分時降雨</span></div>
+<div class="trip-weather-head"><b>🌤️ 10/13 阿倍野・臨空／KIX 天氣</b><span>JMA 官方｜8–12 天趨勢・7 天內逐日・約 43 小時內 3 小時天氣・當天 1 小時實測雨量</span></div>
 <div class="trip-weather-grid" style="--weather-cols:2"><div class="weather-place" data-weather="abeno_day5">
 <div class="weather-top"><div class="weather-place-name">大阪・阿倍野</div><span class="weather-state waiting">讀取中</span></div>
 <div class="weather-main"><div class="weather-icon">⏳</div><div><div class="weather-condition">等待天氣資料</div><div class="weather-temp">—</div></div></div>
@@ -1870,7 +1895,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="weather-confidence">預報可信度：—</div>
 <div class="weather-updated">GitHub Actions 更新後會自動顯示。</div>
 </div></div>
-<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；7 天內自動切換逐日週間預報；進入 JMA 短期預報範圍且官方有發布時，再顯示 6 小時降雨機率區間。JMA 標準預報並非真正逐小時資料，因此本站不做人工內插。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
+<div class="weather-source">資料來源：<a href="https://www.data.jma.go.jp/multi/index.html?lang=cn_zt" rel="noopener" target="_blank">JMA 日本氣象廳・繁中</a>｜<a href="https://www.jma.go.jp/bosai/nowc/" rel="noopener" target="_blank">雨雲動態</a>｜<a href="https://www.jma.go.jp/bosai/kaikotan/" rel="noopener" target="_blank">未來雨勢</a>｜<a href="https://www.data.jma.go.jp/cpd/twoweek/" rel="noopener" target="_blank">2週間氣溫</a>。8–12 天先顯示 JMA 2週間氣溫基礎資料（以行程日為中心的 5 日平均）；只要 JMA 週間資料已包含行程日就切換逐日預報，不再單靠午夜日期差判斷；進入地域時系列預報範圍後顯示 3 小時天氣／氣溫／風；當天另顯示 AMeDAS 最近 1 小時實測雨量。未來雨勢仍連到 JMA 官方「今後の雨」，本站不把 6 小時降雨機率人工拆成假每小時值。週間預報為府縣尺度，景點名稱僅代表當日行程區域。</div>
 </section>
 <main class="grid">
 <div>
@@ -1935,7 +1960,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 </main>
 </div>
-<div class="foot">Prototype v66｜Day 4 梅田購物動線重整：新增 Alpen OSAKA 主線、HEP FIVE／KITTE 彈性分支、LUCUA／阪急／Grand Front 店家與樓層攻略；加入 LUCUA 8F MUJI＋3COINS+plus 同層必逛｜Day 1～5 OpenStreetMap GPS 定位｜JMA 短期 6 小時分時降雨｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
+<div class="foot">Prototype v67｜Day 4 梅田購物動線重整：新增 Alpen OSAKA 主線、HEP FIVE／KITTE 彈性分支、LUCUA／阪急／Grand Front 店家與樓層攻略；加入 LUCUA 8F MUJI＋3COINS+plus 同層必逛｜Day 1～5 OpenStreetMap GPS 定位｜JMA 天氣無縫切換＋3 小時時系列＋當天 1 小時實測雨量｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
 </div>
 <div class="d3-video-modal" hidden="" id="d3VideoModal">
 <div class="d3-video-backdrop" data-d3-video-close=""></div>
@@ -2504,6 +2529,25 @@ function weatherPeriodLabel(state){
   if(state==='current') return '目前時段';
   return '接下來';
 }
+function wdistWeatherIcon(v){
+  const s=String(v||'');
+  if(/雷/.test(s)) return '⛈️';
+  if(/雪/.test(s)) return '🌨️';
+  if(/雨/.test(s)) return '🌧️';
+  if(/晴/.test(s) && /(くもり|曇)/.test(s)) return '⛅';
+  if(/晴/.test(s)) return '☀️';
+  if(/くもり|曇/.test(s)) return '☁️';
+  return '🌥️';
+}
+function weatherHourState(w,item){
+  const now=weatherJapanNow();
+  if(String(w?.date||'')!==now.date) return 'future';
+  const m=weatherMinutes(item?.time);
+  if(m===null) return 'future';
+  if(now.minutes>=m && now.minutes<m+180) return 'current';
+  if(now.minutes>=m+180) return 'past';
+  return 'future';
+}
 function ensureWeatherPeriods(card){
   let el=card.querySelector('.weather-period-host');
   if(el) return el;
@@ -2515,35 +2559,87 @@ function ensureWeatherPeriods(card){
 }
 function renderWeatherPeriods(card,w){
   const host=ensureWeatherPeriods(card);
-  const blocks=Array.isArray(w?.pop_6h)?w.pop_6h:[];
-  if(w?.status!=='ok' || !blocks.length){
+  if(w?.status!=='ok'){
     host.innerHTML='';
     return;
   }
 
   const isToday=String(w.date||'')===weatherJapanNow().date;
-  const items=blocks.map(b=>{
-    const state=weatherPeriodState(w,b);
-    const pop=Number(b.pop);
-    const popText=Number.isFinite(pop)?`${Math.round(pop)}%`:'—';
-    return `<div class="weather-period ${state}">
-      <div class="weather-period-time">${b.start}–${b.end==='00:00'?'24:00':b.end}</div>
-      <div class="weather-period-pop">☔ ${popText}</div>
-      <div class="weather-period-sub">${weatherPeriodLabel(state)}・JMA 6 小時降雨機率</div>
-    </div>`;
-  }).join('');
+  const hourly=Array.isArray(w?.three_hourly)?w.three_hourly:[];
+  const pops=Array.isArray(w?.pop_6h)?w.pop_6h:[];
+  const sections=[];
 
-  host.innerHTML=`<details class="weather-periods" ${isToday?'open':''}>
-    <summary><span>🕒 JMA 分時降雨</span><span>${isToday?'今天自動展開':'查看 6 小時區間'}</span></summary>
-    <div class="weather-period-note">${isToday?'灰色＝已過・藍框＝目前・白色＝接下來。':'JMA 短期預報發布後才會出現；不是人工拆成每小時。'}</div>
-    <div class="weather-period-grid">${items}</div>
-  </details>`;
+  if(isToday && w?.observed_1h){
+    const r=w.observed_1h;
+    const rain=Number(r.precipitation_mm);
+    const rainTxt=Number.isFinite(rain)?`${rain.toFixed(1).replace(/\.0$/,'')} mm`:'—';
+    const temp=Number(r.temperature_c);
+    const tempTxt=Number.isFinite(temp)?`｜目前 ${temp.toFixed(1).replace(/\.0$/,'')}°C`:'';
+    const at=r.as_of?String(r.as_of).slice(11,16):'';
+    sections.push(`<div class="weather-rain-now"><b>🌧️ 最近 1 小時實測雨量：${rainTxt}${tempTxt}</b>${at?`<br>AMeDAS ${r.station_name||'代表觀測點'}・${at} JST`:''}｜<a href="https://www.jma.go.jp/bosai/kaikotan/" target="_blank" rel="noopener">查看未來 15 小時「今後の雨」↗</a><br><span style="color:var(--muted)">這是實測雨量，不是把 JMA 預報人工拆成每小時。</span></div>`);
+  }
+
+  if(hourly.length){
+    const items=hourly.map(h=>{
+      const state=weatherHourState(w,h);
+      const temp=(h.temp===null||h.temp===undefined||h.temp==='')?'—':`${fmtWeatherNum(h.temp)}°`;
+      const wind=[h.wind_direction,h.wind_range?`${h.wind_range}m/s`:null].filter(Boolean).join(' ');
+      return `<div class="weather-hour ${state}">
+        <div class="weather-hour-time">${h.time}</div>
+        <div class="weather-hour-icon">${wdistWeatherIcon(h.weather)}</div>
+        <div class="weather-hour-weather">${h.weather||'JMA 天氣'}</div>
+        <div class="weather-hour-temp">${temp}</div>
+        <div class="weather-hour-wind">${wind||'風況待更新'}</div>
+      </div>`;
+    }).join('');
+    sections.push(`<details class="weather-periods" ${(isToday||Number(w.days_ahead)<=1)?'open':''}>
+      <summary><span>🕒 JMA 3 小時天氣</span><span>${hourly.length} 個時段</span></summary>
+      <div class="weather-period-note">JMA 地域時系列預報：3 小時一格；灰色＝已過、藍框＝目前。通常涵蓋今天＋明天（依 5/11/17 時發布範圍而變動）。</div>
+      <div class="weather-hourly-grid">${items}</div>
+    </details>`);
+  }
+
+  if(pops.length){
+    const items=pops.map(b=>{
+      const state=weatherPeriodState(w,b);
+      const pop=Number(b.pop);
+      const popText=Number.isFinite(pop)?`${Math.round(pop)}%`:'—';
+      return `<div class="weather-period ${state}">
+        <div class="weather-period-time">${b.start}–${b.end==='00:00'?'24:00':b.end}</div>
+        <div class="weather-period-pop">☔ ${popText}</div>
+        <div class="weather-period-sub">${weatherPeriodLabel(state)}・JMA 6 小時降雨機率</div>
+      </div>`;
+    }).join('');
+    sections.push(`<details class="weather-periods">
+      <summary><span>☔ JMA 6 小時降雨機率</span><span>短期預報</span></summary>
+      <div class="weather-period-note">這是 JMA 官方 6 小時區間，本站不內插成假的每小時機率。</div>
+      <div class="weather-period-grid">${items}</div>
+    </details>`);
+  }
+
+  host.innerHTML=sections.join('');
+}
+function domWeatherLooksValid(card){
+  const s=card.querySelector('.weather-state');
+  return !!s && (s.classList.contains('weekly') || s.classList.contains('short') || s.classList.contains('two_week'));
 }
 
 function renderTripWeather(data){
-  const weather=data?._weather?.places||{};
+  const bundle=data?._weather||{};
+  const weather=bundle?.places||{};
+  const bundleHasFetchTime=!!bundle?.fetched_at;
   document.querySelectorAll('[data-weather]').forEach(card=>{
     const w=weather[card.dataset.weather];
+
+    // v67: repo 內的 usj-queue.json 可能只是初始化／備援資料。
+    // 沒有 fetched_at 的 bundle 不允許覆蓋 HTML 內已烘焙的有效 JMA 天氣。
+    if(!bundleHasFetchTime){
+      return;
+    }
+    // 單一地點抓取失敗／尚未發布時，也不要把已存在的有效週間或短期資料蓋成「等待」。
+    if((!w || w.status==='not_available_yet' || w.status==='unavailable') && domWeatherLooksValid(card)){
+      return;
+    }
     const state=card.querySelector('.weather-state');
     const icon=card.querySelector('.weather-icon');
     const cond=card.querySelector('.weather-condition');
@@ -2564,8 +2660,8 @@ function renderTripWeather(data){
       const tw=w?.two_week_url||'https://www.data.jma.go.jp/cpd/twoweek/';
       metrics.innerHTML=`<span class="weather-metric">🌡️ <a href="${tw}" target="_blank" rel="noopener">查看 JMA 2週間氣溫趨勢 ↗</a></span>`;
       confidence.className='weather-confidence';
-      confidence.textContent='8–12 天：氣溫趨勢｜7 天內：逐日｜短期：6 小時降雨';
-      updated.textContent='進入 12 天範圍後先顯示氣溫趨勢；7 天內切換逐日預報；JMA 短期資料發布後再出現 6 小時分時降雨。';
+      confidence.textContent='8–12 天：氣溫趨勢｜JMA 有該日即切逐日｜約 43h：3 小時天氣';
+      updated.textContent='進入 12 天範圍後先顯示氣溫趨勢；JMA 週間資料一旦真的包含該日期就切換逐日；地域時系列資料發布後再出現 3 小時天氣。';
       return;
     }
     if(w.status==='ok' && w.mode==='two_week'){
@@ -2604,7 +2700,7 @@ function renderTripWeather(data){
       confidence.className='weather-confidence medium';
       confidence.textContent='趨勢資料｜非逐日晴雨預報';
       const init=w.guidance_initial_date?String(w.guidance_initial_date).slice(5).replace('-','/'):'—';
-      updated.textContent=`${w.date} · JMA 2週間氣溫予報基礎資料 · 初期值 ${init}｜進入 7 天內切換逐日；短期再顯示 6 小時分時降雨`;
+      updated.textContent=`${w.date} · JMA 2週間氣溫予報基礎資料 · 初期值 ${init}｜JMA 週間含該日後切換逐日；約 43 小時內再顯示 3 小時天氣`;
       return;
     }
     if(w.status==='expired'){
@@ -2644,8 +2740,14 @@ function renderTripWeather(data){
     if(w.precipitation_probability!==null&&w.precipitation_probability!==undefined&&w.precipitation_probability!==''&&Number.isFinite(Number(w.precipitation_probability))){
       chips.push(`<span class="weather-metric">☔ 降雨機率 ${Math.round(Number(w.precipitation_probability))}%</span>`);
     }
+    if(Array.isArray(w.three_hourly)&&w.three_hourly.length){
+      chips.push(`<span class="weather-metric">🕒 JMA 3 小時天氣 ${w.three_hourly.length} 格</span>`);
+    }
     if(Array.isArray(w.pop_6h)&&w.pop_6h.length){
-      chips.push(`<span class="weather-metric">🕒 已有 JMA 分時降雨</span>`);
+      chips.push(`<span class="weather-metric">☔ JMA 6 小時降雨率</span>`);
+    }
+    if(w.observed_1h){
+      chips.push(`<span class="weather-metric">🌧️ AMeDAS 近 1h 實測</span>`);
     }
     if(w.forecast_area) chips.push(`<span class="weather-metric">📍 JMA ${w.forecast_area}</span>`);
     metrics.innerHTML=chips.length?chips.join(''):'<span class="weather-metric">JMA 降雨資料待更新</span>';
