@@ -419,6 +419,7 @@ jobs:
                   "weekly_area_code": "270000",
                   "short_area_code": "270000",
                   "temp_area_code": "62078",
+                  "amedas_code": "62078",
                   "forecast_area": "大阪府",
                   "two_week_station_id": "47772",
                   "two_week_station_name": "大阪",
@@ -430,6 +431,7 @@ jobs:
                   "weekly_area_code": "260000",
                   "short_area_code": "260010",
                   "temp_area_code": "61286",
+                  "amedas_code": "61286",
                   "forecast_area": "京都府南部",
                   "two_week_station_id": "47759",
                   "two_week_station_name": "京都",
@@ -441,6 +443,7 @@ jobs:
                   "weekly_area_code": "290000",
                   "short_area_code": "290010",
                   "temp_area_code": "64036",
+                  "amedas_code": "64036",
                   "forecast_area": "奈良県北部",
                   "two_week_station_id": "47780",
                   "two_week_station_name": "奈良",
@@ -452,6 +455,7 @@ jobs:
                   "weekly_area_code": "270000",
                   "short_area_code": "270000",
                   "temp_area_code": "62078",
+                  "amedas_code": "62078",
                   "forecast_area": "大阪府",
                   "two_week_station_id": "47772",
                   "two_week_station_name": "大阪",
@@ -463,6 +467,7 @@ jobs:
                   "weekly_area_code": "270000",
                   "short_area_code": "270000",
                   "temp_area_code": "62078",
+                  "amedas_code": "62078",
                   "forecast_area": "大阪府",
                   "two_week_station_id": "47772",
                   "two_week_station_name": "大阪",
@@ -474,6 +479,7 @@ jobs:
                   "weekly_area_code": "270000",
                   "short_area_code": "270000",
                   "temp_area_code": "62078",
+                  "amedas_code": "62078",
                   "forecast_area": "大阪府",
                   "two_week_station_id": "47772",
                   "two_week_station_name": "大阪",
@@ -485,6 +491,7 @@ jobs:
                   "weekly_area_code": "270000",
                   "short_area_code": "270000",
                   "temp_area_code": "62078",
+                  "amedas_code": "62078",
                   "forecast_area": "大阪府",
                   "two_week_station_id": "47772",
                   "two_week_station_name": "大阪",
@@ -496,6 +503,7 @@ jobs:
                   "weekly_area_code": "270000",
                   "short_area_code": "270000",
                   "temp_area_code": "62078",
+                  "amedas_code": "62078",
                   "forecast_area": "大阪府",
                   "two_week_station_id": "47772",
                   "two_week_station_name": "大阪",
@@ -508,6 +516,9 @@ jobs:
           # Official JMA probability-guidance CSV used as the numerical basis for
           # the two-week temperature product. Each row is a five-day moving average.
           JMA_TWOWEEK_CSV = "https://www.data.jma.go.jp/risk/probability/guidance/download2w.php?2week_t_{station}.csv"
+          JMA_WDIST_VPFD_BASE = "https://www.jma.go.jp/bosai/jmatile/data/wdist/VPFD"
+          JMA_AMEDAS_LATEST = "https://www.jma.go.jp/bosai/amedas/data/latest_time.txt"
+          JMA_AMEDAS_POINT_BASE = "https://www.jma.go.jp/bosai/amedas/data/point"
 
           def jma_date(iso_value):
               return str(iso_value or "")[:10]
@@ -573,6 +584,119 @@ jobs:
                       "pop": pop,
                   })
               return blocks
+
+
+          def jma_three_hourly_blocks(target, wdist_doc):
+              if not isinstance(wdist_doc, dict):
+                  return []
+              target_date = target["date"]
+              area_ts = wdist_doc.get("areaTimeSeries") or {}
+              point_ts = wdist_doc.get("pointTimeSeries") or {}
+
+              temp_by_dt = {}
+              p_times = point_ts.get("timeDefines") or []
+              p_temps = point_ts.get("temperature") or []
+              for i, td in enumerate(p_times):
+                  dt = (td or {}).get("dateTime") if isinstance(td, dict) else None
+                  if not dt or jma_date(dt) != target_date or i >= len(p_temps):
+                      continue
+                  v = p_temps[i]
+                  if v not in ("", None):
+                      temp_by_dt[dt] = v
+
+              times = area_ts.get("timeDefines") or []
+              weather = area_ts.get("weather") or []
+              wind = area_ts.get("wind") or []
+              out = []
+              for i, td in enumerate(times):
+                  dt = (td or {}).get("dateTime") if isinstance(td, dict) else None
+                  if not dt or jma_date(dt) != target_date:
+                      continue
+                  w = weather[i] if i < len(weather) else None
+                  wi = wind[i] if i < len(wind) and isinstance(wind[i], dict) else {}
+                  out.append({
+                      "datetime": dt,
+                      "time": str(dt)[11:16],
+                      "weather": w,
+                      "temp": temp_by_dt.get(dt),
+                      "wind_direction": wi.get("direction"),
+                      "wind_range": wi.get("range"),
+                  })
+              return out
+
+          def amedas_block_key(dt):
+              h = (dt.hour // 3) * 3
+              return dt.strftime("%Y%m%d_") + f"{h:02d}"
+
+          def jma_amedas_recent_1h(amedas_code, station_name, now_jst, latest_text):
+              if not latest_text:
+                  return None
+              try:
+                  latest_dt = datetime.fromisoformat(latest_text.strip().replace("Z", "+00:00"))
+                  if latest_dt.tzinfo is None:
+                      latest_dt = latest_dt.replace(tzinfo=JST)
+                  latest_dt = latest_dt.astimezone(JST)
+              except Exception:
+                  return None
+
+              # Only use this for the actual trip day.
+              if latest_dt.date() != now_jst.date():
+                  return None
+
+              docs = {}
+              keys = {
+                  amedas_block_key(latest_dt),
+                  amedas_block_key(latest_dt - timedelta(hours=3)),
+              }
+              for key in keys:
+                  try:
+                      docs.update(request_json(f"{JMA_AMEDAS_POINT_BASE}/{amedas_code}/{key}.json"))
+                  except Exception as e:
+                      print(f"AMeDAS fetch failed for {amedas_code}/{key}: {e}")
+
+              if not docs:
+                  return None
+
+              points = []
+              for ts, row in docs.items():
+                  try:
+                      dt = datetime.strptime(ts, "%Y%m%d%H%M%S").replace(tzinfo=JST)
+                  except Exception:
+                      continue
+                  if dt > latest_dt or dt < latest_dt - timedelta(minutes=59):
+                      continue
+                  p = (row or {}).get("precipitation10m")
+                  precip = None
+                  if isinstance(p, list) and p:
+                      try:
+                          precip = float(p[0])
+                      except Exception:
+                          precip = None
+                  points.append((dt, precip, row))
+
+              if not points:
+                  return None
+              points.sort(key=lambda x: x[0])
+
+              rain = sum(x[1] for x in points if x[1] is not None)
+              latest_row = points[-1][2] or {}
+              temp = latest_row.get("temp")
+              temp_v = None
+              if isinstance(temp, list) and temp:
+                  try:
+                      temp_v = float(temp[0])
+                  except Exception:
+                      pass
+
+              return {
+                  "station_code": str(amedas_code),
+                  "station_name": station_name,
+                  "as_of": points[-1][0].isoformat(),
+                  "precipitation_mm": round(rain, 1),
+                  "temperature_c": temp_v,
+                  "source": "JMA AMeDAS",
+                  "period": "recent_1h_observed",
+              }
 
           def jma_twoweek_record(target, raw_csv):
               from datetime import date as date_cls
@@ -657,7 +781,7 @@ jobs:
                   "two_week_station_name": target.get("two_week_station_name"),
               }
 
-          def jma_weather_record(target, today, pref_docs, twoweek_docs):
+          def jma_weather_record(target, today, pref_docs, twoweek_docs, wdist_docs, amedas_current):
               from datetime import date as date_cls
 
               target_date = date_cls.fromisoformat(target["date"])
@@ -781,6 +905,20 @@ jobs:
 
               weather_code = short_code or weekly_code
               if weather_code in (None, ""):
+                  # Midnight can make diff==7 before JMA's 11:00 weekly issue actually
+                  # contains the target date. Keep the still-valid 2-week trend instead
+                  # of creating a blank "waiting" window.
+                  if 7 <= diff <= 12:
+                      station = str(target.get("two_week_station_id"))
+                      tw = jma_twoweek_record(target, twoweek_docs.get(station))
+                      if tw:
+                          return {
+                              **base,
+                              **tw,
+                              "status": "ok",
+                              "mode": "two_week",
+                              "days_ahead": diff,
+                          }
                   return {
                       **base,
                       "status": "not_available_yet",
@@ -810,6 +948,11 @@ jobs:
                   "pop_6h": pop_blocks,
                   "short_period_resolution_hours": 6 if pop_blocks else None,
                   "short_period_source": "JMA official forecast JSON" if pop_blocks else None,
+                  "three_hourly": jma_three_hourly_blocks(
+                      target, wdist_docs.get(str(target["short_area_code"]))
+                  ),
+                  "three_hourly_source": "JMA regional time-series forecast (wdist VPFD)",
+                  "observed_1h": amedas_current.get(str(target.get("amedas_code") or "")) if diff == 0 else None,
                   "reliability": reliability,
                   "publishing_office": office,
                   "report_datetime": report_dt,
@@ -851,7 +994,7 @@ jobs:
               needed_twoweek_stations = sorted({
                   str(t["two_week_station_id"])
                   for t in WEATHER_TARGETS.values()
-                  if 8 <= (datetime.fromisoformat(t["date"]).date() - now_jst.date()).days <= 12
+                  if 7 <= (datetime.fromisoformat(t["date"]).date() - now_jst.date()).days <= 12
               })
               for station in needed_twoweek_stations:
                   try:
@@ -860,10 +1003,47 @@ jobs:
                       print(f"JMA two-week CSV fetch failed for {station}: {e}")
                       twoweek_docs[station] = None
 
+              # JMA regional three-hourly forecast (today/tomorrow, sometimes part of day+2).
+              wdist_docs = {}
+              needed_wdist_codes = sorted({
+                  str(t["short_area_code"])
+                  for t in WEATHER_TARGETS.values()
+                  if 0 <= (datetime.fromisoformat(t["date"]).date() - now_jst.date()).days <= 2
+              })
+              for area_code in needed_wdist_codes:
+                  try:
+                      wdist_docs[area_code] = request_json(f"{JMA_WDIST_VPFD_BASE}/{area_code}.json")
+                  except Exception as e:
+                      print(f"JMA wdist VPFD fetch failed for {area_code}: {e}")
+                      wdist_docs[area_code] = None
+
+              # AMeDAS recent 1-hour observed rainfall: only for trip cards whose date is today.
+              amedas_current = {}
+              today_targets = [
+                  t for t in WEATHER_TARGETS.values()
+                  if datetime.fromisoformat(t["date"]).date() == now_jst.date()
+              ]
+              if today_targets:
+                  latest_text = None
+                  try:
+                      latest_text = request_text(JMA_AMEDAS_LATEST).strip()
+                  except Exception as e:
+                      print(f"JMA AMeDAS latest-time fetch failed: {e}")
+                  for t in today_targets:
+                      code = str(t.get("amedas_code") or "")
+                      if not code or code in amedas_current:
+                          continue
+                      amedas_current[code] = jma_amedas_recent_1h(
+                          code,
+                          t.get("two_week_station_name") or t.get("label"),
+                          now_jst,
+                          latest_text,
+                      )
+
               places = {}
               for key, target in WEATHER_TARGETS.items():
                   try:
-                      places[key] = jma_weather_record(target, now_jst.date(), pref_docs, twoweek_docs)
+                      places[key] = jma_weather_record(target, now_jst.date(), pref_docs, twoweek_docs, wdist_docs, amedas_current)
                   except Exception as e:
                       places[key] = {
                           "status": "unavailable",
@@ -884,7 +1064,7 @@ jobs:
                   "official_zh_url": JMA_MULTI_ZHT,
                   "two_week_url": JMA_TWOWEEK,
                   "twoweek_enabled": True,
-                  "short_period_detail": "JMA official 6-hour precipitation-probability blocks when published; no artificial hourly interpolation",
+                  "short_period_detail": "JMA daily -> regional 3-hourly (wdist VPFD) -> same-day AMeDAS recent 1-hour observed rainfall; 6-hour POP is never interpolated into fake hourly values",
               }
 
 
