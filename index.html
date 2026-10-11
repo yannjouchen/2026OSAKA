@@ -1015,6 +1015,72 @@ html,body{max-width:100%;overflow-x:hidden}
 .quick-nav-actions a.quick-nav-btn.navitime-link{border-color:#9fc6c0;background:#f3fbf9;color:#1e615a}
 .quick-nav-actions a.quick-nav-btn:hover{transform:none}
 @media(max-width:620px){.quick-nav-actions{grid-template-columns:1fr}.quick-nav-actions a.quick-nav-btn{min-height:34px}}
+
+/* --- v73 map navigator: map + tappable place cards --- */
+.map-place-list{
+  display:flex;
+  gap:9px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  padding:11px 13px 12px;
+  border-top:1px solid var(--line);
+  background:#fffdf8;
+  scroll-snap-type:x proximity;
+}
+.map-place-card{
+  appearance:none;
+  -webkit-appearance:none;
+  flex:0 0 min(245px,78vw);
+  min-width:0;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:14px;
+  padding:10px 11px;
+  text-align:left;
+  color:var(--ink);
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+  cursor:pointer;
+  scroll-snap-align:start;
+  box-shadow:0 4px 12px #00000008;
+}
+.map-place-card:hover{border-color:#b9c9c5}
+.map-place-card:focus-visible{outline:3px solid #7cb5b1;outline-offset:2px}
+.map-place-card.optional{background:#f4f5f5;color:#536168}
+.map-place-card .map-place-num{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--coral);color:#fff;
+  display:grid;place-items:center;
+  font-size:12px;font-weight:950;
+  border:2px solid #fff;box-shadow:0 2px 6px #0002;
+}
+.map-place-card.optional .map-place-num{background:#68747a}
+.map-place-card.special .map-place-num{background:var(--teal)}
+.map-place-copy{min-width:0}
+.map-place-copy b{
+  display:block;font-size:12px;line-height:1.35;
+  white-space:normal;overflow-wrap:anywhere;
+}
+.map-place-meta{
+  margin-top:3px;color:var(--muted);
+  font-size:10.5px;line-height:1.4;
+}
+.map-place-hint{
+  padding:8px 13px 0;
+  font-size:11px;color:var(--muted);line-height:1.45;
+  background:#fffdf8;
+}
+.map-focus-row{display:flex;gap:8px;flex-wrap:wrap}
+.map-focus-row .btn{cursor:pointer}
+@media(max-width:620px){
+  .map-place-list{padding:9px 10px 10px}
+  .map-place-card{flex-basis:min(225px,82vw)}
+  .map-place-card{grid-template-columns:31px minmax(0,1fr);padding:9px}
+  .map-place-card .map-place-num{width:29px;height:29px}
+}
 </style>
 </head>
 <body>
@@ -1225,8 +1291,8 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 </div>
 <section class="card mapcard">
-<div class="head"><h2>今日逛街地圖</h2><span class="pill">點編號看店名</span></div>
-<div id="map"></div>
+<div class="head"><h2>今日逛街地圖</h2><span class="pill">地圖＋地點清單</span></div>
+<div id="map"></div><div class="map-place-hint">👇 點下方地點卡可直接把地圖拉到該位置。</div><div class="map-place-list" id="mapList1" aria-label="Day 1 地點清單"></div>
 <div class="tools">
 <a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.6725206%2C135.5015478&amp;travelmode=walking&amp;waypoints=34.6726828%2C135.5016161%7C34.6754425%2C135.5018327%7C34.6744954%2C135.501474%7C34.6738473%2C135.5009574%7C34.6732406%2C135.5009613" target="_blank">Google Maps ①～⑥</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.6725206%2C%27lon%27%3A135.5015478%7D&amp;goal_name=%E6%9D%BE%E6%9C%AC%E6%B8%85" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a>
 <a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.6725206%2C135.5015478&amp;destination=34.6646089%2C135.5012633&amp;travelmode=walking&amp;waypoints=34.6696023%2C135.5011469%7C34.6685660%2C135.5014380%7C34.6666466%2C135.5025872%7C34.6670875%2C135.5030161" target="_blank">Google Maps ⑦～⑪</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6725206%2C%27lon%27%3A135.5015478%7D&amp;start_name=%E6%9D%BE%E6%9C%AC%E6%B8%85&amp;goal=%7B%27lat%27%3A34.6646089%2C%27lon%27%3A135.5012633%7D&amp;goal_name=%E5%A4%A7%E9%98%AA%E9%AB%98%E5%B3%B6%E5%B1%8B" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a>
@@ -1298,8 +1364,8 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 </div>
 <section class="card mapcard">
-<div class="head"><h2>Day 2｜池田・奈良・大阪地圖</h2><span class="pill">主線 4 站＋唐吉位置</span></div>
-<div id="map2"></div>
+<div class="head"><h2>Day 2｜池田・奈良・大阪地圖</h2><span class="pill">地圖＋地點清單</span></div>
+<div id="map2"></div><div class="map-place-hint">👇 點下方地點卡可直接把地圖拉到該位置。</div><div class="map-place-list" id="mapList2" aria-label="Day 2 地點清單"></div>
 <div class="tools"><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.8180487%2C135.4266758&amp;travelmode=transit" target="_blank">飯店 → 池田</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.8180487%2C135.4266758&amp;destination=34.685047%2C135.843012&amp;travelmode=transit" target="_blank">池田 → 奈良</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.685047%2C135.843012&amp;destination=34.6746794%2C135.4963046&amp;travelmode=transit" target="_blank">奈良 → FUJIMOTO</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.6746794%2C135.4963046&amp;destination=34.6763681%2C135.4919172&amp;travelmode=walking" target="_blank">FUJIMOTO → LIFE</a><button class="btn soft locate-btn" id="locate2" type="button">📍 我的位置</button><button class="btn soft" id="fit2" type="button">顯示全部</button></div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span>池田站與奈良公園各保留一個順路咖啡點</span><span>🛒 LIFE＝晚餐後主線</span><span>灰色 D＝唐吉訶德位置參考</span></div>
 <div class="location-note">📍 Day 2 跨池田、奈良、大阪，範圍很大；定位後按「顯示全部」可回到整日全景。</div><div class="legend"><b>新版順路判斷：</b>上午池田、下午奈良、晚上 FUJIMOTO → LIFE。唐吉訶德道頓堀御堂筋店只用灰色 D 標在地圖上，方便臨時想去時確認方向，沒有排固定時間。</div>
@@ -1727,6 +1793,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <span><i class="kitty">9</i>Hello Kitty 必排</span>
 <span><i class="main" style="background:#2f7b65">F</i>F1～F14 餐飲（點標記對照菜單表）</span>
 </div>
+<div class="map-place-hint">👇 園區圖保留原本配置；下方主線卡可直接跳到該設施說明。</div><div class="map-place-list" id="usjMapList" aria-label="USJ 主線設施清單"></div>
 <div class="tools">
 <a class="btn teal" href="https://www.usj.co.jp/web/zh/tw/service-guide/parkmap" target="_blank">開啟 USJ 官方互動園區圖</a>
 <a class="btn" href="https://www.usj.co.jp/web/zh/tw/enjoy/app" target="_blank">官方 App</a>
@@ -1741,7 +1808,7 @@ html,body{max-width:100%;overflow-x:hidden}
     </div>
 <div class="coffee-mini">
 <div class="coffee-mini-head">☕ Day 3｜飯店 ↔ Universal City 區域參考（GPS 地圖）</div>
-<div id="map3coffee"></div>
+<div id="map3coffee"></div><div class="map-place-hint">👇 點地點卡快速查看飯店、USJ 與 Universal City 周邊。</div><div class="map-place-list" id="mapList3" aria-label="Day 3 區域地點清單"></div>
 <div class="tools"><button class="btn soft locate-btn" id="locate3" type="button">📍 我的位置</button><button class="btn soft" id="fit3" type="button">顯示全部</button></div>
 <div class="location-note">📍 去程主線已改 Uber／計程車；這張「飯店 ↔ Universal City」OpenStreetMap 只保留區域與回程參考。上方 USJ 園區圖是動線示意圖，不是經緯度 GPS 地圖。</div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="tea">T</i>珍珠奶茶</span><span>Starbucks 07:00 才開；Gong cha 10:00 才開，所以都以離園／白天順路為主</span></div>
@@ -1752,20 +1819,20 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="day-panel" data-panel="day4" id="panel-day4">
 <section class="hero" id="day4" style="padding-top:38px">
 <div class="kicker">DAY 4 · 2026/10/12 MON · 日本體育之日</div>
-<h1>梅田茶屋町 → 百貨 → HARBS → LUCUA → Grand Front → 難波燒肉</h1>
-<div class="muted">池田已移到 Day 2；Day 4 全留給梅田。09:30 從茶屋町慢慢開始，HARBS 大丸梅田店正式升為主線午餐＋蛋糕，下午把時間留給 LUCUA 與 Grand Front。</div>
+<h1>Blue Bottle → Nintendo／HARBS → 梅田購物 → 20:00 難波燒肉 → 唐吉</h1>
+<div class="muted">早上不等心齋橋 HOKA 開門，直接進梅田。Nintendo OSAKA／皮克敏先處理，HARBS 11:00 開店就吃；下午把 HOKA、LUCUA、Yodobashi／LINKS、Grand Front 集中完成。KITTE 維持有時間才去，晚餐改 20:00，吃完再逛道頓堀唐吉。</div>
 <div class="chips">
-<span class="chip">☕ 09:30 Blue Bottle</span><span class="chip">🎰 10:00 扭蛋之森</span><span class="chip">👟 10:30 Alpen</span><span class="chip">🍰 13:00 HARBS</span><span class="chip">🛍️ LUCUA 核心</span><span class="chip">🔥 19:30 焼肉きんぐ</span>
+<span class="chip">☕ 08:00 Blue Bottle</span><span class="chip">🌱 10:00 Nintendo・皮克敏</span><span class="chip">🍰 11:00 HARBS</span><span class="chip">👟 Alpen＋LINKS 找 HOKA</span><span class="chip">🛍️ Yodobashi／LINKS 正式加入</span><span class="chip">🔥 20:00 焼肉きんぐ</span><span class="chip">🛒 晚餐後唐吉</span>
 </div>
 <div class="quick">
-<a href="https://store.bluebottlecoffee.jp/pages/umeda-chayamachi" rel="noopener" target="_blank">☕ Blue Bottle<span>梅田茶屋町｜09:30 主線</span></a>
-<a href="https://www.gachagachanomori.com/shoplist/" rel="noopener" target="_blank">🎰 扭蛋之森<span>梅田茶屋町店｜10:00</span></a>
-<a href="https://store.alpen-group.jp/Form/RealShop/ShopDetail.aspx?rsid=5600" rel="noopener" target="_blank">👟 Alpen OSAKA<span>茶屋町｜10:00–21:00</span></a>
-<a href="https://www.harbs.co.jp/shop_kansai/" rel="noopener" target="_blank">🍰 HARBS 大丸梅田<span>6F｜主線午餐＋蛋糕</span></a>
-<a href="#d4-umeda-25d">🧭 梅田步行導航<span>B1／1F／2F 三層</span></a>
-<a href="https://www.yakiniku-king.jp/shop/2394" rel="noopener" target="_blank">🔥 燒肉訂位<span>namBaHIPS｜19:30</span></a>
-<div class="quick-nav-card"><div class="quick-nav-head"><b class="quick-nav-title">🚇 飯店 → 梅田茶屋町</b><span class="quick-nav-sub">09:20 左右抵達</span></div><div class="quick-nav-actions"><a class="quick-nav-btn google" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.7078018%2C135.4982278&amp;travelmode=transit" rel="noopener" target="_blank">🗺️ Google Maps</a><a class="quick-nav-btn navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.7078018%2C%27lon%27%3A135.4982278%7D&amp;goal_name=Blue+Bottle+Coffee+Umeda+Chayamachi" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">🇯🇵 Japan Travel</a></div></div>
-<div class="quick-nav-card"><div class="quick-nav-head"><b class="quick-nav-title">🚇 梅田 → 晚餐</b><span class="quick-nav-sub">18:20 左右離開</span></div><div class="quick-nav-actions"><a class="quick-nav-btn google" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.7024579%2C135.4913958&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit" rel="noopener" target="_blank">🗺️ Google Maps</a><a class="quick-nav-btn navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.7024579%2C%27lon%27%3A135.4913958%7D&amp;start_name=34.7024579%2C135.4913958&amp;goal=%7B%27lat%27%3A34.6675993%2C%27lon%27%3A135.5006679%7D&amp;goal_name=34.6675993%2C135.5006679" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）">🇯🇵 Japan Travel</a></div></div>
+<a href="https://store.bluebottlecoffee.jp/pages/umeda-chayamachi" rel="noopener" target="_blank">☕ Blue Bottle<span>梅田茶屋町｜08:00</span></a>
+<a href="https://www.nintendo.com/jp/officialstore/index.html" rel="noopener" target="_blank">🌱 Nintendo OSAKA<span>大丸梅田 13F｜皮克敏優先</span></a>
+<a href="https://www.harbs.co.jp/shop_kansai/" rel="noopener" target="_blank">🍰 HARBS 大丸梅田<span>6F｜11:00 午餐＋蛋糕</span></a>
+<a href="https://store.alpen-group.jp/Form/RealShop/ShopDetail.aspx?rsid=5600" rel="noopener" target="_blank">👟 Alpen OSAKA<span>HOKA 第一輪</span></a>
+<a href="https://links-umeda.jp/" rel="noopener" target="_blank">🛍️ Yodobashi／LINKS<span>家電＋戶外＋HOKA 第二輪</span></a>
+<a href="https://www.yakiniku-king.jp/shop/2394" rel="noopener" target="_blank">🔥 燒肉訂位<span>namBaHIPS｜20:00</span></a>
+<div class="quick-nav-card"><div class="quick-nav-head"><b class="quick-nav-title">🚇 飯店 → Blue Bottle</b><span class="quick-nav-sub">07:30 左右出發</span></div><div class="quick-nav-actions"><a class="quick-nav-btn google" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=34.7078018%2C135.4982278&amp;travelmode=transit" rel="noopener" target="_blank">🗺️ Google Maps</a><a class="quick-nav-btn navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.7078018%2C%27lon%27%3A135.4982278%7D&amp;goal_name=Blue+Bottle+Coffee+Umeda+Chayamachi" rel="noopener" target="_blank">🇯🇵 Japan Travel</a></div></div>
+<div class="quick-nav-card"><div class="quick-nav-head"><b class="quick-nav-title">🚇 梅田 → 20:00 燒肉</b><span class="quick-nav-sub">19:10～19:15 左右離開較穩</span></div><div class="quick-nav-actions"><a class="quick-nav-btn google" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.7012797%2C135.4983196&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit" rel="noopener" target="_blank">🗺️ Google Maps</a><a class="quick-nav-btn navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.7012797%2C%27lon%27%3A135.4983196%7D&amp;start_name=%E9%98%AA%E7%A5%9E%E6%A2%85%E7%94%B0%E6%9C%AC%E5%BA%97&amp;goal=%7B%27lat%27%3A34.6675993%2C%27lon%27%3A135.5006679%7D&amp;goal_name=%E7%84%BC%E8%82%89%E3%81%8D%E3%82%93%E3%81%90+namBaHIPS" rel="noopener" target="_blank">🇯🇵 Japan Travel</a></div></div>
 </div>
 </section>
 <section class="trip-weather" id="weather-day4">
@@ -1781,62 +1848,94 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="grid">
 <div>
 <section class="card">
-<div class="head"><h2>第四天完整時間軸</h2><span class="pill">交通校正版</span></div>
+<div class="head"><h2>第四天完整時間軸</h2><span class="pill">皮克敏＋HOKA＋採買版</span></div>
 <div class="body">
-<div class="calib"><b>交通校正：</b>Day 4 不再跨區到池田；早上直接從心齋橋到梅田茶屋町。主線採「茶屋町 → 阪急／阪神 → 大丸 HARBS → LUCUA → Grand Front → Grand Green」，並保留約 1 小時彈性緩衝。</div>
-<div class="section">上午｜茶屋町 → 百貨</div>
+<div class="calib"><b>交通校正：</b>早上直接去梅田，不在心齋橋等 HOKA 專門店 11:00 開門。HOKA 先在 Alpen OSAKA 找，若尺寸／配色沒買到，下午在 Yodobashi／LINKS 的運動／戶外樓層再找。KITTE 維持彈性；20:00 難波燒肉固定，唐吉放晚餐後。</div>
+
+<div class="section">上午｜早餐 → 皮克敏 → HARBS</div>
 <div class="timeline">
-<div class="t"><div class="time">08:50</div><div><b>橋樑酒店 心齋橋出發</b><div class="muted">不用特別早起；搭御堂筋線到梅田後往茶屋町。以 09:20 左右抵達 Blue Bottle 周邊為目標。</div><div class="move">🚶 約 5–6 分 → 🚇 心齋橋→梅田約 7–8 分 → 🚶 茶屋町約 8–10 分</div></div></div>
-<div class="t" id="d4-1"><div class="time">09:30</div><div><b>① Blue Bottle Coffee 梅田茶屋町</b><div class="muted">先喝咖啡、找 HASAMI PORCELAIN MUG；不要坐太久，10:00 接同區扭蛋之森。</div><span class="stay">☕ 約 20–25 分</span><div class="actions"><a class="btn mini" href="https://store.bluebottlecoffee.jp/pages/umeda-chayamachi" rel="noopener" target="_blank">Blue Bottle 官方</a></div></div></div>
-<div class="t" id="d4-2"><div class="time">10:00</div><div><b>② ガチャガチャの森 梅田茶屋町店</b><div class="muted">開店就逛，讓小孩先完成扭蛋目標；與 Blue Bottle、Alpen 都在茶屋町步行群。</div><span class="stay">🎰 約 25 分</span></div></div>
-<div class="t" id="d4-3"><div class="time">10:30</div><div><b>③ Alpen OSAKA｜跑鞋＋戶外</b><div class="muted">不全棟掃店：優先 1F 跑鞋／運動鞋與 4F 戶外；HOKA、On、New Balance、ASICS 等以現場配置為準。</div><span class="stay">👟 約 40 分</span><div class="mall-floor-groups"><div class="mall-floor"><b><span class="floor-label">1F</span>跑鞋／運動鞋</b>有明確尺碼需求先在這層處理。</div><div class="mall-floor"><b><span class="floor-label">4F</span>戶外／登山</b>沒有需求就快速略過。</div></div><div class="actions"><a class="btn mini teal" href="https://store.alpen-group.jp/Form/RealShop/ShopDetail.aspx?rsid=5600" rel="noopener" target="_blank">Alpen 官方</a></div></div></div>
-<div class="t"><div class="time">11:15</div><div><b>A｜HEP FIVE｜想逛才插入</b><div class="muted">Disney／Sanrio／JUMP SHOP 等角色商品有興趣才進；最多抓 25–30 分。若不逛，直接去阪急，時間全部留給後面的 LUCUA。</div><span class="stay">🛍️ 彈性 0–30 分</span></div></div>
-<div class="t" id="d4-4"><div class="time">11:45</div><div><b>④ 阪急梅田本店｜美妝＋精品</b><div class="muted">美妝集中 2F：SUQQU、ADDICTION、THREE、YSL Beauty、SK-II、RMK；再視需求看精品。</div><span class="stay">🛍️ 約 35–40 分</span><div class="actions"><a class="btn mini" href="https://www.hankyu-dept.co.jp/honten/floor/index.html" rel="noopener" target="_blank">官方樓層／品牌</a></div></div></div>
-<div class="t" id="d4-5"><div class="time">12:25</div><div><b>⑤ 阪神梅田本店｜伴手禮集中補貨</b><div class="muted">B1 食品館一次處理 BRULEE MERIZE、菓匠三全、SALTRA、551、Club Harie 等，不要晚上再繞回來。</div><span class="stay">🛍️ 約 30 分</span><div class="mallshops"><b>照片購物目標：</b><div class="malltags"><span class="malltag">BRULEE MERIZE Merchee</span><span class="malltag">菓匠三全</span><span class="malltag">SALTRA</span><span class="malltag">551蓬萊</span><span class="malltag">Club Harie</span></div></div></div></div>
-<div class="t" id="d4-6"><div class="time">13:00</div><div><b>⑥ HARBS 大丸梅田店 6F｜午餐＋蛋糕</b><div class="muted">正式排入主線，不再只是彈性甜點。這間可吃義大利麵，也可只點蛋糕＋飲料；現場依排隊狀況控制時間。若等候超過約 20–25 分鐘，改外帶蛋糕或縮短用餐，避免壓到 LUCUA。</div><div class="move">🚶 阪神→大阪站／大丸約 5–8 分 → ⬆ 6F</div><span class="stay">🍝🍰 約 60 分</span><div class="actions"><a class="btn mini teal" href="https://www.harbs.co.jp/shop_kansai/" rel="noopener" target="_blank">HARBS 官方</a><a class="btn mini" href="https://www.google.com/maps/search/?api=1&amp;query=HARBS%20%E5%A4%A7%E4%B8%B8%E6%A2%85%E7%94%B0%E5%BA%97" target="_blank">Google Maps</a></div></div></div>
+<div class="t"><div class="time">07:30</div><div><b>橋樑酒店 心齋橋出發 → 梅田</b><div class="muted">御堂筋線直上梅田，再步行到茶屋町；不先去心齋橋 HOKA。</div><div class="move">🚶 飯店→心齋橋站 → 🚇 心齋橋→梅田 → 🚶 Blue Bottle</div></div></div>
+
+<div class="t" id="d4-1"><div class="time">08:00–08:50</div><div><b>① Blue Bottle Coffee 梅田茶屋町｜早餐</b><div class="muted">早餐＋咖啡；HASAMI PORCELAIN MUG 有看到再買。08:50 左右離開，往大阪站／大丸方向。</div><span class="stay">☕ 約 45–50 分</span><div class="actions"><a class="btn mini teal" href="https://store.bluebottlecoffee.jp/pages/umeda-chayamachi" rel="noopener" target="_blank">官方</a></div></div></div>
+
+<div class="t" id="d4-2"><div class="time">09:15–10:50</div><div><b>② Nintendo OSAKA｜皮克敏最優先</b><div class="muted">先到大丸梅田／大阪站南側確認假日整理券。若需要整理券，開店前依官方現場指示辦理；10:00 後通常在 13F 店前確認。進店後先找 PIKMIN 商品，再看 Pokémon／Nintendo 其他商品。</div><div class="move">🚶 Blue Bottle → 大阪站／大丸約 12–15 分</div><span class="stay">🌱 皮克敏優先；整理券時段若較晚就先去後面行程再回來</span><div class="actions"><a class="btn mini teal" href="https://www.nintendo.com/jp/officialstore/index.html" rel="noopener" target="_blank">Nintendo 官方</a><a class="btn mini" href="https://www.google.com/maps/search/?api=1&amp;query=Nintendo%20OSAKA" target="_blank">Google Maps</a></div></div></div>
+
+<div class="t" id="d4-3"><div class="time">11:00–12:05</div><div><b>③ HARBS 大丸梅田店 6F｜午餐＋蛋糕</b><div class="muted">Nintendo 與 HARBS 都在大丸梅田，可直接館內上下樓。11:00 開店就吃，避開原本 13:00 才吃造成下午行程被壓縮。</div><span class="stay">🍝🍰 約 60–65 分</span><div class="actions"><a class="btn mini teal" href="https://www.harbs.co.jp/shop_kansai/" rel="noopener" target="_blank">HARBS 官方</a></div></div></div>
 </div>
-<div class="section">下午｜大阪站 → 北側</div>
+
+<div class="section">中午～下午｜扭蛋 → HOKA → 大阪站購物</div>
 <div class="timeline">
-<div class="t" id="d4-7"><div class="time">14:10</div><div><b>⑦ LUCUA Osaka＋LUCUA 1100＋LUCUA SOUTH</b><div class="muted">Day 4 最大購物核心；現在抓約 1 小時 35 分，比舊版 75 分更寬鬆。</div><div class="move">🚶 大丸／大阪站→LUCUA：約 3–5 分</div><span class="stay">🛍️ 約 95 分</span><div class="mall-floor-groups"><div class="mall-floor"><b><span class="floor-label">LUCUA 2F</span>服飾</b>lululemon・FRAY I.D・Mila Owen</div><div class="mall-floor"><b><span class="floor-label">LUCUA 3F</span>潮流</b>BEAMS</div><div class="mall-floor"><b><span class="floor-label">1100 3F</span>⭐ 優先層</b>@cosme OSAKA・Barbour・TEN.</div><div class="mall-floor"><b><span class="floor-label">LUCUA 8F</span>⭐ 必逛</b>MUJI 無印良品＋3COINS+plus</div><div class="mall-floor"><b><span class="floor-label">LUCUA 9F</span>文具</b>LOFT</div><div class="mall-floor"><b><span class="floor-label">SOUTH 13F</span>親子角色店</b>Nintendo OSAKA・Pokémon Center・CAPCOM・Tomica / Plarail・ONE PIECE</div></div><div class="route-choice"><b>⬆ 建議順序：</b>2F → 3F → 1100 3F → 8F → 9F → SOUTH 13F。5F／6F 仍是時間充裕再插入。</div><div class="actions"><a class="btn mini" href="https://www.lucua.jp/zh/shopguide/id1121_zh.html" rel="noopener" target="_blank">3COINS+plus 官方</a><a class="btn mini" href="https://www.lucua.jp/shopguide/shop.html" rel="noopener" target="_blank">LUCUA 店家</a></div></div></div>
-<div class="t" id="d4-8"><div class="time">15:50</div><div><b>⑧ GRAND FRONT OSAKA｜戶外＋文具</b><div class="muted">ARC'TERYX、THE NORTH FACE+、New Balance、GREGORY；南館 6F 可順逛紀伊國屋＋伊東屋。</div><span class="stay">🛍️ 約 55 分</span><div class="actions"><a class="btn mini" href="https://www.gfo-sc.jp/shop/list/" rel="noopener" target="_blank">官方店家目錄</a></div></div></div>
-<div class="t" id="d4-9"><div class="time">16:50</div><div><b>⑨ GRAND GREEN OSAKA｜短散步</b><div class="muted">抓 20–25 分放鬆；如果 HARBS／LUCUA 超時，這站仍是第一個刪除。</div><span class="stay">🌳 約 20–25 分</span></div></div>
-<div class="t"><div class="time">17:20–18:15</div><div><b>梅田彈性補買／緩衝</b><div class="muted">可依需求插入 B｜KITTE、C｜Yodobashi／LINKS、D｜WeLoveDonut、E｜唐吉訶德；也可以完全不加，留作迷路、排隊、休息與退稅緩衝。</div><span class="stay">🧭 約 55 分彈性</span></div></div>
+<div class="t" id="d4-4"><div class="time">12:15–12:50</div><div><b>④ ガチャガチャの森 梅田茶屋町店｜扭蛋</b><div class="muted">約 2,400 台。皮克敏扭蛋有看到就先轉；實際款式以現場為準。</div><span class="stay">🎰 約 30–35 分</span><div class="actions"><a class="btn mini" href="https://www.gachagachanomori.com/shoplist/" rel="noopener" target="_blank">官方店舖</a></div></div></div>
+
+<div class="t" id="d4-5"><div class="time">12:55–13:45</div><div><b>⑤ Alpen OSAKA｜HOKA 第一輪＋戶外</b><div class="muted">先看 HOKA，再看 On／New Balance／ASICS 等。不要全棟掃店；有目標型號、尺寸、配色就先問店員最快。</div><span class="stay">👟 約 45–50 分</span><div class="actions"><a class="btn mini teal" href="https://store.alpen-group.jp/Form/RealShop/ShopDetail.aspx?rsid=5600" rel="noopener" target="_blank">Alpen 官方</a></div></div></div>
+
+<div class="t" id="d4-6"><div class="time">13:50–14:25</div><div><b>⑥ 阪急梅田本店｜美妝＋精品</b><div class="muted">SUQQU、ADDICTION、THREE、YSL Beauty、SK-II、RMK 等照需求快速處理。</div><span class="stay">🛍️ 約 35 分</span><div class="actions"><a class="btn mini" href="https://www.hankyu-dept.co.jp/honten/floor/index.html" rel="noopener" target="_blank">官方樓層</a></div></div></div>
+
+<div class="t" id="d4-7"><div class="time">14:30–15:30</div><div><b>⑦ LUCUA Osaka＋LUCUA 1100｜TEN.／MUJI／LOFT</b><div class="muted">Nintendo 已經上午完成，所以這段專心逛原本指定店家，不再為 13F 角色店繞樓。</div><div class="mall-floor-groups"><div class="mall-floor"><b><span class="floor-label">LUCUA 2F</span>服飾</b>lululemon・FRAY I.D・Mila Owen</div><div class="mall-floor"><b><span class="floor-label">LUCUA 3F</span>潮流</b>BEAMS</div><div class="mall-floor"><b><span class="floor-label">1100 3F</span>⭐ 優先</b>@cosme OSAKA・Barbour・TEN.</div><div class="mall-floor"><b><span class="floor-label">8F</span>⭐ 必逛</b>MUJI＋3COINS+plus</div><div class="mall-floor"><b><span class="floor-label">9F</span>文具</b>LOFT</div></div><span class="stay">🛍️ 約 60 分</span></div></div>
+
+<div class="t" id="d4-8"><div class="time">15:35–16:30</div><div><b>⑧ Yodobashi Camera／LINKS UMEDA｜正式加入主線</b><div class="muted">Yodobashi 看家電／玩具；LINKS 依需求看 UNIQLO、GU、NITORI。若 Alpen 沒買到合適 HOKA，這裡再到石井スポーツ／Art Sports 找第二輪，現場庫存為準。</div><div class="mall-floor-groups"><div class="mall-floor"><b><span class="floor-label">Yodobashi</span>家電／玩具</b>相機、3C、玩具、遊戲等</div><div class="mall-floor"><b><span class="floor-label">LINKS</span>服飾／生活</b>UNIQLO・GU・NITORI</div><div class="mall-floor"><b><span class="floor-label">運動／戶外</span>HOKA 第二輪</b>石井スポーツ／Art Sports，品項以現場為準</div></div><span class="stay">🛍️ 約 55 分</span><div class="actions"><a class="btn mini teal" href="https://www.yodobashi.com/ec/store/0081/" rel="noopener" target="_blank">Yodobashi 官方</a><a class="btn mini" href="https://links-umeda.jp/" rel="noopener" target="_blank">LINKS 官方</a></div></div></div>
+
+<div class="t" id="d4-9"><div class="time">16:35–17:20</div><div><b>⑨ GRAND FRONT OSAKA｜戶外＋文具</b><div class="muted">ARC'TERYX、THE NORTH FACE+、New Balance、GREGORY；南館 6F 可看紀伊國屋＋伊東屋。</div><span class="stay">🛍️ 約 45 分</span><div class="actions"><a class="btn mini" href="https://www.gfo-sc.jp/shop/list/" rel="noopener" target="_blank">官方店家目錄</a></div></div></div>
+
+<div class="t"><div class="time">17:25–17:50</div><div><b>A｜KITTE 大阪｜有時間才去</b><div class="muted">維持彈性，不綁死。前面任一站超時就直接略過 KITTE，把時間留給伴手禮與 20:00 晚餐。</div><span class="stay">🧭 彈性 0–25 分</span><div class="actions"><a class="btn mini" href="https://osaka.jp-kitte.jp/shop/index.jsp" rel="noopener" target="_blank">KITTE 店家目錄</a></div></div></div>
+
+<div class="t" id="d4-10"><div class="time">17:55–18:35</div><div><b>⑩ 阪神梅田本店 B1｜伴手禮集中購買</b><div class="muted">把需要帶回台灣的伴手禮集中在最後買，不用整天提著。BRULEE MERIZE、菓匠三全、551、Club Harie 等以當日櫃位與庫存為準。</div><span class="stay">🎁 約 40 分</span></div></div>
+
+<div class="t"><div class="time">18:35–19:10</div><div><b>梅田最後緩衝｜退稅／漏買／休息</b><div class="muted">KITTE 若跳過，這段會更寬鬆。19:10～19:15 左右離開梅田，前往難波。</div><span class="stay">🧭 約 35 分緩衝</span></div></div>
 </div>
-<div class="umeda-nav25d" id="d4-umeda-25d">
-<div class="umeda-nav25d-head"><h3>🧭 梅田分層步行導航｜B1／1F／2F</h3><p>梅田最容易迷路的是走錯樓層。這裡保留原本三層導航，但把池田拿掉，並加入 HARBS 大丸梅田這個固定垂直移動點。</p></div>
-<div class="umeda-layer level2"><div class="umeda-level">2F 空橋<small>跨站最直覺</small></div><div class="umeda-nodes"><span class="umeda-node main">大阪站／LUCUA</span><span class="umeda-arrow">↔</span><span class="umeda-node main">Grand Front</span><span class="umeda-arrow">↔</span><span class="umeda-node optional">Yodobashi／LINKS</span></div></div>
-<div class="umeda-layer level1"><div class="umeda-level">1F 地面<small>茶屋町主線</small></div><div class="umeda-nodes"><span class="umeda-node main">Blue Bottle</span><span class="umeda-arrow">→</span><span class="umeda-node main">扭蛋</span><span class="umeda-arrow">→</span><span class="umeda-node main">Alpen</span><span class="umeda-arrow">→</span><span class="umeda-node optional">HEP FIVE</span><span class="umeda-arrow">→</span><span class="umeda-node main">阪急</span></div></div>
-<div class="umeda-layer levelb1"><div class="umeda-level">B1 地下<small>百貨／大阪站核心</small></div><div class="umeda-nodes"><span class="umeda-node main">阪急 B1</span><span class="umeda-arrow">→</span><span class="umeda-node main">阪神 B1</span><span class="umeda-arrow">→</span><span class="umeda-node main">大阪站／大丸</span><span class="umeda-arrow">↑ 6F HARBS</span><span class="umeda-arrow">→</span><span class="umeda-node main">LUCUA</span></div></div>
-<div class="umeda-nav25d-note">📌 原則：茶屋町走 1F；阪急→阪神→大阪站可用 B1；HARBS 在大丸 6F 吃完後回大阪站核心，再往 LUCUA；LUCUA→Grand Front 優先走 2F 空橋。</div>
+
+<div class="umeda-nav25d" id="d4-umeda-guide">
+<div class="umeda-nav25d-head"><h3>🧭 梅田樓層捷徑｜B1／1F／2F</h3><p>不做 2.5D／3D 模擬，只保留實用的樓層選擇：茶屋町用地面走，大阪站周邊用 B1 或 2F 空橋最省繞路。</p></div>
+<div class="umeda-layer level2"><div class="umeda-level">2F 空橋<small>大阪站北側</small></div><div class="umeda-nodes"><span class="umeda-node main">LUCUA</span><span class="umeda-arrow">↔</span><span class="umeda-node main">Yodobashi／LINKS</span><span class="umeda-arrow">↔</span><span class="umeda-node main">Grand Front</span></div></div>
+<div class="umeda-layer level1"><div class="umeda-level">1F 地面<small>茶屋町</small></div><div class="umeda-nodes"><span class="umeda-node main">Blue Bottle</span><span class="umeda-arrow">↔</span><span class="umeda-node main">扭蛋</span><span class="umeda-arrow">↔</span><span class="umeda-node main">Alpen</span></div></div>
+<div class="umeda-layer levelb1"><div class="umeda-level">B1 地下<small>大阪站／百貨</small></div><div class="umeda-nodes"><span class="umeda-node main">阪急</span><span class="umeda-arrow">↔</span><span class="umeda-node main">阪神</span><span class="umeda-arrow">↔</span><span class="umeda-node main">大阪站／大丸</span><span class="umeda-arrow">↔</span><span class="umeda-node main">LUCUA</span></div></div>
+<div class="umeda-nav25d-note">📌 Nintendo／HARBS 同棟大丸梅田；LUCUA → LINKS → Grand Front 可優先走大阪站北側連通區。KITTE 在大阪站西側，只有時間足夠才插入。</div>
 </div>
-<div class="umeda-clusters"><div class="umeda-cluster"><b>A｜茶屋町</b><p>Blue Bottle → 扭蛋 → Alpen →（彈性）HEP</p><div class="cluster-route">1F 地面一次走完</div></div><div class="umeda-cluster"><b>B｜百貨／大阪站核心</b><p>阪急 → 阪神 → HARBS 大丸6F → LUCUA</p><div class="cluster-route">B1＋館內垂直移動</div></div><div class="umeda-cluster"><b>C｜大阪站北側</b><p>Grand Front → GRAND GREEN；Yodobashi／LINKS 只在有需求時插入</p><div class="cluster-route">2F 空橋優先</div></div></div>
-<div class="section">晚上｜難波</div>
+
+<div class="section">晚上｜難波燒肉 → 唐吉</div>
 <div class="timeline">
-<div class="t"><div class="time">18:20</div><div><b>梅田離開 → 難波</b><div class="muted">不管前面是否插入彈性店，18:35 視為最後建議離開梅田時間，保留找出口與國定假日晚間人潮。</div><div class="move">🚶 到梅田站約 8–10 分 → 🚇 御堂筋線梅田→難波約 9 分 → 🚶 namBa HIPS 約 5 分</div></div></div>
-<div class="t" id="d4-10"><div class="time">19:30</div><div><b>焼肉きんぐ namBaHIPS店｜晚餐</b><div class="muted">⚠️ 固定主行程；建議事先完成優先案內預約。店舖位於 namBa HIPS 7F。</div><div class="actions"><a class="btn mini teal" href="https://www.yakiniku-king.jp/shop/2394" rel="noopener" target="_blank">🔥 官方訂位</a><a class="btn mini" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%84%BC%E8%82%89%E3%81%8D%E3%82%93%E3%81%90%20namBaHIPS%E5%BA%97" target="_blank">Google Maps</a></div></div></div>
-<div class="t"><div class="time">21:10</div><div><b>回橋樑酒店 心齋橋</b><div class="muted">Day 5 要退房，今晚不再追加遠距離行程。</div></div></div>
+<div class="t"><div class="time">19:10–19:15</div><div><b>梅田離開 → 難波</b><div class="move">🚇 御堂筋線 梅田→難波約 9 分＋步行；預留假日人潮、找出口與等車時間</div></div></div>
+
+<div class="t" id="d4-11"><div class="time">20:00</div><div><b>⑪ 焼肉きんぐ namBaHIPS店｜原本那間燒肉</b><div class="muted">晚餐改成 20:00。店舖位於 namBa HIPS 7F；建議仍依你原本訂位／優先案內安排。</div><span class="stay">🔥 約 90–100 分</span><div class="actions"><a class="btn mini teal" href="https://www.yakiniku-king.jp/shop/2394" rel="noopener" target="_blank">官方店舖／訂位</a><a class="btn mini" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%84%BC%E8%82%89%E3%81%8D%E3%82%93%E3%81%90%20namBaHIPS%E5%BA%97" target="_blank">Google Maps</a></div></div></div>
+
+<div class="t" id="d4-12"><div class="time">約21:40</div><div><b>⑫ 唐吉訶德 道頓堀御堂筋店｜晚餐後採買</b><div class="muted">唐吉改到難波燒肉後再逛，不占白天梅田購物時間。藥妝、零食、日用品最後集中補貨。</div><span class="stay">🛒 約 30–45 分；累了就縮短</span><div class="actions"><a class="btn mini teal" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%89%E3%83%B3%E3%83%BB%E3%82%AD%E3%83%9B%E3%83%BC%E3%83%86%E9%81%93%E9%A0%93%E5%A0%80%E5%BE%A1%E5%A0%82%E7%AD%8B%E5%BA%97" target="_blank">Google Maps</a></div></div></div>
+
+<div class="t"><div class="time">22:20 左右</div><div><b>步行回橋樑酒店 心齋橋</b><div class="muted">唐吉就在飯店／心齋橋方向，不再安排其他遠距離行程。</div></div></div>
 </div>
-<div class="note"><b>Day 4 新版原則：</b>池田移到 Day 2；HARBS 大丸梅田正式進主線。優先守住 Alpen、阪急／阪神、HARBS、LUCUA、Grand Front 與 19:30 燒肉；延誤時先刪 GRAND GREEN，再刪 A～E 彈性分支。</div>
+
+<div class="note"><b>Day 4 新原則：</b>皮克敏、HARBS、Alpen HOKA、LUCUA、Yodobashi／LINKS、Grand Front、伴手禮、20:00 燒肉為核心。KITTE 維持「有時間再去」；若 Nintendo 整理券指定較晚時段，就把扭蛋／Alpen 前移，按整理券時間回大丸即可。</div>
 </div>
 </section>
+
 <section class="card" style="margin-top:18px">
-<div class="head"><h2>Day 4｜A～E 彈性／順路選擇</h2><span class="pill">17:20 後優先使用</span></div>
+<div class="head"><h2>Day 4｜彈性／順路選擇</h2><span class="pill">不影響主線</span></div>
 <div class="body">
-<div class="trip-alert"><b>怎麼用：</b>HARBS 已升為主線，不在彈性清單。A｜HEP 可以在 11:15 插入；B～E 建議留到 17:20 後的緩衝時段。若主線超時，全部都可以不去。</div>
+<div class="trip-alert"><b>怎麼用：</b>Yodobashi／LINKS 已升為正式主線；唐吉改成難波燒肉後。KITTE 仍是第一個可刪點。</div>
 <div class="option-grid">
-<article class="option-card" id="d4-a"><div class="option-title"><span class="opt-letter">A</span><div><b>HEP FIVE｜角色商品分支</b><div class="muted">Alpen 後想逛角色商品才進去；最多抓 25–30 分。Disney Store、Sanrio、蠟筆小新、JUMP SHOP 等依當日店家為準。</div></div></div><div class="actions"><a class="btn mini" href="https://www.hepfive.jp/tw/shop_list" rel="noopener" target="_blank">HEP 官方店家</a></div></article>
-<article class="option-card" id="d4-b"><div class="option-title"><span class="opt-letter">B</span><div><b>KITTE 大阪</b><div class="muted">LUCUA 後或 17:20 緩衝時段有時間再去；吉伊卡哇麵包不當保證目標。</div></div></div><div class="actions"><a class="btn mini" href="https://osaka.jp-kitte.jp/shop/index.jsp" rel="noopener" target="_blank">官方店家目錄</a></div></article>
-<article class="option-card" id="d4-c"><div class="option-title"><span class="opt-letter">C</span><div><b>Yodobashi／LINKS UMEDA</b><div class="muted">家電、UNIQLO、GU、NITORI、戶外用品有明確採買需求才進；與大阪站／Grand Front 2F 連通。</div></div></div><div class="actions"><a class="btn mini" href="https://links-umeda.jp/" rel="noopener" target="_blank">LINKS 官方</a></div></article>
-<article class="option-card" id="d4-d"><div class="option-title"><span class="opt-letter">D</span><div><b>WeLoveDonut × TAKAGI COFFEE</b><div class="muted">HARBS 已吃過甜點，除非真的還想吃甜甜圈，不然這站直接略過。</div></div></div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/search/?api=1&amp;query=WeLoveDonut%20TAKAGI%20COFFEE%20%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%86%E3%82%A3%E3%81%86%E3%82%81%E3%81%A0%E5%BA%97" target="_blank">Google Maps</a></div></article>
-<article class="option-card" id="d4-e"><div class="option-title"><span class="opt-letter">E</span><div><b>唐吉訶德 梅田本店</b><div class="muted">三麗鷗、零食、雜貨補貨用；Day 1 已有道頓堀唐吉訶德，所以時間不夠就不要重複逛。</div></div></div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%94%90%E5%90%89%E8%A8%B6%E5%BE%B7%20%E6%A2%85%E7%94%B0%E6%9C%AC%E5%BA%97" target="_blank">Google Maps</a></div></article>
-</div></div></section>
+<article class="option-card" id="d4-a"><div class="option-title"><span class="opt-letter">A</span><div><b>KITTE 大阪</b><div class="muted">17:25 左右有時間再去；前面購物或 Nintendo 整理券延誤就直接略過。</div></div></div><div class="actions"><a class="btn mini" href="https://osaka.jp-kitte.jp/shop/index.jsp" rel="noopener" target="_blank">官方店家目錄</a></div></article>
+<article class="option-card" id="d4-b"><div class="option-title"><span class="opt-letter">B</span><div><b>HEP FIVE｜角色商品</b><div class="muted">只有真的還想看 Disney／Sanrio／JUMP SHOP 等角色店才插入，不另外預留固定時間。</div></div></div><div class="actions"><a class="btn mini" href="https://www.hepfive.jp/tw/shop_list" rel="noopener" target="_blank">HEP 官方</a></div></article>
+<article class="option-card" id="d4-c"><div class="option-title"><span class="opt-letter">C</span><div><b>WeLoveDonut × TAKAGI COFFEE</b><div class="muted">HARBS 已排午餐＋蛋糕；只有還想吃甜甜圈時才順路加。</div></div></div><div class="actions"><a class="btn mini" href="https://www.google.com/maps/search/?api=1&amp;query=WeLoveDonut%20TAKAGI%20COFFEE%20%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%86%E3%82%A3%E3%81%86%E3%82%81%E3%81%A0%E5%BA%97" target="_blank">Google Maps</a></div></article>
+</div></div>
+</section>
 </div>
-<section class="card mapcard">
-<div class="head"><h2>Day 4｜梅田・難波地圖</h2><span class="pill">主線＋A～E</span></div>
+
+<section class="card mapcard modern-map">
+<div class="head"><h2>Day 4｜梅田 → 難波地圖</h2><span class="pill">地圖＋地點清單</span></div>
 <div id="map4"></div>
-<div class="tools"><button class="btn soft locate-btn" id="locate4" type="button">📍 我的位置</button><button class="btn soft" id="fit4" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.7078018%2C135.4982278&amp;destination=34.701789%2C135.4965763&amp;travelmode=walking&amp;waypoints=34.7079533%2C135.4993874%7C34.705200%2C135.499460%7C34.7028186%2C135.4985323%7C34.7012797%2C135.4983196" target="_blank">上午 → HARBS</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.701789%2C135.4965763&amp;destination=34.7024579%2C135.4913958&amp;travelmode=walking&amp;waypoints=34.7028866%2C135.4953236%7C34.7038664%2C135.4949205" target="_blank">HARBS → 北側</a><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.7024579%2C135.4913958&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit" target="_blank">梅田 → 晚餐</a></div>
-<div class="coffee-legend"><span><i class="bb">B</i>Blue Bottle</span><span><i class="tea">T</i>珍珠奶茶</span><span>Blue Bottle 已是主線①，不另疊咖啡 Marker；THE ALLEY 仍只作順路飲料備選</span></div>
-<div class="location-note">📍 Day 4 已移除池田，地圖會集中在梅田＋難波；定位後「顯示全部」可回到整日全景。</div><div class="legend"><b>新版地圖：</b>① Blue Bottle → ②扭蛋 → ③Alpen → ④阪急 → ⑤阪神 → ⑥HARBS 大丸梅田 → ⑦LUCUA → ⑧Grand Front → ⑨Grand Green → ⑩燒肉；灰色 A～E 為彈性點。</div>
+<div class="map-place-hint">👇 地圖預設先放大梅田。點地點卡可直接聚焦；需要看難波晚餐／唐吉再按「顯示全部」。</div>
+<div class="map-place-list" id="mapList4" aria-label="Day 4 地點清單"></div>
+<div class="tools">
+<button class="btn soft locate-btn" id="locate4" type="button">📍 我的位置</button>
+<button class="btn soft" id="fit4umeda" type="button">梅田區</button>
+<button class="btn soft" id="fit4" type="button">顯示全部</button>
+<a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.7078018%2C135.4982278&amp;destination=34.705200%2C135.4994600&amp;travelmode=walking&amp;waypoints=34.701789%2C135.4965763%7C34.7079533%2C135.4993874" target="_blank">上午主線</a>
+<a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.705200%2C135.4994600&amp;destination=34.7012797%2C135.4983196&amp;travelmode=walking&amp;waypoints=34.7028186%2C135.4985323%7C34.7028866%2C135.4953236%7C34.704704%2C135.4965441%7C34.7038664%2C135.4949205" target="_blank">下午主線</a>
+<a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.7012797%2C135.4983196&amp;destination=34.6675993%2C135.5006679&amp;travelmode=transit" target="_blank">梅田 → 20:00 燒肉</a>
+<a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.6675993%2C135.5006679&amp;destination=34.6692391%2C135.4999246&amp;travelmode=walking" target="_blank">燒肉 → 唐吉</a>
+</div>
+<div class="coffee-legend"><span><i class="bb">B</i>Blue Bottle</span><span><i class="tea">T</i>THE ALLEY 備選</span><span>大丸梅田同棟的 Nintendo 13F＋HARBS 6F 合併成「2/3」地圖 Marker，避免重疊。</span></div>
+<div class="location-note">📍 新版地圖顯示：主線用編號、彈性點用灰色字母；下方地點卡可以直接聚焦位置。Day 4 預設看梅田，避免被難波晚餐拉遠造成梅田店家擠在一起。</div>
+<div class="legend"><b>主線：</b>① Blue Bottle → ② Nintendo OSAKA → ③ HARBS → ④扭蛋 → ⑤Alpen → ⑥阪急 → ⑦LUCUA → ⑧Yodobashi／LINKS → ⑨Grand Front → ⑩阪神 B1伴手禮 → ⑪20:00燒肉 → ⑫唐吉。A｜KITTE 為有時間才去。</div>
 </section>
 </main>
 </div>
@@ -1936,15 +2035,15 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 </div>
 <section class="card mapcard">
-<div class="head"><h2>Day 5｜天王寺・阿倍野 → 臨空 → KIX</h2><span class="pill">主線＋E</span></div>
-<div id="map5"></div>
+<div class="head"><h2>Day 5｜天王寺・阿倍野 → 臨空 → KIX</h2><span class="pill">地圖＋地點清單</span></div>
+<div id="map5"></div><div class="map-place-hint">👇 點下方地點卡可直接查看天王寺、臨空或機場。</div><div class="map-place-list" id="mapList5" aria-label="Day 5 地點清單"></div>
 <div class="tools"><button class="btn soft locate-btn" id="locate5" type="button">📍 我的位置</button><button class="btn soft" id="fit5" type="button">顯示全部</button><a class="btn teal" href="https://www.google.com/maps/dir/?api=1&amp;origin=34.673856%2C135.498128&amp;destination=Kansai%20International%20Airport%20Terminal%201&amp;travelmode=transit&amp;waypoints=34.6448982%2C135.5116009%7C34.646337%2C135.513389%7C34.646629%2C135.513131%7C34.4107338%2C135.2996108" target="_blank">開啟 Day 5 路線</a><a class="btn teal navitime-link" href="https://japantravel.navitime.com/zh-tw/area/jp/route?start=%7B%27lat%27%3A34.6738560%2C%27lon%27%3A135.4981280%7D&amp;start_name=34.673856%2C135.498128&amp;goal=%7B%27lat%27%3A34.4343600%2C%27lon%27%3A135.2449500%7D&amp;goal_name=%E9%97%9C%E8%A5%BF%E5%9C%8B%E9%9A%9B%E6%A9%9F%E5%A0%B4+%E7%AC%AC1%E8%88%AA%E5%BB%88" rel="noopener" target="_blank" title="Japan Travel by NAVITIME（繁體中文）；此按鈕帶入起終點，多站順序請以 Google Maps 為準">Japan Travel 起終點</a></div>
 <div class="coffee-legend"><span><i class="sb">S</i>Starbucks</span><span><i class="tea">T</i>珍珠奶茶</span><span>Day 5 的 Starbucks 與 Gong cha 都在主行程商場內：Gong cha あべのキューズモール B1F 已併入①，不另疊 Marker</span></div>
 <div class="location-note">📍 Day 5 跨天王寺、臨空、KIX 範圍很大；定位會直接拉到你目前的位置，再按「顯示全部」即可回到整日全景。</div><div class="legend"><b>行李＋午餐策略：</b>抵達天王寺先把大行李寄在天王寺站／MIO 一帶，空手走 Q's Mall；11:00 在 Q's Mall 4F 吃大起水產壽司，再走 Harukas → MIO → 取行李 → 臨空。大起水產與① Q's Mall 同棟，不另外疊 Marker；E｜HARBS 與② Harukas 同棟。最後一段一定保留機場緩衝。</div>
 </section>
 </main>
 </div>
-<div class="foot">Prototype v72｜Day 2 晚餐後加入 LIFE 西大橋店；唐吉訶德道頓堀御堂筋店僅地圖標示位置｜Day 3 去程改 Uber／計程車直達 USJ、06:20–06:30 排隊、回程維持電車｜Day 1 Bic Camera 改難波大型店並重排南下動線｜Day 1 店家更新：Onitsuka Tiger 改難波大型店、UNIQLO 改なんばCITY大型店並重排南下動線｜Day 2 改為池田杯麵博物館＋奈良；Day 4 改為梅田整日購物＋HARBS 大丸梅田主線午餐；保留 Alpen、阪急／阪神、LUCUA、Grand Front 與分層導航｜Day 1～5 OpenStreetMap GPS 定位｜JMA 天氣無縫切換＋3 小時時系列＋當天 1 小時實測雨量｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
+<div class="foot">Prototype v73｜Day 4 改為 08:00 Blue Bottle → Nintendo皮克敏 → 11:00 HARBS → 扭蛋 → Alpen HOKA → LUCUA → Yodobashi/LINKS → Grand Front → 伴手禮 → 20:00燒肉 → 唐吉；KITTE維持彈性｜全站地圖改為地圖＋可點地點卡顯示｜Day 2 晚餐後加入 LIFE 西大橋店；唐吉訶德道頓堀御堂筋店僅地圖標示位置｜Day 3 去程改 Uber／計程車直達 USJ、06:20–06:30 排隊、回程維持電車｜Day 1 Bic Camera 改難波大型店並重排南下動線｜Day 1 店家更新：Onitsuka Tiger 改難波大型店、UNIQLO 改なんばCITY大型店並重排南下動線｜Day 2 改為池田杯麵博物館＋奈良；Day 4 改為梅田整日購物＋HARBS 大丸梅田主線午餐；保留 Alpen、阪急／阪神、LUCUA、Grand Front 與分層導航｜Day 1～5 OpenStreetMap GPS 定位｜JMA 天氣無縫切換＋3 小時時系列＋當天 1 小時實測雨量｜保留 Day 3 v58 兒童適合度四級制｜JMA 日本氣象廳官方天氣＋Google Maps＋Japan Travel by NAVITIME｜五天交通校正版。</div>
 </div>
 <div class="d3-video-modal" hidden="" id="d3VideoModal">
 <div class="d3-video-backdrop" data-d3-video-close=""></div>
@@ -2063,6 +2162,50 @@ function setupLocateButton(targetMap, buttonId){
   });
 }
 
+
+function setupMapPlaceList(listId,targetMap,items,options={}){
+  const host=document.getElementById(listId);
+  if(!host||!targetMap||!Array.isArray(items)) return;
+  host.innerHTML='';
+  items.forEach((item,idx)=>{
+    if(!Number.isFinite(item.lat)||!Number.isFinite(item.lng)) return;
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='map-place-card'+(item.optional?' optional':'')+(item.special?' special':'');
+    const label=String(item.n ?? item.code ?? (idx+1));
+    const meta=[item.time||item.hours||'',item.tag||item.note||''].filter(Boolean).join('｜');
+    btn.innerHTML='<span class="map-place-num">'+label+'</span><span class="map-place-copy"><b>'+item.name+'</b><span class="map-place-meta">'+meta+'</span></span>';
+    btn.addEventListener('click',()=>{
+      const zoom=Number.isFinite(item.zoom)?item.zoom:(options.zoom||17);
+      targetMap.setView([item.lat,item.lng],zoom,{animate:true});
+      L.popup({closeButton:true,autoPan:true})
+        .setLatLng([item.lat,item.lng])
+        .setContent('<b>'+label+'. '+item.name+'</b>'+(meta?'<br>'+meta:''))
+        .openOn(targetMap);
+    });
+    host.appendChild(btn);
+  });
+}
+
+function setupUsjSchematicList(){
+  const host=document.getElementById('usjMapList');
+  const wrap=document.getElementById('usjMapWrap');
+  if(!host||!wrap) return;
+  const pins=[...wrap.querySelectorAll('.usj-pin:not(.alt):not(.food)')];
+  pins.forEach(pin=>{
+    const title=(pin.getAttribute('title')||'').trim();
+    if(!title) return;
+    const firstSpace=title.indexOf(' ');
+    const label=firstSpace>0?title.slice(0,firstSpace):pin.textContent.trim();
+    const name=firstSpace>0?title.slice(firstSpace+1):title;
+    const a=document.createElement('a');
+    a.className='map-place-card';
+    a.href=pin.getAttribute('href')||'#';
+    a.innerHTML='<span class="map-place-num">'+label.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g,'')+'</span><span class="map-place-copy"><b>'+name+'</b><span class="map-place-meta">點一下跳到設施說明</span></span>';
+    host.appendChild(a);
+  });
+}
+
 const points=[{"n":1,"name":"MooKEN","lat":34.6726828,"lng":135.5016161,"time":"14:20","tag":"甜點","note":"先去；時間較敏感"},{"n":2,"name":"HOKA 大阪心齋橋店","lat":34.6754425,"lng":135.5018327,"time":"15:50","tag":"鞋類","note":"購物"},{"n":3,"name":"OS Drug Shinsaibashi","lat":34.6744954,"lng":135.501474,"time":"16:10","tag":"藥妝","note":"較早關門店家優先"},{"n":4,"name":"心齋橋 PARCO","lat":34.6738473,"lng":135.5009574,"time":"16:25","tag":"商場","note":"20:00 前優先"},{"n":5,"name":"大丸心齋橋店","lat":34.6732406,"lng":135.5009613,"time":"16:50","tag":"百貨","note":"心齋橋段最後一站"},{"n":6,"name":"松本清","lat":34.6725206,"lng":135.5015478,"time":"17:10","tag":"藥妝","note":"補買即可"},{"n":7,"name":"WEGO","lat":34.6696023,"lng":135.5011469,"time":"17:30","tag":"服飾","note":"往道頓堀方向"},{"n":8,"name":"Onitsuka Tiger 難波店","lat":34.668566,"lng":135.501438,"time":"17:50","tag":"鞋類・附圖指定","note":"大型難波店｜20:00 前優先"},{"n":9,"name":"Bic Camera 難波店","lat":34.6666466,"lng":135.5025872,"time":"18:15","tag":"電器・附圖指定","note":"千日前 2-10-1｜大型店｜10:00–22:00"},{"n":10,"name":"くろーばー結び なんばウォーク店","lat":34.6670875,"lng":135.5030161,"time":"18:45","tag":"📸必買・銅鑼燒","note":"B21出口旁｜季節限定口味優先"},{"n":11,"name":"大阪高島屋","lat":34.6646089,"lng":135.5012633,"time":"19:00","tag":"百貨","note":"19:25 前後離開"},{"n":12,"name":"UNIQLO なんばCITY店","lat":34.663055,"lng":135.5017744,"time":"19:30","tag":"服飾・附圖指定","note":"本館 B2F｜大型店｜同層 GU 可順逛"},{"n":13,"name":"難波公園","lat":34.6616083,"lng":135.5019349,"time":"20:05","tag":"商場","note":"快速逛重點"},{"n":14,"name":"一蘭拉麵 難波御堂筋店","lat":34.6692891,"lng":135.5006608,"time":"20:50","tag":"晚餐","note":"20:50–21:35"},{"n":15,"name":"唐吉訶德 道頓堀御堂筋","lat":34.669254,"lng":135.499904,"time":"21:40","tag":"夜間購物","note":"最後逛"}];
 const map=L.map('map');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
@@ -2081,6 +2224,8 @@ points.forEach(p=>{
   const extra=d1PopupExtra[p.n]||'';
   L.marker([p.lat,p.lng],{icon,zIndexOffset:900}).addTo(map).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.time+' · '+p.tag+extra);
 });
+
+setupMapPlaceList('mapList1',map,points.map(p=>({...p})),{zoom:17});
 
 const d1Coffee=[
   {kind:'bb',name:'Blue Bottle Coffee 心齋橋 Cafe',lat:34.6774355,lng:135.4993954,hours:'08:00–20:00（10/9）',note:'HOKA／心齋橋北側附近；只標地圖，不重新排進主時間軸',url:'https://store.bluebottlecoffee.jp/pages/shinsaibashi'}
@@ -2118,6 +2263,11 @@ day2Optional.forEach(p=>{
   const icon=L.divIcon({className:'',html:'<div class="marker" style="background:#68747a">'+p.code+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
   L.marker([p.lat,p.lng],{icon}).addTo(map2).bindPopup('<b>'+p.name+'</b><br>'+p.hours+' · '+p.note+'<br><a href="'+p.url+'" target="_blank" rel="noopener">Google Maps ↗</a>');
 });
+setupMapPlaceList('mapList2',map2,[
+  ...day2points.map(p=>({...p})),
+  ...day2Optional.map(p=>({n:p.code,name:p.name,lat:p.lat,lng:p.lng,time:p.hours,tag:p.note,optional:true}))
+],{zoom:16});
+
 const d2Coffee=[
   {kind:'sb',name:'Starbucks｜阪急池田站店',lat:34.821554,lng:135.4257517,hours:'08:00–22:00',note:'池田站改札旁；杯麵博物館前後都順路',url:'https://store.starbucks.co.jp/detail-376/'},
   {kind:'sb',name:'Starbucks｜奈良公園巴士總站店',lat:34.6848018,lng:135.8345378,hours:'07:00–20:00',note:'奈良公園西側／縣廳旁；從近鐵奈良往公園方向屬順路區域',url:'https://store.starbucks.co.jp/detail-1349/'}
@@ -2142,56 +2292,87 @@ const d3Tea=[
 ];
 addCoffeeMarkers(map3coffee,d3Coffee);
 addCoffeeMarkers(map3coffee,d3Tea);
+setupMapPlaceList('mapList3',map3coffee,[
+  {n:'🏨',name:hotel.name,lat:hotel.lat,lng:hotel.lng,time:'清晨出發',tag:'飯店',special:true,zoom:15},
+  {n:'🎢',name:usjEntrance.name,lat:usjEntrance.lat,lng:usjEntrance.lng,time:'Day 3',tag:'USJ',special:true,zoom:17},
+  ...d3Coffee.map(c=>({n:'S',name:c.name,lat:c.lat,lng:c.lng,time:c.hours,tag:c.note,optional:true,zoom:18})),
+  ...d3Tea.map(c=>({n:'T',name:c.name,lat:c.lat,lng:c.lng,time:c.hours,tag:c.note,optional:true,zoom:18}))
+],{zoom:16});
+setupUsjSchematicList();
+
 const bounds3coffee=L.latLngBounds([[hotel.lat,hotel.lng],[usjEntrance.lat,usjEntrance.lng],...d3Coffee.map(c=>[c.lat,c.lng]),...d3Tea.map(c=>[c.lat,c.lng])]);
 map3coffee.fitBounds(bounds3coffee,{padding:[28,28]});
 document.getElementById('fit3').onclick=()=>map3coffee.fitBounds(bounds3coffee,{padding:[28,28]});
 
 /* --- Day 4 map --- */
 const d4Main=[
-  {n:'1',name:'Blue Bottle Coffee 梅田茶屋町',lat:34.7078018,lng:135.4982278,time:'09:30',tag:'咖啡・HASAMI MUG'},
-  {n:'2',name:'ガチャガチャの森 梅田茶屋町店',lat:34.7079533,lng:135.4993874,time:'10:00',tag:'扭蛋'},
-  {n:'3',name:'Alpen OSAKA',lat:34.705200,lng:135.499460,time:'10:30',tag:'跑鞋／戶外'},
-  {n:'4',name:'阪急梅田本店',lat:34.7028186,lng:135.4985323,time:'11:45',tag:'美妝・精品'},
-  {n:'5',name:'阪神梅田本店',lat:34.7012797,lng:135.4983196,time:'12:25',tag:'伴手禮'},
-  {n:'6',name:'HARBS 大丸梅田店 6F',lat:34.701789,lng:135.4965763,time:'13:00',tag:'午餐＋蛋糕'},
-  {n:'7',name:'LUCUA Osaka / 1100 / SOUTH',lat:34.7028866,lng:135.4953236,time:'14:10',tag:'TEN.・MUJI・3COINS・角色店'},
-  {n:'8',name:'GRAND FRONT 大阪',lat:34.7038664,lng:135.4949205,time:'15:50',tag:'戶外・文具'},
-  {n:'9',name:'GRAND GREEN OSAKA',lat:34.7024579,lng:135.4913958,time:'16:50',tag:'短散步・可刪'},
-  {n:'10',name:'焼肉きんぐ namBaHIPS店',lat:34.6675993,lng:135.5006679,time:'19:30',tag:'晚餐'}
+  {n:'1',name:'Blue Bottle Coffee 梅田茶屋町',lat:34.7078018,lng:135.4982278,time:'08:00–08:50',tag:'早餐'},
+  {n:'2',name:'Nintendo OSAKA｜大丸梅田 13F',lat:34.701789,lng:135.4965763,time:'10:00 前後',tag:'皮克敏優先'},
+  {n:'3',name:'HARBS 大丸梅田店 6F',lat:34.701789,lng:135.4965763,time:'11:00–12:05',tag:'午餐＋蛋糕'},
+  {n:'4',name:'ガチャガチャの森 梅田茶屋町店',lat:34.7079533,lng:135.4993874,time:'12:15–12:50',tag:'扭蛋'},
+  {n:'5',name:'Alpen OSAKA',lat:34.705200,lng:135.499460,time:'12:55–13:45',tag:'HOKA 第一輪／戶外'},
+  {n:'6',name:'阪急梅田本店',lat:34.7028186,lng:135.4985323,time:'13:50–14:25',tag:'美妝・精品'},
+  {n:'7',name:'LUCUA Osaka / LUCUA 1100',lat:34.7028866,lng:135.4953236,time:'14:30–15:30',tag:'TEN.・MUJI・LOFT'},
+  {n:'8',name:'Yodobashi Camera / LINKS UMEDA',lat:34.704704,lng:135.4965441,time:'15:35–16:30',tag:'家電・戶外・HOKA 第二輪'},
+  {n:'9',name:'GRAND FRONT OSAKA',lat:34.7038664,lng:135.4949205,time:'16:35–17:20',tag:'戶外・文具'},
+  {n:'10',name:'阪神梅田本店 B1',lat:34.7012797,lng:135.4983196,time:'17:55–18:35',tag:'伴手禮集中購買'},
+  {n:'11',name:'焼肉きんぐ namBaHIPS店',lat:34.6675993,lng:135.5006679,time:'20:00',tag:'晚餐'},
+  {n:'12',name:'唐吉訶德 道頓堀御堂筋店',lat:34.6692391,lng:135.4999246,time:'約21:40',tag:'晚餐後採買'}
 ];
 const d4Optional=[
-  {n:'A',name:'HEP FIVE',lat:34.704016,lng:135.500472,tag:'11:15 可插入・角色商品'},
-  {n:'B',name:'KITTE 大阪',lat:34.7006219,lng:135.4941733,tag:'17:20 後彈性'},
-  {n:'C',name:'Yodobashi / LINKS UMEDA',lat:34.704704,lng:135.4965441,tag:'彈性・家電／補貨'},
-  {n:'D',name:'WeLoveDonut × TAKAGI COFFEE',lat:34.7019223,lng:135.4985078,tag:'彈性甜點'},
-  {n:'E',name:'唐吉訶德 梅田本店',lat:34.703924,lng:135.500711,tag:'彈性・三麗鷗／零食'}
+  {n:'A',name:'KITTE 大阪',lat:34.7006219,lng:135.4941733,time:'17:25–17:50',tag:'有時間才去',optional:true},
+  {n:'B',name:'HEP FIVE',lat:34.704016,lng:135.500472,time:'彈性',tag:'角色商品',optional:true},
+  {n:'C',name:'WeLoveDonut × TAKAGI COFFEE',lat:34.7019223,lng:135.4985078,time:'彈性',tag:'甜甜圈',optional:true}
 ];
 const map4=L.map('map4');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map4);
-L.marker([hotel.lat,hotel.lng],{icon:hicon}).addTo(map4).bindPopup('<b>'+hotel.name+'</b>');
-const d4coords=[[hotel.lat,hotel.lng]];
-const d4PopupExtra={
-  '6':'<hr style="border:0;border-top:1px solid #ddd"><b>🍰 HARBS</b>：大丸梅田店 6F；主線午餐＋蛋糕',
-  '8':'<hr style="border:0;border-top:1px solid #ddd"><b>☕ Starbucks</b>：南館6F／北館1F；需要休息再停'
-};
-d4Main.forEach(p=>{
-  d4coords.push([p.lat,p.lng]);
+
+L.marker([hotel.lat,hotel.lng],{icon:hicon}).addTo(map4).bindPopup('<b>'+hotel.name+'</b><br>Day 4 結束後回飯店');
+
+const d4MapMarkers=[
+  {n:'1',name:'Blue Bottle Coffee 梅田茶屋町',lat:34.7078018,lng:135.4982278,time:'08:00',tag:'早餐'},
+  {n:'2/3',name:'大丸梅田｜Nintendo OSAKA 13F＋HARBS 6F',lat:34.701789,lng:135.4965763,time:'10:00／11:00',tag:'同棟合併 Marker'},
+  {n:'4',name:'ガチャガチャの森 梅田茶屋町店',lat:34.7079533,lng:135.4993874,time:'12:15',tag:'扭蛋'},
+  {n:'5',name:'Alpen OSAKA',lat:34.705200,lng:135.499460,time:'12:55',tag:'HOKA 第一輪'},
+  {n:'6',name:'阪急梅田本店',lat:34.7028186,lng:135.4985323,time:'13:50',tag:'百貨'},
+  {n:'7',name:'LUCUA Osaka / LUCUA 1100',lat:34.7028866,lng:135.4953236,time:'14:30',tag:'購物'},
+  {n:'8',name:'Yodobashi / LINKS UMEDA',lat:34.704704,lng:135.4965441,time:'15:35',tag:'家電／戶外'},
+  {n:'9',name:'GRAND FRONT OSAKA',lat:34.7038664,lng:135.4949205,time:'16:35',tag:'戶外／文具'},
+  {n:'10',name:'阪神梅田本店 B1',lat:34.7012797,lng:135.4983196,time:'17:55',tag:'伴手禮'},
+  {n:'11',name:'焼肉きんぐ namBaHIPS店',lat:34.6675993,lng:135.5006679,time:'20:00',tag:'晚餐'},
+  {n:'12',name:'唐吉訶德 道頓堀御堂筋店',lat:34.6692391,lng:135.4999246,time:'約21:40',tag:'採買'}
+];
+
+d4MapMarkers.forEach(p=>{
   const icon=L.divIcon({className:'',html:'<div class="marker">'+p.n+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
-  const extra=d4PopupExtra[p.n]||'';
-  L.marker([p.lat,p.lng],{icon,zIndexOffset:900}).addTo(map4).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+(p.time||'')+' · '+p.tag+extra);
+  L.marker([p.lat,p.lng],{icon,zIndexOffset:900}).addTo(map4).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.time+' · '+p.tag);
 });
 d4Optional.forEach(p=>{
-  d4coords.push([p.lat,p.lng]);
   const icon=L.divIcon({className:'',html:'<div class="marker optional">'+p.n+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
-  L.marker([p.lat,p.lng],{icon}).addTo(map4).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.tag);
+  L.marker([p.lat,p.lng],{icon}).addTo(map4).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.time+' · '+p.tag);
 });
-const d4Coffee=[];
+
 const d4Tea=[
-  {kind:'tea',name:'THE ALLEY｜梅田 EST 店',lat:34.705027,lng:135.501006,hours:'11:00–23:00',note:'茶屋町→阪急一帶的順路飲料備選；HARBS 已是主線甜點',url:'https://www.potomak.co.jp/shop/7578/',linkLabel:'THE ALLEY 官方'}
+  {kind:'tea',name:'THE ALLEY｜梅田 EST 店',lat:34.705027,lng:135.501006,hours:'11:00–23:00',note:'只有想喝再順路買；不列主線',url:'https://www.potomak.co.jp/shop/7578/',linkLabel:'THE ALLEY 官方'}
 ];
 addCoffeeMarkers(map4,d4Tea);
-d4Tea.forEach(c=>d4coords.push([c.lat,c.lng]));
-const bounds4=L.latLngBounds(d4coords); map4.fitBounds(bounds4,{padding:[30,30]});
+
+setupMapPlaceList('mapList4',map4,[...d4Main,...d4Optional],{zoom:17});
+
+const d4UmedaCoords=[
+  [34.7078018,135.4982278],[34.701789,135.4965763],[34.7079533,135.4993874],
+  [34.705200,135.499460],[34.7028186,135.4985323],[34.7028866,135.4953236],
+  [34.704704,135.4965441],[34.7038664,135.4949205],[34.7012797,135.4983196],
+  [34.7006219,135.4941733],[34.704016,135.500472],[34.7019223,135.4985078]
+];
+const d4AllCoords=[
+  ...d4UmedaCoords,
+  [34.6675993,135.5006679],[34.6692391,135.4999246],[hotel.lat,hotel.lng]
+];
+const bounds4Umeda=L.latLngBounds(d4UmedaCoords);
+const bounds4=L.latLngBounds(d4AllCoords);
+map4.fitBounds(bounds4Umeda,{padding:[34,34]});
+document.getElementById('fit4umeda').onclick=()=>map4.fitBounds(bounds4Umeda,{padding:[34,34]});
 document.getElementById('fit4').onclick=()=>map4.fitBounds(bounds4,{padding:[30,30]});
 
 /* --- Day 5 map --- */
@@ -2219,6 +2400,8 @@ d5Points.forEach(p=>{
   const extra=d5PopupExtra[p.n]||'';
   L.marker([p.lat,p.lng],{icon,zIndexOffset:900}).addTo(map5).bindPopup('<b>'+p.n+'. '+p.name+'</b><br>'+p.time+' · '+p.tag+extra);
 });
+setupMapPlaceList('mapList5',map5,d5Points.map(p=>({...p})),{zoom:16});
+
 const d5Optional=[]; // E｜HARBS 與② Harukas 同棟，資訊併入② Popup，不另畫 Marker。
 const d5Coffee=[]; // Day 5 Starbucks 全部併入主行程編號 Popup。
 addCoffeeMarkers(map5,d5Coffee);
